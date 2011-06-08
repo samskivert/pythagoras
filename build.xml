@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<project name="pythagoras" default="compile" basedir="." xmlns:artifact="urn:maven-artifact-ant">
+  <property name="src.dir"      value="src/main/java"/>
+  <property name="test.dir"     value="src/test/java"/>
+  <property name="target.dir"   value="target"/>
+  <property name="classes.dir"  value="${target.dir}/classes"/>
+  <property name="tclasses.dir" value="${target.dir}/test-classes"/>
+  <property name="javadoc.dir"  value="${target.dir}/docs"/>
+
+  <property name="maven-ant.vers" value="2.1.3"/>
+  <property name="maven-ant.dir" value="${user.home}/.m2/ant-support"/>
+  <property name="maven-ant.jar" value="${maven-ant.dir}/maven-ant-tasks-${maven-ant.vers}.jar"/>
+  <property name="maven-ant.url"
+            value="http://mirrors.ibiblio.org/pub/mirrors/apache/maven/binaries"/>
+  <condition property="maven-ant.exists"><available file="${maven-ant.jar}"/></condition>
+  <target name="-download-maven-ant" unless="maven-ant.exists">
+    <mkdir dir="${maven-ant.dir}"/>
+    <get src="${maven-ant.url}/maven-ant-tasks-${maven-ant.vers}.jar"
+         dest="${maven-ant.jar}" usetimestamp="true"/>
+  </target>
+
+  <target name="-init-maven-ant" depends="-download-maven-ant">
+    <taskdef resource="org/apache/maven/artifact/ant/antlib.xml"
+             uri="urn:maven-artifact-ant" classpath="${maven-ant.jar}"/>
+    <artifact:pom id="pom" file="pom.xml"/>
+    <artifact:dependencies pathId="classpath" pomRefId="pom"/>
+    <path id="test.classpath">
+      <path refid="classpath"/>
+      <pathelement location="${classes.dir}"/>
+      <pathelement location="${tclasses.dir}"/>
+    </path>
+  </target>
+
+  <target name="-prepare" depends="-init-maven-ant">
+    <mkdir dir="${target.dir}"/>
+  </target>
+
+  <target name="clean" description="Deletes all build results.">
+    <delete dir="${target.dir}"/>
+  </target>
+
+  <target name="compile" depends="-prepare" description="Compiles the code.">
+    <mkdir dir="${classes.dir}"/>
+    <javac srcdir="${src.dir}" destdir="${classes.dir}" includeAntRuntime="false"
+           debug="on" optimize="${build.optimize}" source="1.6" target="1.6" encoding="utf-8">
+      <classpath refid="classpath"/>
+      <compilerarg value="-Xlint"/>
+      <compilerarg value="-Xlint:-serial"/>
+<!--
+      <compilerarg value="-Xlint:rawtypes"/>
+-->
+    </javac>
+
+<!--
+    <mkdir dir="${tclasses.dir}"/>
+    <javac srcdir="${test.dir}" destdir="${tclasses.dir}" includeAntRuntime="false"
+           debug="on" optimize="${build.optimize}" source="1.6" target="1.6" encoding="utf-8">
+      <classpath refid="test.classpath"/>
+      <compilerarg value="-Xlint"/>
+      <compilerarg value="-Xlint:-serial"/>
+    </javac>
+-->
+  </target>
+
+  <target name="javadoc" depends="-prepare" description="Generates javadoc documentation.">
+    <mkdir dir="${javadoc.dir}"/>
+    <javadoc windowtitle="${ant.project.name} API" doctitle="${ant.project.name} API"
+             access="public" destdir="${javadoc.dir}" additionalparam="-breakiterator">
+      <packageset dir="${src.dir}">
+        <exclude name="**/impl/**"/>
+      </packageset>
+      <classpath refid="classpath"/>
+      <link href="http://download.oracle.com/javase/1.5.0/docs/api/"/>
+    </javadoc>
+  </target>
+
+  <target name="tests" depends="compile" description="Runs the unit tests.">
+    <!-- allows passing -Dtest=NamePrefix to restrict to subset of tests -->
+    <property name="test" value=""/>
+    <taskdef name="unit" classpathref="classpath"
+      classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask"/>
+    <mkdir dir="${target.dir}/test-reports"/>
+    <unit printsummary="off" haltonfailure="yes" fork="${junit.fork}">
+      <classpath refid="test.classpath"/>
+      <sysproperty key="com.samskivert.depot.debug" value="${debug}"/>
+      <formatter type="brief" usefile="false"/>
+      <formatter type="xml"/>
+      <batchtest todir="${target.dir}/test-reports">
+        <fileset dir="${test.dir}" includes="**/${test}*Test.java"/>
+      </batchtest>
+    </unit>
+  </target>
+
+  <!-- todo: depend on tests target -->
+  <target name="package" depends="compile" description="Compiles code and builds jar file.">
+    <jar destfile="${target.dir}/${ant.project.name}.jar" basedir="${classes.dir}"/>
+  </target>
+
+  <property name="maven.install.repo" value="file://${user.home}/.m2/repository"/>
+  <target name="install" depends="package" 
+          description="Deploys our build artifacts to a Maven repository.">
+    <jar basedir="${src.dir}" destfile="${target.dir}/${ant.project.name}-sources.jar"/>
+    <artifact:deploy file="${target.dir}/${ant.project.name}.jar" uniqueVersion="false">
+      <remoteRepository url="${maven.install.repo}"/>
+      <pom refid="pom"/>
+      <attach file="${target.dir}/${ant.project.name}-sources.jar" classifier="sources"/>
+    </artifact:deploy>
+  </target>
+</project>
