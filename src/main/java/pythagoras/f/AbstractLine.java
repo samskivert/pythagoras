@@ -44,6 +44,46 @@ public abstract class AbstractLine implements ILine
     }
 
     @Override // from interface ILine
+    public float pointLineDistSq (float px, float py) {
+        return Geometry.pointLineDistSq(px, py, getX1(), getY1(), getX2(), getY2());
+    }
+
+    @Override // from interface ILine
+    public float pointLineDistSq (IPoint p) {
+        return Geometry.pointLineDistSq(p.getX(), p.getY(), getX1(), getY1(), getX2(), getY2());
+    }
+
+    @Override // from interface ILine
+    public float pointLineDist (float px, float py) {
+        return Geometry.pointLineDist(px, py, getX1(), getY1(), getX2(), getY2());
+    }
+
+    @Override // from interface ILine
+    public float pointLineDist (IPoint p) {
+        return Geometry.pointLineDist(p.getX(), p.getY(), getX1(), getY1(), getX2(), getY2());
+    }
+
+    @Override // from interface ILine
+    public float pointSegDistSq (float px, float py) {
+        return Geometry.pointSegDistSq(px, py, getX1(), getY1(), getX2(), getY2());
+    }
+
+    @Override // from interface ILine
+    public float pointSegDistSq (IPoint p) {
+        return Geometry.pointSegDistSq(p.getX(), p.getY(), getX1(), getY1(), getX2(), getY2());
+    }
+
+    @Override // from interface ILine
+    public float pointSegDist (float px, float py) {
+        return Geometry.pointSegDist(px, py, getX1(), getY1(), getX2(), getY2());
+    }
+
+    @Override // from interface ILine
+    public float pointSegDist (IPoint p) {
+        return Geometry.pointSegDist(p.getX(), p.getY(), getX1(), getY1(), getX2(), getY2());
+    }
+
+    @Override // from interface ILine
     public Line clone () {
         return new Line(getX1(), getY1(), getX2(), getY2());
     }

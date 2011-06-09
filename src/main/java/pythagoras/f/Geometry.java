@@ -81,6 +81,64 @@ public class Geometry
     }
 
     /**
+     * Returns the square of the distance from the specified point to the specified line.
+     */
+    public static float pointLineDistSq (float px, float py,
+                                         float x1, float y1, float x2, float y2) {
+        x2 -= x1;
+        y2 -= y1;
+        px -= x1;
+        py -= y1;
+        float s = px * y2 - py * x2;
+        return (s * s) / (x2 * x2 + y2 * y2);
+    }
+
+    /**
+     * Returns the distance from the specified point to the specified line.
+     */
+    public static float pointLineDist (float px, float py, float x1, float y1, float x2, float y2) {
+        return (float)Math.sqrt(pointLineDistSq(px, py, x1, y1, x2, y2));
+    }
+
+    /**
+     * Returns the square of the distance between the specified point and the specified line
+     * segment.
+     */
+    public static float pointSegDistSq (float px, float py,
+                                        float x1, float y1, float x2, float y2) {
+        // A = (x2 - x1, y2 - y1)
+        // P = (px - x1, py - y1)
+        x2 -= x1; // A = (x2, y2)
+        y2 -= y1;
+        px -= x1; // P = (px, py)
+        py -= y1;
+        float dist;
+        if (px * x2 + py * y2 <= 0.0) { // P*A
+            dist = px * px + py * py;
+        } else {
+            px = x2 - px; // P = A - P = (x2 - px, y2 - py)
+            py = y2 - py;
+            if (px * x2 + py * y2 <= 0.0) { // P*A
+                dist = px * px + py * py;
+            } else {
+                dist = px * y2 - py * x2;
+                dist = dist * dist / (x2 * x2 + y2 * y2); // pxA/|A|
+            }
+        }
+        if (dist < 0) {
+            dist = 0;
+        }
+        return dist;
+    }
+
+    /**
+     * Returns the distance between the specified point and the specified line segment.
+     */
+    public static float pointSegDist (float px, float py, float x1, float y1, float x2, float y2) {
+        return (float)Math.sqrt(pointSegDistSq(px, py, x1, y1, x2, y2));
+    }
+
+    /**
      * Returns a string describing the supplied point, of the form <code>+x+y</code>,
      * <code>+x-y</code>, <code>-x-y</code>, etc.
      */

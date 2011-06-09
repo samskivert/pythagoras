@@ -53,6 +53,48 @@ public interface ILine extends IShape, Cloneable
     Point getP2 ();
 
     /**
+     * Returns the square of the distance from the specified point to the line defined by this line
+     * segment.
+     */
+    float pointLineDistSq (float px, float py);
+
+    /**
+     * Returns the square of the distance from the supplied point to the line defined by this line
+     * segment.
+     */
+    float pointLineDistSq (IPoint p);
+
+    /**
+     * Returns the distance from the specified point to the line defined by this line segment.
+     */
+    float pointLineDist (float px, float py);
+
+    /**
+     * Returns the distance from the supplied point to the line defined by this line segment.
+     */
+    float pointLineDist (IPoint p);
+
+    /**
+     * Returns the square of the distance from the specified point this line segment.
+     */
+    float pointSegDistSq (float px, float py);
+
+    /**
+     * Returns the square of the distance from the supplied point this line segment.
+     */
+    float pointSegDistSq (IPoint p);
+
+    /**
+     * Returns the distance from the specified point this line segment.
+     */
+    float pointSegDist (float px, float py);
+
+    /**
+     * Returns the distance from the supplied point this line segment.
+     */
+    float pointSegDist (IPoint p);
+
+    /**
      * Returns a mutable copy of this line.
      */
     Line clone ();
