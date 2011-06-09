@@ -7,7 +7,7 @@ package pythagoras.f;
 /**
  * Provides read-only access to a {@link Rectangle}.
  */
-public interface IRectangle extends Shape, Cloneable
+public interface IRectangle extends IRectangularShape, Cloneable
 {
     /** The bitmask that indicates that a point lies to the left of this rectangle.
      * See {@link #outcode}. */
@@ -24,41 +24,26 @@ public interface IRectangle extends Shape, Cloneable
     int OUT_BOTTOM = 8;
 
     /**
-     * Returns the x-coordinate of the rectangle's upper left corner.
+     * Returns a view of this rectangle's upper-left corner. Subsequent changes to this rectangle's
+     * location will be reflected in the returned point.
      */
-    float getX ();
+    IPoint location ();
 
     /**
-     * Returns the y-coordinate of the rectangle's upper left corner.
-     */
-    float getY ();
-
-    /**
-     * Returns the width of the rectangle.
-     */
-    float getWidth ();
-
-    /**
-     * Returns the height of the rectangle.
-     */
-    float getHeight ();
-
-    /**
-     * Returns true if this rectangle does not have > 0 width and height.
-     */
-    boolean isEmpty ();
-
-    /**
-     * Returns this rectangle's upper-left corner. Note that this constructs a new instance,
-     * because a {@link Rectangle} is not an {@link IPoint} and cannot efficiently masquerade as
-     * one.
+     * Returns a copy of this rectangle's upper-left corner. Subsequent changes to this rectangle's
+     * location will not be reflected in the returned point.
      */
     Point getLocation ();
 
     /**
-     * Returns the size of this rectangle as a newly constructed dimension. Note that this
-     * constructs a new instance, because a {@link Rectangle} is not an {@link IDimension} and
-     * cannot efficiently masquerade as one.
+     * Returns a view of this rectangle's size. Subsequent changes to this rectangle's size will be
+     * reflected in the returned dimension.
+     */
+    IDimension size ();
+
+    /**
+     * Returns a copy of this rectangle's size. Subsequent changes to this rectangle's size will
+     * not be reflected in the returned dimension.
      */
     Dimension getSize ();
 
@@ -81,10 +66,20 @@ public interface IRectangle extends Shape, Cloneable
     Rectangle union (IRectangle r);
 
     /**
+     * Returns true if the specified line segment intersects this rectangle.
+     */
+    boolean intersectsLine (float x1, float y1, float x2, float y2);
+
+    /**
+     * Returns true if the supplied line segment intersects this rectangle.
+     */
+    boolean intersectsLine (ILine l);
+
+    /**
      * Returns a set of flags indicating where the specified point lies in relation to the bounds
      * of this rectangle. See {@link #OUT_LEFT}, etc.
      */
-    int outcode (double px, double py);
+    int outcode (float px, float py);
 
     /**
      * Returns a set of flags indicating where the supplied point lies in relation to the bounds of
@@ -93,7 +88,7 @@ public interface IRectangle extends Shape, Cloneable
     int outcode (IPoint point);
 
     /**
-     * Clones this rectangle.
+     * Returns a mutable copy of this rectangle.
      */
     Rectangle clone ();
 }

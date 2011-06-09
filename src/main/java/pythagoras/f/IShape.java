@@ -7,8 +7,13 @@ package pythagoras.f;
 /**
  * An interface provided by all shapes.
  */
-public interface Shape
+public interface IShape
 {
+    /**
+     * Returns true if this shape encloses no area.
+     */
+    boolean isEmpty ();
+
     /**
      * Returns true if this shape contains the specified point.
      */
@@ -40,9 +45,16 @@ public interface Shape
     boolean intersects (IRectangle r);
 
     /**
-     * Returns the bounding rectangle for this shape.
+     * Returns a view of the bounding rectangle for this shape. Subsequent changes to the bounding
+     * rectangle will be reflected in the returned rectangle.
      */
-    IRectangle getBounds ();
+    IRectangle bounds();
+
+    /**
+     * Returns a copy of the bounding rectangle for this shape. Subsequent changes to the bounding
+     * rectangle will not be reflected in the returned rectangle.
+     */
+    Rectangle getBounds ();
 
     // /**
     //  * Returns an iterator over the path described by this shape.

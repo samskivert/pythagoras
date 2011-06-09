@@ -40,7 +40,7 @@ public interface IPoint extends Cloneable
     float distance (IPoint p);
 
     /**
-     * Clones this point.
+     * Returns a mutable copy of this point.
      */
     Point clone ();
 }

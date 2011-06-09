@@ -20,7 +20,7 @@ public interface IDimension extends Cloneable
     float getHeight ();
 
     /**
-     * Clones this dimension.
+     * Returns a mutable copy of this dimension.
      */
     Dimension clone ();
 }

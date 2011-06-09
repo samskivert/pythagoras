@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * Represents a point on a plane.
  */
-public class Point implements IPoint, Serializable
+public class Point extends AbstractPoint implements Serializable
 {
     /** The x-coordinate of the point. */
     public float x;
@@ -76,56 +76,5 @@ public class Point implements IPoint, Serializable
     @Override // from interface IPoint
     public float getY () {
         return y;
-    }
-
-    @Override // from interface IPoint
-    public float distanceSq (float px, float py) {
-        return Geometry.distanceSq(x, y, px, py);
-    }
-
-    @Override // from interface IPoint
-    public float distanceSq (IPoint p) {
-        return Geometry.distanceSq(x, y, p.getX(), p.getY());
-    }
-
-    @Override // from interface IPoint
-    public float distance (float px, float py) {
-        return Geometry.distance(x, y, px, py);
-    }
-
-    @Override // from interface IPoint
-    public float distance (IPoint p) {
-        return Geometry.distance(x, y, p.getX(), p.getY());
-    }
-
-    @Override // from interface IPoint
-    public Point clone () {
-        try {
-            return (Point)super.clone();
-        } catch (CloneNotSupportedException cnse) {
-            throw new AssertionError(cnse);
-        }
-    }
-
-    @Override
-    public boolean equals (Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (obj instanceof Point) {
-            Point p = (Point)obj;
-            return x == p.x && y == p.y;
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode () {
-        return Float.floatToIntBits(x) ^ Float.floatToIntBits(y);
-    }
-
-    @Override
-    public String toString () {
-        return Geometry.pointToString(x, y);
     }
 }
