@@ -10,9 +10,16 @@ import java.io.Serializable;
  */
 public class Line extends AbstractLine implements Serializable
 {
+    /** The x-coordinate of the start of this line segment. */
     public float x1;
+
+    /** The y-coordinate of the start of this line segment. */
     public float y1;
+
+    /** The x-coordinate of the end of this line segment. */
     public float x2;
+
+    /** The y-coordinate of the end of this line segment. */
     public float y2;
 
     /**

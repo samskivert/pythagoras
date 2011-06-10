@@ -11,22 +11,22 @@ public abstract class AbstractPoint implements IPoint
 {
     @Override // from interface IPoint
     public float distanceSq (float px, float py) {
-        return Geometry.distanceSq(getX(), getY(), px, py);
+        return Points.distanceSq(getX(), getY(), px, py);
     }
 
     @Override // from interface IPoint
     public float distanceSq (IPoint p) {
-        return Geometry.distanceSq(getX(), getY(), p.getX(), p.getY());
+        return Points.distanceSq(getX(), getY(), p.getX(), p.getY());
     }
 
     @Override // from interface IPoint
     public float distance (float px, float py) {
-        return Geometry.distance(getX(), getY(), px, py);
+        return Points.distance(getX(), getY(), px, py);
     }
 
     @Override // from interface IPoint
     public float distance (IPoint p) {
-        return Geometry.distance(getX(), getY(), p.getX(), p.getY());
+        return Points.distance(getX(), getY(), p.getX(), p.getY());
     }
 
     @Override // from interface IPoint
@@ -53,6 +53,6 @@ public abstract class AbstractPoint implements IPoint
 
     @Override
     public String toString () {
-        return Geometry.pointToString(getX(), getY());
+        return Points.pointToString(getX(), getY());
     }
 }

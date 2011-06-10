@@ -33,6 +33,6 @@ public abstract class AbstractDimension implements IDimension
 
     @Override
     public String toString () {
-        return Geometry.dimenToString(getWidth(), getHeight());
+        return Dimensions.dimenToString(getWidth(), getHeight());
     }
 }
