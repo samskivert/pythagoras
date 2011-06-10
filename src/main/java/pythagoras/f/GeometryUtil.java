@@ -43,7 +43,7 @@ public class GeometryUtil
      * Checks whether line (x1, y1) - (x2, y2) and line (x3, y3) - (x4, y4) intersect. If lines
      * intersect then the result parameters are saved to point array. The size of {@code point}
      * must be at least 2.
-     * 
+     *
      * @return 1 if two lines intersect in the defined interval, otherwise 0.
      */
     public static int intersectLines (float x1, float y1, float x2, float y2, float x3, float y3,
@@ -78,7 +78,7 @@ public class GeometryUtil
      * Checks whether there is intersection of the line (x1, y1) - (x2, y2) and the quad curve
      * (qx1, qy1) - (qx2, qy2) - (qx3, qy3). The parameters of the intersection area saved to
      * {@code params}. Therefore {@code params} must be of length at least 4.
-     * 
+     *
      * @return the number of roots that lie in the defined interval.
      */
     public static int intersectLineAndQuad (float x1, float y1, float x2, float y2,
@@ -122,7 +122,7 @@ public class GeometryUtil
      * Checks whether the line (x1, y1) - (x2, y2) and the cubic curve (cx1, cy1) - (cx2, cy2) -
      * (cx3, cy3) - (cx4, cy4) intersect. The points of intersection are saved to {@code points}.
      * Therefore {@code points} must be of length at least 6.
-     * 
+     *
      * @return the numbers of roots that lie in the defined interval.
      */
     public static int intersectLineAndCubic (float x1, float y1, float x2, float y2,
@@ -169,7 +169,7 @@ public class GeometryUtil
      * Checks whether two quads (x1, y1) - (x2, y2) - (x3, y3) and (qx1, qy1) - (qx2, qy2) - (qx3,
      * qy3) intersect. The result is saved to {@code params}. Thus {@code params} must be of length
      * at least 4.
-     * 
+     *
      * @return the number of roots that lie in the interval.
      */
     public static int intersectQuads (float x1, float y1, float x2, float y2, float x3, float y3,
@@ -222,7 +222,7 @@ public class GeometryUtil
      * Checks whether the quad (x1, y1) - (x2, y2) - (x3, y3) and the cubic (cx1, cy1) - (cx2, cy2)
      * - (cx3, cy3) - (cx4, cy4) curves intersect. The points of the intersection are saved to
      * {@code params}. Thus {@code params} must be of length at least 6.
-     * 
+     *
      * @return the number of intersection points that lie in the interval.
      */
     public static int intersectQuadAndCubic (float qx1, float qy1, float qx2, float qy2,
@@ -284,7 +284,7 @@ public class GeometryUtil
      * Checks whether two cubic curves (x1, y1) - (x2, y2) - (x3, y3) - (x4, y4) and (cx1, cy1) -
      * (cx2, cy2) - (cx3, cy3) - (cx4, cy4) intersect. The result is saved to {@code params}. Thus
      * {@code params} must be of length at least 6.
-     * 
+     *
      * @return the number of intersection points that lie in the interval.
      */
     public static int intersectCubics (float x1, float y1, float x2, float y2, float x3, float y3,
