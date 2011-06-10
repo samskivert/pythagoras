@@ -11,65 +11,40 @@ package pythagoras.f;
  */
 public interface IRectangularShape extends IShape
 {
-    /**
-     * Returns the x-coordinate of the upper-left corner of the framing rectangle.
-     */
+    /** Returns the x-coordinate of the upper-left corner of the framing rectangle. */
     float getX ();
 
-    /**
-     * Returns the y-coordinate of the upper-left corner of the framing rectangle.
-     */
+    /** Returns the y-coordinate of the upper-left corner of the framing rectangle. */
     float getY ();
 
-    /**
-     * Returns the width of the framing rectangle.
-     */
+    /** Returns the width of the framing rectangle. */
     float getWidth ();
 
-    /**
-     * Returns the height of the framing rectangle.
-     */
+    /** Returns the height of the framing rectangle. */
     float getHeight ();
 
-    /**
-     * Returns the minimum x-coordinate of the framing rectangle.
-     */
+    /** Returns the minimum x-coordinate of the framing rectangle. */
     float getMinX ();
 
-    /**
-     * Returns the minimum y-coordinate of the framing rectangle.
-     */
+    /** Returns the minimum y-coordinate of the framing rectangle. */
     float getMinY ();
 
-    /**
-     * Returns the maximum x-coordinate of the framing rectangle.
-     */
+    /** Returns the maximum x-coordinate of the framing rectangle. */
     float getMaxX ();
 
-    /**
-     * Returns the maximum y-coordinate of the framing rectangle.
-     */
+    /** Returns the maximum y-coordinate of the framing rectangle. */
     float getMaxY ();
 
-    /**
-     * Returns the x-coordinate of the center of the framing rectangle.
-     */
+    /** Returns the x-coordinate of the center of the framing rectangle. */
     float getCenterX ();
 
-    /**
-     * Returns the y-coordinate of the center of the framing rectangle.
-     */
+    /** Returns the y-coordinate of the center of the framing rectangle. */
     float getCenterY ();
 
-    /**
-     * Returns a view of this shape's framing rectangle. Subsequent changes to the shape will be
-     * reflected in the returned rectangle.
-     */
-    IRectangle frame ();
-
-    /**
-     * Returns a copy of this shape's framing rectangle. Subsequent changes to the shape will be
-     * reflected in the returned rectangle.
-     */
+    /** Returns a copy of this shape's framing rectangle. */
     Rectangle getFrame ();
+
+    /** Initializes the supplied rectangle with this shape's framing rectangle.
+     * @return the supplied rectangle. */
+    Rectangle getFrame (Rectangle target);
 }

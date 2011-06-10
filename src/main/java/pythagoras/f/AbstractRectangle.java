@@ -12,37 +12,25 @@ import java.util.NoSuchElementException;
 public abstract class AbstractRectangle extends RectangularShape implements IRectangle
 {
     @Override // from interface IRectangle
-    public IPoint location () {
-        return new AbstractPoint() {
-            @Override public float getX () {
-                return AbstractRectangle.this.getX();
-            }
-            @Override public float getY () {
-                return AbstractRectangle.this.getY();
-            }
-        };
-    }
-
-    @Override // from interface IRectangle
     public Point getLocation () {
-        return new Point(getX(), getY());
+        return getLocation(new Point());
     }
 
     @Override // from interface IRectangle
-    public IDimension size () {
-        return new AbstractDimension() {
-            @Override public float getWidth () {
-                return AbstractRectangle.this.getWidth();
-            }
-            @Override public float getHeight () {
-                return AbstractRectangle.this.getHeight();
-            }
-        };
+    public Point getLocation (Point target) {
+        target.setLocation(getX(), getY());
+        return target;
     }
 
     @Override // from interface IRectangle
     public Dimension getSize () {
-        return new Dimension(getWidth(), getHeight());
+        return getSize(new Dimension());
+    }
+
+    @Override // from interface IRectangle
+    public Dimension getSize (Dimension target) {
+        target.setSize(getWidth(), getHeight());
+        return target;
     }
 
     @Override // from interface IRectangle
@@ -145,16 +133,6 @@ public abstract class AbstractRectangle extends RectangularShape implements IRec
     @Override // from interface IShape
     public PathIterator getPathIterator (AffineTransform t, float flatness) {
         return new Iterator(this, t);
-    }
-
-    @Override // from RectangularShape
-    public IRectangle frame () {
-        return this;
-    }
-
-    @Override // from RectangularShape
-    public IRectangle bounds () {
-        return this;
     }
 
     @Override // from Object

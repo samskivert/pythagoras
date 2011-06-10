@@ -27,7 +27,6 @@ public class Rectangle extends AbstractRectangle implements Serializable
      * Constructs a rectangle at (0,0) and with dimensions (0,0).
      */
     public Rectangle () {
-        setBounds(0, 0, 0, 0);
     }
 
     /**

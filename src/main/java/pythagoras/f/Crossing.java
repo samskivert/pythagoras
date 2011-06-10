@@ -218,17 +218,15 @@ class Crossing
         }
     }
 
-    /**
-     * CubicCurve class provides basic functionality to find curve crossing and calculating bounds
-     */
-    public static class CubicCurve
+    /** CubicCurve helper for finding curve crossing and calculating bounds. */
+    public static class CubicCurveH
     {
         float ax, ay, bx, by, cx, cy;
         float Ax, Ay, Bx, By, Cx, Cy;
         float Ax3, Bx2;
 
-        public CubicCurve (float x1, float y1, float cx1, float cy1, float cx2, float cy2,
-                           float x2, float y2) {
+        public CubicCurveH (float x1, float y1, float cx1, float cy1, float cx2, float cy2,
+                            float x2, float y2) {
             ax = x2 - x1;
             ay = y2 - y1;
             bx = cx1 - x1;
@@ -410,7 +408,7 @@ class Crossing
         }
 
         // INSIDE
-        CubicCurve c = new CubicCurve(x1, y1, cx1, cy1, cx2, cy2, x2, y2);
+        CubicCurveH c = new CubicCurveH(x1, y1, cx1, cy1, cx2, cy2, x2, y2);
         float px = x - x1, py = y - y1;
         float[] res = new float[3];
         int rc = c.solvePoint(res, px);
@@ -471,7 +469,7 @@ class Crossing
      * Returns how many times a ray from point (x,y) crosses a shape.
      */
     public static int crossShape (IShape s, float x, float y) {
-        if (!s.bounds().contains(x, y)) {
+        if (!s.getBounds().contains(x, y)) {
             return 0;
         }
         return crossPath(s.getPathIterator(null), x, y);
@@ -642,7 +640,7 @@ class Crossing
         }
 
         // INSIDE
-        CubicCurve c = new CubicCurve(x1, y1, cx1, cy1, cx2, cy2, x2, y2);
+        CubicCurveH c = new CubicCurveH(x1, y1, cx1, cy1, cx2, cy2, x2, y2);
         float px1 = rx1 - x1;
         float py1 = ry1 - y1;
         float px2 = rx2 - x1;
@@ -758,7 +756,7 @@ class Crossing
      * Returns how many times rectangle stripe cross shape or the are intersect
      */
     public static int intersectShape (IShape s, float x, float y, float w, float h) {
-        if (!s.bounds().intersects(x, y, w, h)) {
+        if (!s.getBounds().intersects(x, y, w, h)) {
             return 0;
         }
         return intersectPath(s.getPathIterator(null), x, y, w, h);

@@ -9,38 +9,24 @@ package pythagoras.f;
  */
 public interface IPoint extends Cloneable
 {
-    /**
-     * Returns this point's x-coordinate.
-     */
+    /** Returns this point's x-coordinate. */
     float getX ();
 
-    /**
-     * Returns this point's y-coordinate.
-     */
+    /** Returns this point's y-coordinate. */
     float getY ();
 
-    /**
-     * Returns the squared Euclidian distance between this point and the specified point.
-     */
+    /** Returns the squared Euclidian distance between this point and the specified point. */
     float distanceSq (float px, float py);
 
-    /**
-     * Returns the squared Euclidian distance between this point and the supplied point.
-     */
+    /** Returns the squared Euclidian distance between this point and the supplied point. */
     float distanceSq (IPoint p);
 
-    /**
-     * Returns the Euclidian distance between this point and the specified point.
-     */
+    /** Returns the Euclidian distance between this point and the specified point. */
     float distance (float px, float py);
 
-    /**
-     * Returns the Euclidian distance between this point and the supplied point.
-     */
+    /** Returns the Euclidian distance between this point and the supplied point. */
     float distance (IPoint p);
 
-    /**
-     * Returns a mutable copy of this point.
-     */
+    /** Returns a mutable copy of this point. */
     Point clone ();
 }

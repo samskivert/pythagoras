@@ -12,37 +12,25 @@ import java.util.NoSuchElementException;
 public abstract class AbstractLine implements ILine
 {
     @Override // from interface ILine
-    public IPoint p1 () {
-        return new AbstractPoint() {
-            @Override public float getX () {
-                return getX1();
-            }
-            @Override public float getY () {
-                return getY1();
-            }
-        };
-    }
-
-    @Override // from interface ILine
     public Point getP1 () {
-        return new Point(getX1(), getY1());
+        return getP1(new Point());
     }
 
     @Override // from interface ILine
-    public IPoint p2 () {
-        return new AbstractPoint() {
-            @Override public float getX () {
-                return getX2();
-            }
-            @Override public float getY () {
-                return getY2();
-            }
-        };
+    public Point getP1 (Point target) {
+        target.setLocation(getX1(), getY1());
+        return target;
     }
 
     @Override // from interface ILine
     public Point getP2 () {
-        return new Point(getX2(), getY2());
+        return getP2(new Point());
+    }
+
+    @Override // from interface ILine
+    public Point getP2 (Point target) {
+        target.setLocation(getX2(), getY2());
+        return target;
     }
 
     @Override // from interface ILine
@@ -126,31 +114,12 @@ public abstract class AbstractLine implements ILine
     }
 
     @Override // from interface IShape
-    public IRectangle bounds () {
-        return new AbstractRectangle() {
-            @Override public float getX () {
-                return Math.min(getX1(), getX2());
-            }
-            @Override public float getY () {
-                return Math.min(getY1(), getY2());
-            }
-            @Override public float getWidth () {
-                float x1 = getX1(), x2 = getX2();
-                return (x1 < x2) ? (x2 - x1) : (x1 - x2);
-            }
-            @Override public float getHeight () {
-                float y1 = getY1(), y2 = getY2();
-                return (y1 < y2) ? (y2 - y1) : (y1 - y2);
-            }
-            // this isn't visible in the type, so won't be called by non-combatants
-            @Override public void setFrame (float x, float y, float w, float h) {
-                throw new UnsupportedOperationException();
-            }
-        };
+    public Rectangle getBounds () {
+        return getBounds(new Rectangle());
     }
 
     @Override // from interface IShape
-    public Rectangle getBounds () {
+    public Rectangle getBounds (Rectangle target) {
         float x1 = getX1(), x2 = getX2(), y1 = getY1(), y2 = getY2();
         float rx, ry, rw, rh;
         if (x1 < x2) {
@@ -167,7 +136,8 @@ public abstract class AbstractLine implements ILine
             ry = y2;
             rh = y1 - y2;
         }
-        return new Rectangle(rx, ry, rw, rh);
+        target.setBounds(rx, ry, rw, rh);
+        return target;
     }
 
     @Override // from interface IShape

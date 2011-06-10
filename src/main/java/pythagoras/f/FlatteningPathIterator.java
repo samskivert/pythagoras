@@ -128,17 +128,15 @@ public class FlatteningPathIterator implements PathIterator
     }
 
     /**
-     * Calculates flat path points for current segment of the source shape.
-     * 
-     * Line segment is flat by itself. Flatness of quad and cubic curves
-     * evaluated by getFlatnessSq() method. Curves subdivided until current
-     * flatness is bigger than user defined and subdivision limit isn't
-     * exhausted. Single source segment translated to series of buffer points.
-     * The less flatness the bigger serries. Every currentSegment() call extract
-     * one point from the buffer. When series completed evaluate() takes next
+     * Calculates flat path points for the current segment of the source shape. Line segment is
+     * flat by itself. Flatness of quad and cubic curves are evaluated by the getFlatnessSq()
+     * method. Curves are subdivided until current flatness is bigger than user defined value and
+     * subdivision limit isn't exhausted. Single source segments are translated to a series of
+     * buffer points. The smaller the flatness the bigger the series. Every currentSegment() call
+     * extracts one point from the buffer. When a series is completed, evaluate() takes the next
      * source shape segment.
      */
-    void evaluate () {
+    protected void evaluate () {
         if (bufEmpty) {
             bufType = p.currentSegment(coords);
         }
@@ -149,6 +147,7 @@ public class FlatteningPathIterator implements PathIterator
             px = coords[0];
             py = coords[1];
             break;
+
         case SEG_QUADTO:
             if (bufEmpty) {
                 bufIndex -= 6;
@@ -159,7 +158,7 @@ public class FlatteningPathIterator implements PathIterator
             }
 
             while (bufSubdiv < bufLimit) {
-                if (QuadCurve2D.getFlatnessSq(buf, bufIndex) < flatness2) {
+                if (QuadCurves.getFlatnessSq(buf, bufIndex) < flatness2) {
                     break;
                 }
 
@@ -173,7 +172,7 @@ public class FlatteningPathIterator implements PathIterator
                     bufIndex += BUFFER_CAPACITY;
                 }
 
-                QuadCurve2D.subdivide(buf, bufIndex, buf, bufIndex - 4, buf, bufIndex);
+                QuadCurves.subdivide(buf, bufIndex, buf, bufIndex - 4, buf, bufIndex);
 
                 bufIndex -= 4;
                 bufSubdiv++;
@@ -189,6 +188,7 @@ public class FlatteningPathIterator implements PathIterator
                 bufType = SEG_LINETO;
             }
             break;
+
         case SEG_CUBICTO:
             if (bufEmpty) {
                 bufIndex -= 8;
@@ -199,7 +199,7 @@ public class FlatteningPathIterator implements PathIterator
             }
 
             while (bufSubdiv < bufLimit) {
-                if (CubicCurve2D.getFlatnessSq(buf, bufIndex) < flatness2) {
+                if (CubicCurves.getFlatnessSq(buf, bufIndex) < flatness2) {
                     break;
                 }
 
@@ -213,7 +213,7 @@ public class FlatteningPathIterator implements PathIterator
                     bufIndex += BUFFER_CAPACITY;
                 }
 
-                CubicCurve2D.subdivide(buf, bufIndex, buf, bufIndex - 6, buf, bufIndex);
+                CubicCurves.subdivide(buf, bufIndex, buf, bufIndex - 6, buf, bufIndex);
 
                 bufIndex -= 6;
                 bufSubdiv++;
@@ -230,7 +230,6 @@ public class FlatteningPathIterator implements PathIterator
             }
             break;
         }
-
     }
 
     public void next () {

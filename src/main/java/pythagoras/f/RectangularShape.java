@@ -111,13 +111,13 @@ public abstract class RectangularShape implements IRectangularShape
     }
 
     @Override // from IRectangularShape
-    public IRectangle frame () {
-        return bounds();
+    public Rectangle getFrame () {
+        return getBounds();
     }
 
     @Override // from IRectangularShape
-    public Rectangle getFrame () {
-        return getBounds();
+    public Rectangle getFrame (Rectangle target) {
+        return getBounds(target);
     }
 
     @Override // from interface IShape
@@ -141,32 +141,17 @@ public abstract class RectangularShape implements IRectangularShape
     }
 
     @Override // from interface IShape
-    public IRectangle bounds () {
-        return new AbstractRectangle() {
-            @Override public float getX () {
-                return RectangularShape.this.getX();
-            }
-            @Override public float getY () {
-                return RectangularShape.this.getY();
-            }
-            @Override public float getWidth () {
-                return RectangularShape.this.getWidth();
-            }
-            @Override public float getHeight () {
-                return RectangularShape.this.getHeight();
-            }
-            // this isn't visible in the type, so won't be called by non-combatants
-            @Override public void setFrame (float x, float y, float w, float h) {
-                throw new UnsupportedOperationException();
-            }
-        };
+    public Rectangle getBounds () {
+        return getBounds(new Rectangle());
     }
 
     @Override // from interface IShape
-    public Rectangle getBounds () {
-        return new Rectangle(getX(), getY(), getWidth(), getHeight());
+    public Rectangle getBounds (Rectangle target) {
+        target.setBounds(getX(), getY(), getWidth(), getHeight());
+        return target;
     }
 
+    // @Override // from interface IShape
     // public PathIterator getPathIterator (AffineTransform t, float flatness) {
     //     return new FlatteningPathIterator(getPathIterator(t), flatness);
     // }

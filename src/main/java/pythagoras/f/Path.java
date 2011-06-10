@@ -167,18 +167,13 @@ public final class Path implements IShape, Cloneable
         return p;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * <em>Note:</em> this method violates the contract in that the bounds returned will
-     * <em>not</em> reflect subsequent changes to this path. Doing so is prohibitively expensive.
-     */
-    @Override public IRectangle bounds () {
-        return getBounds();
+    @Override // from interface IShape
+    public Rectangle getBounds () {
+        return getBounds(new Rectangle());
     }
 
     @Override // from interface IShape
-    public Rectangle getBounds () {
+    public Rectangle getBounds (Rectangle target) {
         float rx1, ry1, rx2, ry2;
         if (pointSize == 0) {
             rx1 = ry1 = rx2 = ry2 = 0f;
@@ -201,7 +196,8 @@ public final class Path implements IShape, Cloneable
                 }
             }
         }
-        return new Rectangle(rx1, ry1, rx2 - rx1, ry2 - ry1);
+        target.setBounds(rx1, ry1, rx2 - rx1, ry2 - ry1);
+        return target;
     }
 
     @Override // from interface IShape

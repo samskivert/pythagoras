@@ -21,7 +21,6 @@ public class Point extends AbstractPoint implements Serializable
      * Constructs a point at (0, 0).
      */
     public Point () {
-        setLocation(0, 0);
     }
 
     /**
