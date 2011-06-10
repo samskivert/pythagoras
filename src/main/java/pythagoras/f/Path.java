@@ -102,7 +102,7 @@ public final class Path implements IShape, Cloneable
 
     public void append (PathIterator path, boolean connect) {
         while (!path.isDone()) {
-            float coords[] = new float[6];
+            float[] coords = new float[6];
             switch (path.currentSegment(coords)) {
             case PathIterator.SEG_MOVETO:
                 if (!connect || typeSize == 0) {
@@ -271,12 +271,12 @@ public final class Path implements IShape, Cloneable
             throw new IllegalPathStateException("First segment must be a SEG_MOVETO");
         }
         if (typeSize == types.length) {
-            byte tmp[] = new byte[typeSize + BUFFER_CAPACITY];
+            byte[] tmp = new byte[typeSize + BUFFER_CAPACITY];
             System.arraycopy(types, 0, tmp, 0, typeSize);
             types = tmp;
         }
         if (pointSize + pointCount > points.length) {
-            float tmp[] = new float[pointSize + Math.max(BUFFER_CAPACITY * 2, pointCount)];
+            float[] tmp = new float[pointSize + Math.max(BUFFER_CAPACITY * 2, pointCount)];
             System.arraycopy(points, 0, tmp, 0, pointSize);
             points = tmp;
         }
@@ -360,11 +360,11 @@ public final class Path implements IShape, Cloneable
     protected int rule;
 
     /** The space required in points buffer for different segmenet types. */
-    protected static int pointShift[] = { 2, // MOVETO
-                                        2, // LINETO
-                                        4, // QUADTO
-                                        6, // CUBICTO
-                                        0 }; // CLOSE
+    protected static int[] pointShift = { 2, // MOVETO
+                                          2, // LINETO
+                                          4, // QUADTO
+                                          6, // CUBICTO
+                                          0 }; // CLOSE
 
     /** The default initial buffer size. */
     protected static final int BUFFER_SIZE = 10;

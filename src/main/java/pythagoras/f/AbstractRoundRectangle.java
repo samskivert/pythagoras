@@ -119,7 +119,7 @@ public abstract class AbstractRoundRectangle extends RectangularShape implements
                 return SEG_CLOSE;
             }
             int j = 0;
-            float p[] = POINTS[index];
+            float[] p = POINTS[index];
             for (int i = 0; i < p.length; i += 4) {
                 coords[j++] = x + p[i + 0] * width + p[i + 1] * aw;
                 coords[j++] = y + p[i + 2] * height + p[i + 3] * ah;

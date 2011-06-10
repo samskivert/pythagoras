@@ -14,7 +14,7 @@ public class QuadCurves
         return Lines.pointSegDistSq(ctrlx, ctrly, x1, y1, x2, y2);
     }
 
-    public static float getFlatnessSq (float coords[], int offset) {
+    public static float getFlatnessSq (float[] coords, int offset) {
         return Lines.pointSegDistSq(coords[offset + 2], coords[offset + 3],
                                     coords[offset + 0], coords[offset + 1],
                                     coords[offset + 4], coords[offset + 5]);
@@ -53,7 +53,7 @@ public class QuadCurves
     }
 
     public static void subdivide (float[] src, int srcoff,
-                                  float left[], int leftOff, float[] right, int rightOff) {
+                                  float[] left, int leftOff, float[] right, int rightOff) {
         float x1 = src[srcoff + 0];
         float y1 = src[srcoff + 1];
         float cx = src[srcoff + 2];

@@ -90,13 +90,13 @@ public abstract class AbstractEllipse extends RectangularShape implements IEllip
             if (index == 0) {
                 type = SEG_MOVETO;
                 count = 1;
-                float p[] = POINTS[3];
+                float[] p = POINTS[3];
                 coords[0] = x + p[4] * width;
                 coords[1] = y + p[5] * height;
             } else {
                 type = SEG_CUBICTO;
                 count = 3;
-                float p[] = POINTS[index - 1];
+                float[] p = POINTS[index - 1];
                 int j = 0;
                 for (int i = 0; i < 3; i++) {
                     coords[j] = x + p[j++] * width;

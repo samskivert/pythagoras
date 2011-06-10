@@ -15,7 +15,7 @@ public class CubicCurves
                         Lines.pointSegDistSq(ctrlx2, ctrly2, x1, y1, x2, y2));
     }
 
-    public static float getFlatnessSq (float coords[], int offset) {
+    public static float getFlatnessSq (float[] coords, int offset) {
         return getFlatnessSq(coords[offset + 0], coords[offset + 1], coords[offset + 2],
                              coords[offset + 3], coords[offset + 4], coords[offset + 5],
                              coords[offset + 6], coords[offset + 7]);
@@ -26,7 +26,7 @@ public class CubicCurves
         return (float)Math.sqrt(getFlatnessSq(x1, y1, ctrlx1, ctrly1, ctrlx2, ctrly2, x2, y2));
     }
 
-    public static float getFlatness (float coords[], int offset) {
+    public static float getFlatness (float[] coords, int offset) {
         return getFlatness(coords[offset + 0], coords[offset + 1], coords[offset + 2],
                            coords[offset + 3], coords[offset + 4], coords[offset + 5],
                            coords[offset + 6], coords[offset + 7]);
@@ -54,8 +54,8 @@ public class CubicCurves
         }
     }
 
-    public static void subdivide (float src[], int srcOff, float left[], int leftOff,
-                                  float right[], int rightOff) {
+    public static void subdivide (float[] src, int srcOff, float left[], int leftOff,
+                                  float[] right, int rightOff) {
         float x1 = src[srcOff + 0], y1 = src[srcOff + 1];
         float cx1 = src[srcOff + 2], cy1 = src[srcOff + 3];
         float cx2 = src[srcOff + 4], cy2 = src[srcOff + 5];

@@ -22,7 +22,7 @@ class Crossing
      * @param res the roots of the equation
      * @return a number of roots
      */
-    public static int solveQuad (float eqn[], float res[]) {
+    public static int solveQuad (float[] eqn, float[] res) {
         float a = eqn[2];
         float b = eqn[1];
         float c = eqn[0];
@@ -55,7 +55,7 @@ class Crossing
      * @param res the roots of the equation
      * @return a number of roots
      */
-    public static int solveCubic (float eqn[], float res[]) {
+    public static int solveCubic (float[] eqn, float[] res) {
         float d = eqn[3];
         if (d == 0) {
             return solveQuad(eqn, res);
@@ -108,7 +108,7 @@ class Crossing
      * @param rc the roots count
      * @return new roots count
      */
-    protected static int fixRoots (float res[], int rc) {
+    protected static int fixRoots (float[] res, int rc) {
         int tc = 0;
         for (int i = 0; i < rc; i++) {
             out: {
@@ -144,7 +144,7 @@ class Crossing
             Ay = ay - By; // Ay = ay - 2f * by
         }
 
-        public int cross (float res[], int rc, float py1, float py2) {
+        public int cross (float[] res, int rc, float py1, float py2) {
             int cross = 0;
 
             for (int i = 0; i < rc; i++) {
@@ -184,12 +184,12 @@ class Crossing
             return cross;
         }
 
-        public int solvePoint (float res[], float px) {
-            float eqn[] = { -px, Bx, Ax };
+        public int solvePoint (float[] res, float px) {
+            float[] eqn = { -px, Bx, Ax };
             return solveQuad(eqn, res);
         }
 
-        public int solveExtreme (float res[]) {
+        public int solveExtreme (float[] res) {
             int rc = 0;
             if (Ax != 0f) {
                 res[rc++] = -Bx / (Ax + Ax);
@@ -200,7 +200,7 @@ class Crossing
             return rc;
         }
 
-        public int addBound (float bound[], int bc, float res[], int rc, float minX, float maxX,
+        public int addBound (float[] bound, int bc, float[] res, int rc, float minX, float maxX,
                              boolean changeId, int id) {
             for (int i = 0; i < rc; i++) {
                 float t = res[i];
@@ -249,7 +249,7 @@ class Crossing
             Bx2 = Bx + Bx;
         }
 
-        public int cross (float res[], int rc, float py1, float py2) {
+        public int cross (float[] res, int rc, float py1, float py2) {
             int cross = 0;
             for (int i = 0; i < rc; i++) {
                 float t = res[i];
@@ -294,22 +294,22 @@ class Crossing
             return cross;
         }
 
-        public int solvePoint (float res[], float px) {
-            float eqn[] = { -px, Cx, Bx, Ax };
+        public int solvePoint (float[] res, float px) {
+            float[] eqn = { -px, Cx, Bx, Ax };
             return solveCubic(eqn, res);
         }
 
-        public int solveExtremeX (float res[]) {
-            float eqn[] = { Cx, Bx2, Ax3 };
+        public int solveExtremeX (float[] res) {
+            float[] eqn = { Cx, Bx2, Ax3 };
             return solveQuad(eqn, res);
         }
 
-        public int solveExtremeY (float res[]) {
-            float eqn[] = { Cy, By + By, Ay + Ay + Ay };
+        public int solveExtremeY (float[] res) {
+            float[] eqn = { Cy, By + By, Ay + Ay + Ay };
             return solveQuad(eqn, res);
         }
 
-        public int addBound (float bound[], int bc, float res[], int rc, float minX, float maxX,
+        public int addBound (float[] bound, int bc, float[] res, int rc, float minX, float maxX,
                              boolean changeId, int id) {
             for (int i = 0; i < rc; i++) {
                 float t = res[i];
@@ -577,8 +577,8 @@ class Crossing
         float px2 = rx2 - x1;
         float py2 = ry2 - y1;
 
-        float res1[] = new float[3];
-        float res2[] = new float[3];
+        float[] res1 = new float[3];
+        float[] res2 = new float[3];
         int rc1 = c.solvePoint(res1, px1);
         int rc2 = c.solvePoint(res2, px2);
 
@@ -590,7 +590,7 @@ class Crossing
         // Build bound --------------------------------------------------------
         float minX = px1 - DELTA;
         float maxX = px2 + DELTA;
-        float bound[] = new float[28];
+        float[] bound = new float[28];
         int bc = 0;
         // Add roots
         bc = c.addBound(bound, bc, res1, rc1, minX, maxX, false, 0);
@@ -649,8 +649,8 @@ class Crossing
         float px2 = rx2 - x1;
         float py2 = ry2 - y1;
 
-        float res1[] = new float[3];
-        float res2[] = new float[3];
+        float[] res1 = new float[3];
+        float[] res2 = new float[3];
         int rc1 = c.solvePoint(res1, px1);
         int rc2 = c.solvePoint(res2, px2);
 
@@ -663,7 +663,7 @@ class Crossing
         float maxX = px2 + DELTA;
 
         // Build bound --------------------------------------------------------
-        float bound[] = new float[40];
+        float[] bound = new float[40];
         int bc = 0;
         // Add roots
         bc = c.addBound(bound, bc, res1, rc1, minX, maxX, false, 0);
@@ -703,7 +703,7 @@ class Crossing
         int count;
         float mx, my, cx, cy;
         mx = my = cx = cy = 0f;
-        float coords[] = new float[6];
+        float[] coords = new float[6];
 
         float rx1 = x;
         float ry1 = y;
@@ -812,7 +812,7 @@ class Crossing
     /**
      * Returns whether bounds intersect a rectangle or not.
      */
-    protected static int crossBound (float bound[], int bc, float py1, float py2) {
+    protected static int crossBound (float[] bound, int bc, float py1, float py2) {
         // LEFT/RIGHT
         if (bc == 0) {
             return 0;

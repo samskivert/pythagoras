@@ -115,7 +115,7 @@ class FlatteningPathIterator implements PathIterator
 
                 // Realloc buffer
                 if (bufIndex <= 4) {
-                    float tmp[] = new float[bufSize + BUFFER_CAPACITY];
+                    float[] tmp = new float[bufSize + BUFFER_CAPACITY];
                     System.arraycopy(buf, bufIndex, tmp, bufIndex + BUFFER_CAPACITY, bufSize
                             - bufIndex);
                     buf = tmp;
@@ -156,7 +156,7 @@ class FlatteningPathIterator implements PathIterator
 
                 // Realloc buffer
                 if (bufIndex <= 6) {
-                    float tmp[] = new float[bufSize + BUFFER_CAPACITY];
+                    float[] tmp = new float[bufSize + BUFFER_CAPACITY];
                     System.arraycopy(buf, bufIndex, tmp, bufIndex + BUFFER_CAPACITY, bufSize
                             - bufIndex);
                     buf = tmp;
@@ -199,7 +199,7 @@ class FlatteningPathIterator implements PathIterator
     private int bufSubdiv;
 
     /** The points buffer */
-    private float buf[];
+    private float[] buf;
 
     /** The indicator of empty points buffer */
     private boolean bufEmpty = true;
@@ -220,7 +220,7 @@ class FlatteningPathIterator implements PathIterator
     private float py;
 
     /** The tamporary buffer for getting points from PathIterator */
-    private float coords[] = new float[6];
+    private float[] coords = new float[6];
 
     /** The default points buffer size */
     private static final int BUFFER_SIZE = 16;
