@@ -4,6 +4,9 @@
 
 package pythagoras.f;
 
+/**
+ * Internal utility methods for computing intersections and containment.
+ */
 class Crossing
 {
     /** Return value indicating that a crossing was found. */
@@ -850,13 +853,9 @@ class Crossing
         return UNKNOWN;
     }
 
-    /**
-     * Allowable tolerance for bounds comparison
-     */
+    /** Allowable tolerance for bounds comparison */
     protected static final float DELTA = 1E-5f;
 
-    /**
-     * If roots have distance less then <code>ROOT_DELTA</code> they are double
-     */
+    /** If roots have distance less then <code>ROOT_DELTA</code> they are double */
     protected static final float ROOT_DELTA = 1E-10f;
 }
