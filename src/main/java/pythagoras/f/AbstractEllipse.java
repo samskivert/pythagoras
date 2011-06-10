@@ -1,5 +1,6 @@
 //
-// $Id$
+// Pythagoras - a collection of geometry classes
+// http://github.com/samskivert/pythagoras
 
 package pythagoras.f;
 
