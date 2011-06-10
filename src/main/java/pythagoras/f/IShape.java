@@ -19,13 +19,13 @@ public interface IShape
     boolean contains (IPoint point);
 
     /** Returns true if this shape completely contains the specified rectangle. */
-    boolean contains (float x, float y, float w, float h);
+    boolean contains (float x, float y, float width, float height);
 
     /** Returns true if this shape completely contains the supplied rectangle. */
     boolean contains (IRectangle r);
 
     /** Returns true if this shape intersects the specified rectangle. */
-    boolean intersects (float x, float y, float w, float h);
+    boolean intersects (float x, float y, float width, float height);
 
     /** Returns true if this shape intersects the supplied rectangle. */
     boolean intersects (IRectangle r);
