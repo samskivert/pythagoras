@@ -19,13 +19,13 @@ public interface IShape
     boolean contains (IPoint point);
 
     /** Returns true if this shape completely contains the specified rectangle. */
-    boolean contains (float x, float y, float w, float h);
+    boolean contains (float x, float y, float width, float height);
 
     /** Returns true if this shape completely contains the supplied rectangle. */
     boolean contains (IRectangle r);
 
     /** Returns true if this shape intersects the specified rectangle. */
-    boolean intersects (float x, float y, float w, float h);
+    boolean intersects (float x, float y, float width, float height);
 
     /** Returns true if this shape intersects the supplied rectangle. */
     boolean intersects (IRectangle r);
@@ -39,14 +39,14 @@ public interface IShape
 
     /**
      * Returns an iterator over the path described by this shape.
-     * 
+     *
      * @param at if supplied, the points in the path are transformed using this.
      */
     PathIterator getPathIterator (AffineTransform at);
 
     /**
      * Returns an iterator over the path described by this shape.
-     * 
+     *
      * @param at if supplied, the points in the path are transformed using this.
      * @param flatness when approximating curved segments with lines, this controls the maximum
      *        distance the lines are allowed to deviate from the approximated curve, thus a higher
