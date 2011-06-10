@@ -57,7 +57,7 @@ public class Ellipse extends AbstractEllipse implements Serializable
     }
 
     @Override // from RectangularShape
-    public void setFrame (float x, float y, float w, float h) {
+    public void setFrame (float x, float y, float width, float height) {
         this.x = x;
         this.y = y;
         this.width = width;
