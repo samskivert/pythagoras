@@ -11,21 +11,41 @@ import java.io.Serializable;
  */
 public class RoundRectangle extends AbstractRoundRectangle implements Serializable
 {
+    /** The x-coordinate of the framing rectangle. */
     public float x;
+
+    /** The y-coordinate of the framing rectangle. */
     public float y;
+
+    /** The width of the framing rectangle. */
     public float width;
+
+    /** The height of the framing rectangle. */
     public float height;
+
+    /** The width of the arc that defines the rounded corners. */
     public float arcwidth;
+
+    /** The height of the arc that defines the rounded corners. */
     public float archeight;
 
+    /**
+     * Creates a rounded rectangle with frame (0x0+0+0) and corners of size (0x0).
+     */
     public RoundRectangle () {
     }
 
+    /**
+     * Creates a rounded rectangle with the specified frame and corner dimensions.
+     */
     public RoundRectangle (float x, float y, float width, float height,
                            float arcwidth, float archeight) {
         setRoundRect(x, y, width, height, arcwidth, archeight);
     }
 
+    /**
+     * Sets the frame and corner dimensions of this rectangle to the specified values.
+     */
     public void setRoundRect (float x, float y, float width, float height,
                               float arcwidth, float archeight) {
         this.x = x;
@@ -36,6 +56,10 @@ public class RoundRectangle extends AbstractRoundRectangle implements Serializab
         this.archeight = archeight;
     }
 
+    /**
+     * Sets the frame and corner dimensions of this rectangle to be equal to those of the supplied
+     * rectangle.
+     */
     public void setRoundRect (IRoundRectangle rr) {
         setRoundRect(rr.getX(), rr.getY(), rr.getWidth(), rr.getHeight(),
                      rr.getArcWidth(), rr.getArcHeight());
