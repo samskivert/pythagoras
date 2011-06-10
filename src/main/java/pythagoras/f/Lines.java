@@ -120,4 +120,32 @@ public class Lines
     public static float pointSegDist (float px, float py, float x1, float y1, float x2, float y2) {
         return (float)Math.sqrt(pointSegDistSq(px, py, x1, y1, x2, y2));
     }
+
+    /**
+     * Returns an indicator of where the specified point (px,py) lies with respect to the line
+     * segment from (x1,y1) to (x2,y2).
+     *
+     * @see http://download.oracle.com/javase/6/docs/api/java/awt/geom/Line2D.html
+     */
+    public static int relativeCCW (float px, float py, float x1, float y1, float x2, float y2) {
+        // A = (x2-x1, y2-y1)
+        // P = (px-x1, py-y1)
+        x2 -= x1;
+        y2 -= y1;
+        px -= x1;
+        py -= y1;
+        float t = px * y2 - py * x2; // PxA
+        if (t == 0f) {
+            t = px * x2 + py * y2; // P*A
+            if (t > 0f) {
+                px -= x2; // B-A
+                py -= y2;
+                t = px * x2 + py * y2; // (P-A)*A
+                if (t < 0f) {
+                    t = 0f;
+                }
+            }
+        }
+        return (t < 0f) ? -1 : (t > 0f ? 1 : 0);
+    }
 }

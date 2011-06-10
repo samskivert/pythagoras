@@ -60,6 +60,10 @@ public interface ILine extends IShape, Cloneable
     /** Returns the distance from the supplied point this line segment. */
     float pointSegDist (IPoint p);
 
+    int relativeCCW (float px, float py);
+
+    int relativeCCW (IPoint p);
+
     /** Returns a mutable copy of this line. */
     Line clone ();
 }

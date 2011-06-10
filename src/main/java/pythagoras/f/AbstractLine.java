@@ -74,6 +74,16 @@ public abstract class AbstractLine implements ILine
     }
 
     @Override // from interface ILine
+    public int relativeCCW (float px, float py) {
+        return Lines.relativeCCW(px, py, getX1(), getY1(), getX2(), getY2());
+    }
+
+    @Override // from interface ILine
+    public int relativeCCW (IPoint p) {
+        return Lines.relativeCCW(p.getX(), p.getY(), getX1(), getY1(), getX2(), getY2());
+    }
+
+    @Override // from interface ILine
     public Line clone () {
         return new Line(getX1(), getY1(), getX2(), getY2());
     }
