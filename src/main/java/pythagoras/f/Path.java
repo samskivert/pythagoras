@@ -263,7 +263,7 @@ public final class Path implements IShape, Cloneable
     /**
      * Checks points and types buffer size to add pointCount points. If necessary realloc buffers
      * to enlarge size.
-     * 
+     *
      * @param pointCount the point count to be added in buffer
      */
     protected void checkBuf (int pointCount, boolean checkMove) {
@@ -284,7 +284,7 @@ public final class Path implements IShape, Cloneable
 
     /**
      * Checks cross count according to path rule to define is it point inside shape or not.
-     * 
+     *
      * @param cross the point cross count.
      * @return true if point is inside path, or false otherwise.
      */

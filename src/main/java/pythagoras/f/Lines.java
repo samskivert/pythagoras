@@ -22,7 +22,7 @@ public class Lines
         // F = (x2-x3, y2-y3) = A-B
         //
         // Result is ((AxB) * (AxC) <= 0) and ((DxE) * (DxF) <= 0)
-        // 
+        //
         // DxE = (C-B)x(-B) = BxB-CxB = BxC
         // DxF = (C-B)x(A-B) = CxA-CxB-BxA+BxB = AxB+BxC-AxC
         x2 -= x1; // A

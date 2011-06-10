@@ -39,14 +39,14 @@ public interface IShape
 
     /**
      * Returns an iterator over the path described by this shape.
-     * 
+     *
      * @param at if supplied, the points in the path are transformed using this.
      */
     PathIterator getPathIterator (AffineTransform at);
 
     /**
      * Returns an iterator over the path described by this shape.
-     * 
+     *
      * @param at if supplied, the points in the path are transformed using this.
      * @param flatness when approximating curved segments with lines, this controls the maximum
      *        distance the lines are allowed to deviate from the approximated curve, thus a higher
