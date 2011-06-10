@@ -151,8 +151,8 @@ public abstract class RectangularShape implements IRectangularShape
         return target;
     }
 
-    // @Override // from interface IShape
-    // public PathIterator getPathIterator (AffineTransform t, float flatness) {
-    //     return new FlatteningPathIterator(getPathIterator(t), flatness);
-    // }
+    @Override // from interface IShape
+    public PathIterator getPathIterator (AffineTransform t, float flatness) {
+        return new FlatteningPathIterator(getPathIterator(t), flatness);
+    }
 }
