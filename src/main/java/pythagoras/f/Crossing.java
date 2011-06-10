@@ -17,7 +17,7 @@ class Crossing
 
     /**
      * Solves quadratic equation
-     * 
+     *
      * @param eqn the coefficients of the equation
      * @param res the roots of the equation
      * @return a number of roots
@@ -50,7 +50,7 @@ class Crossing
 
     /**
      * Solves cubic equation
-     * 
+     *
      * @param eqn the coefficients of the equation
      * @param res the roots of the equation
      * @return a number of roots
@@ -103,7 +103,7 @@ class Crossing
 
     /**
      * Excludes double roots. Roots are double if they lies enough close with each other.
-     * 
+     *
      * @param res the roots
      * @param rc the roots count
      * @return new roots count

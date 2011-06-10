@@ -65,9 +65,9 @@ public class AffineTransform implements Cloneable, Serializable
 
     /*
      * Method returns type of affine transformation.
-     * 
+     *
      * Transform matrix is m00 m01 m02 m10 m11 m12
-     * 
+     *
      * According analytic geometry new basis vectors are (m00, m01) and (m10,
      * m11), translation vector is (m02, m12). Original basis vectors are (1, 0)
      * and (0, 1). Type transformations classification: TYPE_IDENTITY - new
@@ -294,7 +294,7 @@ public class AffineTransform implements Cloneable, Serializable
 
     /**
      * Multiply matrix of two AffineTransform objects
-     * 
+     *
      * @param t1
      *            - the AffineTransform object is a multiplicand
      * @param t2

@@ -13,7 +13,7 @@ public abstract class RectangularShape implements IRectangularShape
     /**
      * Sets the location and size of the framing rectangle of this shape to the specified values.
      */
-    public abstract void setFrame (float x, float y, float w, float h);
+    public abstract void setFrame (float x, float y, float width, float height);
 
     /**
      * Sets the location and size of the framing rectangle of this shape to the supplied values.
