@@ -167,7 +167,7 @@ public abstract class AbstractRectangle extends RectangularShape implements IRec
         private float x, y, width, height;
         private AffineTransform t;
 
-        /** The current segmenet index. */
+        /** The current segment index. */
         private int index;
 
         Iterator (IRectangle r, AffineTransform at) {

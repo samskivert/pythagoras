@@ -225,7 +225,7 @@ public abstract class AbstractArc extends RectangularShape implements IArc
         /** The path iterator transformation */
         private AffineTransform t;
 
-        /** The current segmenet index */
+        /** The current segment index */
         private int index;
 
         /** The number of arc segments the source arc subdivided to be approximated by Bezier
@@ -238,19 +238,19 @@ public abstract class AbstractArc extends RectangularShape implements IArc
         /** The step to calculate next arc subdivision point */
         private double step;
 
-        /** The tempopary value of cosinus of the current angle */
+        /** The temporary value of cosinus of the current angle */
         private double cos;
 
-        /** The tempopary value of sinus of the current angle */
+        /** The temporary value of sinus of the current angle */
         private double sin;
 
         /** The coefficient to calculate control points of Bezier curves */
         private double k;
 
-        /** The tempopary value of x coordinate of the Bezier curve control vector */
+        /** The temporary value of x coordinate of the Bezier curve control vector */
         private double kx;
 
-        /** The tempopary value of y coordinate of the Bezier curve control vector */
+        /** The temporary value of y coordinate of the Bezier curve control vector */
         private double ky;
 
         /** The x coordinate of the first path point (MOVE_TO) */

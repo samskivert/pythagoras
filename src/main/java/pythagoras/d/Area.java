@@ -1236,7 +1236,7 @@ public class Area implements IShape, Cloneable
     /** offsets[i] - index in array of coords and i - index in array of rules. */
     private int[] offsets = new int[10];
 
-    /** The quantity of MOVETO rule occurences. */
+    /** The quantity of MOVETO rule occurrences. */
     private int moveToCount = 0;
 
     /** True if the shape is polygonal. */
