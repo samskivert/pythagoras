@@ -10,7 +10,7 @@ package pythagoras.d;
 public class Points
 {
     /**
-     * Returns the squared Euclidian distance between the specified two points.
+     * Returns the squared Euclidean distance between the specified two points.
      */
     public static double distanceSq (double x1, double y1, double x2, double y2) {
         x2 -= x1;
@@ -19,7 +19,7 @@ public class Points
     }
 
     /**
-     * Returns the Euclidian distance between the specified two points.
+     * Returns the Euclidean distance between the specified two points.
      */
     public static double distance (double x1, double y1, double x2, double y2) {
         return Math.sqrt(distanceSq(x1, y1, x2, y2));

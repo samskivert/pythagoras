@@ -61,8 +61,11 @@ public interface ILine extends IShape, Cloneable
     /** Returns the distance from the supplied point this line segment. */
     float pointSegDist (IPoint p);
 
+    /** Returns an indicator of where the specified point (px,py) lies with respect to this line
+     * segment. */
     int relativeCCW (float px, float py);
 
+    /** Returns an indicator of where the specified point lies with respect to this line segment. */
     int relativeCCW (IPoint p);
 
     /** Returns a mutable copy of this line. */
