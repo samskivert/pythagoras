@@ -33,8 +33,20 @@ certain design goals.
   and contains none of the curved geometry classes. It is targeted toward
   applications that need "pixel geometry".
 
+## Documentation
+
+[API documentation] is available.
+
+## Maven artifact
+
+Pythagoras can be obtained via Maven Central: `com.samskivert:pythagoras:1.0`.
+Or you can download the pre-built [jar file].
+
 ## License
 
 Pythagoras is released under the Apache License, Version 2.0 which can be found
 in the `LICENSE` file and at http://www.apache.org/licenses/LICENSE-2.0 on the
 web.
+
+[API documentation]: http://samskivert.github.com/pythagoras/apidocs/overview-summary.html
+[jar file]: http://repo2.maven.org/maven2/com/samskivert/pythagoras/1.0/pythagoras-1.0.jar
