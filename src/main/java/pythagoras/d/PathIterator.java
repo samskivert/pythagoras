@@ -5,7 +5,7 @@
 package pythagoras.d;
 
 /**
- * Used to return the boundary of a {@link IShape}, one segment at a time.
+ * Used to return the boundary of an {@link IShape}, one segment at a time.
  */
 public interface PathIterator
 {

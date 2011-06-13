@@ -128,7 +128,7 @@ public class Lines
      * Returns an indicator of where the specified point (px,py) lies with respect to the line
      * segment from (x1,y1) to (x2,y2).
      *
-     * @see http://download.oracle.com/javase/6/docs/api/java/awt/geom/Line2D.html
+     * See http://download.oracle.com/javase/6/docs/api/java/awt/geom/Line2D.html
      */
     public static int relativeCCW (double px, double py,
                                    double x1, double y1, double x2, double y2) {

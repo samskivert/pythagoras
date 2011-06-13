@@ -5,7 +5,7 @@
 package pythagoras.d;
 
 /**
- * The base class for various {@link Shape} objects whose geometry is defined by a rectangular
+ * The base class for various {@link IShape} objects whose geometry is defined by a rectangular
  * frame.
  */
 public abstract class RectangularShape implements IRectangularShape

@@ -5,7 +5,7 @@
 package pythagoras.f;
 
 /**
- * An interface implemented by {@link Shape} classes whose geometry is defined by a rectangular
+ * An interface implemented by {@link IShape} classes whose geometry is defined by a rectangular
  * frame. The framing rectangle <em>defines</em> the geometry, but may in some cases differ from
  * the <em>bounding</em> rectangle of the shape.
  */

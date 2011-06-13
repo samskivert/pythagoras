@@ -10,7 +10,7 @@ package pythagoras.d;
 public class Rectangles
 {
     /**
-     * Intersects the supplied two rectangles, writing the result into {@link dst}.
+     * Intersects the supplied two rectangles, writing the result into {@code dst}.
      */
     public static void intersect (IRectangle src1, IRectangle src2, Rectangle dst) {
         double x1 = Math.max(src1.getMinX(), src2.getMinX());
@@ -21,7 +21,7 @@ public class Rectangles
     }
 
     /**
-     * Unions the supplied two rectangles, writing the result into {@link dst}.
+     * Unions the supplied two rectangles, writing the result into {@code dst}.
      */
     public static void union (IRectangle src1, IRectangle src2, Rectangle dst) {
         double x1 = Math.min(src1.getMinX(), src2.getMinX());

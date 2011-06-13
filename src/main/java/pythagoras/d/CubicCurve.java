@@ -74,7 +74,7 @@ public class CubicCurve extends AbstractCubicCurve implements Serializable
 
     /**
      * Configures the start, control and end points for this curve, using the values at the
-     * specified offset in the {@link coords} array.
+     * specified offset in the {@code coords} array.
      */
     public void setCurve (double[] coords, int offset) {
         setCurve(coords[offset + 0], coords[offset + 1], coords[offset + 2], coords[offset + 3],
@@ -83,7 +83,7 @@ public class CubicCurve extends AbstractCubicCurve implements Serializable
 
     /**
      * Configures the start, control and end points for this curve, using the values at the
-     * specified offset in the {@link points} array.
+     * specified offset in the {@code points} array.
      */
     public void setCurve (IPoint[] points, int offset) {
         setCurve(points[offset + 0].getX(), points[offset + 0].getY(),

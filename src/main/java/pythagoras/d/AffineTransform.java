@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Represents a 2D affine transform, which performs a linear mapping that preserves the
  * straightness and parallelness of lines.
  *
- * @see http://download.oracle.com/javase/6/docs/api/java/awt/geom/AffineTransform.html
+ * See http://download.oracle.com/javase/6/docs/api/java/awt/geom/AffineTransform.html
  */
 public class AffineTransform implements Cloneable, Serializable
 {

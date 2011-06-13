@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 
 /**
  * Stores and manipulates an enclosed area of 2D space.
- * @see http://download.oracle.com/javase/6/docs/api/java/awt/geom/Area.html
+ * See http://download.oracle.com/javase/6/docs/api/java/awt/geom/Area.html
  */
 public class Area implements IShape, Cloneable
 {
