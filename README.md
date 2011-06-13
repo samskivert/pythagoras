@@ -28,11 +28,11 @@ certain design goals.
   example, a `Rectangle` can accept an `IRectangle` to indicate to the caller
   that it will not (and indeed cannot) mutate the supplied entity. Similarly, a
   read-only interface can be returned to a private internal field without fear
-  that the recipient will mutate it and wreak havoc. Bear in mind that the
-  interfaces have performance implications in extremely performance sensitive
-  situations. So use them anyway and then profile your application to determine
-  whether there are places where you need to sacrifice code clarity and safety
-  to obtain higher performance.
+  that the recipient will mutate it and wreak havoc. Note that the interfaces
+  have a very small, but non-zero performance cost versus direct use of the
+  mutable classes. So use the interfaces anyway and then profile your
+  application to determine whether there are places where you need to sacrifice
+  code clarity and safety on the altar of higher performance.
 
 * The library supports garbage creation avoidance (for applications which are
   sensitive to garbage collection pauses, like video games). For example, in
