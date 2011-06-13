@@ -22,6 +22,19 @@ certain design goals.
   floating point values throughout. `pythagoras.i` is specialized on int and
   contains none of the curved geometry classes.
 
+* The need for defensive copying is minimized by the existence of read-only
+  interfaces for each geometric primitive, which allow no mutation of the
+  entity. Thus a consumer that requires only to read the attributes of, for
+  example, a `Rectangle` can accept an `IRectangle` to indicate to the caller
+  that it will not (and indeed cannot) mutate the supplied entity. Similarly, a
+  read-only interface can be returned to a private internal field without fear
+  that the recipient will mutate it and wreak havoc.
+
+  Bear in mind that the interfaces have performance implications in extremely
+  performance sensitive situations. So use them anyway and then profile your
+  application to determine whether there are places where you need to sacrifice
+  code clarity and safety to obtain higher performance.
+
 * The library supports garbage creation avoidance (for applications which are
   sensitive to garbage collection pauses, like video games). For example, in
   cases where entities return a `Rectangle` containing their bounds, a
