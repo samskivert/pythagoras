@@ -16,6 +16,13 @@ projects).
 Some restructuring of the `java.awt.geom` classes was undertaken to meet
 certain design goals.
 
+* The library is specialized on the primitive types rather than attempting to
+  support all types in a single class hierarchy. `pythagoras.f` and
+  `pythagoras.d` provide essentially the same functionality using 32-bit and
+  64-bit floating point values throughout. `pythagoras.i` is specialized on int
+  and contains none of the curved geometry classes. It is targeted toward
+  applications that need "pixel geometry".
+
 * The library supports garbage creation avoidance for applications which are
   sensitive to garbage collection pauses, like video games. For example, in
   cases where entities return a `Rectangle` containing their bounds, a
@@ -30,13 +37,6 @@ certain design goals.
 * Helper methods associated with a given geometric primitive are separated into
   a separate utility class for that primitive. For example line-related
   primitives are in a class named `Lines`.
-
-* The library is specialized on the primitive types rather than attempting to
-  support all types in a single class hierarchy. `pythagoras.f` and
-  `pythagoras.d` provide essentially the same functionality using 32-bit and
-  64-bit floating point values throughout. `pythagoras.i` is specialized on int
-  and contains none of the curved geometry classes. It is targeted toward
-  applications that need "pixel geometry".
 
 ## License
 
