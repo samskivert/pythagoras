@@ -46,9 +46,6 @@
       <classpath refid="classpath"/>
       <compilerarg value="-Xlint"/>
       <compilerarg value="-Xlint:-serial"/>
-<!--
-      <compilerarg value="-Xlint:rawtypes"/>
--->
     </javac>
 
 <!--
@@ -93,7 +90,10 @@
 
   <!-- todo: depend on tests target -->
   <target name="package" depends="compile" description="Compiles code and builds jar file.">
-    <jar destfile="${target.dir}/${ant.project.name}.jar" basedir="${classes.dir}"/>
+    <jar destfile="${target.dir}/${ant.project.name}.jar">
+      <fileset dir="${classes.dir}" includes="**"/>
+      <fileset dir="${src.dir}" includes="**"/> <!-- for use by GWT apps -->
+    </jar>
   </target>
 
   <property name="maven.install.repo" value="file://${user.home}/.m2/repository"/>

@@ -44,7 +44,17 @@
 
   <dependencies>
   </dependencies>
+
   <build>
+    <!-- we include the source files in our main jar for use by GWT -->
+    <resources>
+      <resource>
+        <directory>${project.build.sourceDirectory}</directory>
+      </resource>
+      <resource>
+        <directory>${basedir}/src/main/resources</directory>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
