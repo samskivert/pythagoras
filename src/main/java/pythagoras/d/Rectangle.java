@@ -91,8 +91,8 @@ public class Rectangle extends AbstractRectangle implements Serializable
     /**
      * Sets the size of this rectangle to the supplied dimensions.
      */
-    public void setSize (Dimension d) {
-        setSize(d.width, d.height);
+    public void setSize (IDimension d) {
+        setSize(d.getWidth(), d.getHeight());
     }
 
     /**
