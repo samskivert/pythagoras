@@ -18,25 +18,25 @@ certain design goals.
 
 * The library is specialized on the primitive types rather than attempting to
   support all types in a single class hierarchy. `pythagoras.f` and
-  `pythagoras.d` provide essentially the same functionality using 32-bit and
-  64-bit floating point values throughout. `pythagoras.i` is specialized on int
-  and contains none of the curved geometry classes. It is targeted toward
-  applications that need "pixel geometry".
+  `pythagoras.d` provide equivalent functionality using 32-bit and 64-bit
+  floating point values throughout. `pythagoras.i` is specialized on int and
+  contains none of the curved geometry classes.
 
-* The library supports garbage creation avoidance for applications which are
-  sensitive to garbage collection pauses, like video games. For example, in
+* The library supports garbage creation avoidance (for applications which are
+  sensitive to garbage collection pauses, like video games). For example, in
   cases where entities return a `Rectangle` containing their bounds, a
   corresponding method exists which accepts a `Rectangle` into which to write
-  the bounds.
+  the bounds. Further work is needed here, as some of the implementation
+  internals create garbage that could be avoided.
 
-* The library attempts to minimize the size of its instances, by avoiding the
+* The library attempts to minimize the size of its instances by avoiding the
   inclusion of any fields that are not essential to the function of a
-  particular geometry entity. Thus no cached hash codes or cached computed
-  bounds are maintained.
+  particular geometric entity. For example, no cached hash codes or cached
+  computed bounds are maintained.
 
 * Helper methods associated with a given geometric primitive are separated into
-  a separate utility class for that primitive. For example line-related
-  primitives are in a class named `Lines`.
+  a utility class for each primitive. For example line-related primitives are
+  in a class named `Lines`.
 
 ## License
 
