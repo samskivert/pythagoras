@@ -4,7 +4,7 @@
   <groupId>com.samskivert</groupId>
   <artifactId>pythagoras</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <name>pythagoras</name>
   <description>
     Portable geometry routines, adapted from Apache Harmony geometry classes.
