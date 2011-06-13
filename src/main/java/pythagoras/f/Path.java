@@ -359,7 +359,7 @@ public final class Path implements IShape, Cloneable
     /* The path rule. */
     protected int rule;
 
-    /** The space required in points buffer for different segmenet types. */
+    /** The space required in points buffer for different segment types. */
     protected static int[] pointShift = { 2, // MOVETO
                                           2, // LINETO
                                           4, // QUADTO
