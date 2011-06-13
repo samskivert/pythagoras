@@ -29,12 +29,9 @@ certain design goals.
 * The library is specialized on the primitive types rather than attempting to
   support all types in a single class hierarchy. `pythagoras.f` and
   `pythagoras.d` provide essentially the same functionality using 32-bit and
-  64-bit floating point values throughout.
-
-* A version of the library exists that is specialized on `int` values:
-  `pythagoras.i`. It does not provide many of the more complex geometric
-  shapes, and is targeted toward performing "pixel geometry" where lines do
-  not have zero width, but rather have single pixel width.
+  64-bit floating point values throughout. `pythagoras.i` is specialized on int
+  and contains none of the curved geometry classes. It is targeted toward
+  applications that need "pixel geometry".
 
 ## License
 
