@@ -114,7 +114,7 @@ public abstract class AbstractRectangle extends RectangularShape implements IRec
     public boolean contains (float rx, float ry, float rw, float rh) {
         if (isEmpty()) return false;
 
-        double x1 = getX(), y1 = getY(), x2 = x1 + getWidth(), y2 = y1 + getHeight();
+        float x1 = getX(), y1 = getY(), x2 = x1 + getWidth(), y2 = y1 + getHeight();
         return (x1 <= rx) && (rx + rw <= x2) && (y1 <= ry) && (ry + rh <= y2);
     }
 
@@ -122,7 +122,7 @@ public abstract class AbstractRectangle extends RectangularShape implements IRec
     public boolean intersects (float rx, float ry, float rw, float rh) {
         if (isEmpty()) return false;
 
-        double x1 = getX(), y1 = getY(), x2 = x1 + getWidth(), y2 = y1 + getHeight();
+        float x1 = getX(), y1 = getY(), x2 = x1 + getWidth(), y2 = y1 + getHeight();
         return (rx + rw > x1) && (rx < x2) && (ry + rh > y1) && (ry < y2);
     }
 

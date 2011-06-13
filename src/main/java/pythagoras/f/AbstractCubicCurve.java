@@ -33,13 +33,13 @@ public abstract class AbstractCubicCurve implements ICubicCurve
     }
 
     @Override // from interface ICubicCurve
-    public double getFlatnessSq () {
+    public float getFlatnessSq () {
         return CubicCurves.getFlatnessSq(getX1(), getY1(), getCtrlX1(), getCtrlY1(),
                                          getCtrlX2(), getCtrlY2(), getX2(), getY2());
     }
 
     @Override // from interface ICubicCurve
-    public double getFlatness () {
+    public float getFlatness () {
         return CubicCurves.getFlatness(getX1(), getY1(), getCtrlX1(), getCtrlY1(),
                                        getCtrlX2(), getCtrlY2(), getX2(), getY2());
     }

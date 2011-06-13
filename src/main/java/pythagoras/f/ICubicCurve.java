@@ -47,11 +47,11 @@ public interface ICubicCurve extends IShape, Cloneable
 
     /** Returns the square of the flatness (maximum distance of a control point from the line
      * connecting the end points) of this curve. */
-    double getFlatnessSq ();
+    float getFlatnessSq ();
 
     /** Returns the flatness (maximum distance of a control point from the line connecting the end
      * points) of this curve. */
-    double getFlatness ();
+    float getFlatness ();
 
     /** Subdivides this curve and stores the results into {@code left} and {@code right}. */
     void subdivide (CubicCurve left, CubicCurve right);
