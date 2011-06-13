@@ -6,6 +6,11 @@ provide performant, portable geometry routines for projects that cannot make
 use of `java.awt.geom` (for example for use in GWT projects or Android
 projects).
 
+* [API documentation] is available.
+
+* Pythagoras can be obtained via Maven Central: `com.samskivert:pythagoras:1.0`.
+  Or you can download the pre-built [jar file].
+
 ## Design
 
 Some restructuring of the `java.awt.geom` classes was undertaken to meet
@@ -32,15 +37,6 @@ certain design goals.
   64-bit floating point values throughout. `pythagoras.i` is specialized on int
   and contains none of the curved geometry classes. It is targeted toward
   applications that need "pixel geometry".
-
-## Documentation
-
-[API documentation] is available.
-
-## Maven artifact
-
-Pythagoras can be obtained via Maven Central: `com.samskivert:pythagoras:1.0`.
-Or you can download the pre-built [jar file].
 
 ## License
 
