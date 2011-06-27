@@ -6,6 +6,8 @@ package pythagoras.f;
 
 import java.util.NoSuchElementException;
 
+import pythagoras.util.Platform;
+
 /**
  * Provides most of the implementation of {@link IRectangle}, obtaining only the location and
  * dimensions from the derived class.
@@ -151,8 +153,8 @@ public abstract class AbstractRectangle extends RectangularShape implements IRec
 
     @Override // from Object
     public int hashCode () {
-        return Float.floatToIntBits(getX()) ^ Float.floatToIntBits(getY()) ^
-            Float.floatToIntBits(getWidth()) ^ Float.floatToIntBits(getHeight());
+        return Platform.hashCode(getX()) ^ Platform.hashCode(getY()) ^
+            Platform.hashCode(getWidth()) ^ Platform.hashCode(getHeight());
     }
 
     @Override // from Object

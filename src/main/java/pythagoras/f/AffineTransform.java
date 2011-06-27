@@ -6,6 +6,8 @@ package pythagoras.f;
 
 import java.io.Serializable;
 
+import pythagoras.util.Platform;
+
 /**
  * Represents a 2D affine transform, which performs a linear mapping that preserves the
  * straightness and parallelness of lines.
@@ -436,19 +438,17 @@ public class AffineTransform implements Cloneable, Serializable
             "[[" + m00 + ", " + m01 + ", " + m02 + "], [" + m10 + ", " + m11 + ", " + m12 + "]]";
     }
 
-    @Override
+    // @Override // can't declare @Override due to GWT
     public AffineTransform clone () {
-        try {
-            return (AffineTransform)super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new InternalError();
-        }
+        AffineTransform xform = new AffineTransform(m00, m01, m02, m10, m11, m12);
+        xform.type = this.type;
+        return xform;
     }
 
     @Override
     public int hashCode () {
-        return Float.floatToIntBits(m00) ^ Float.floatToIntBits(m01) ^ Float.floatToIntBits(m02) ^
-            Float.floatToIntBits(m10) ^ Float.floatToIntBits(m11) ^ Float.floatToIntBits(m12);
+        return Platform.hashCode(m00) ^ Platform.hashCode(m01) ^ Platform.hashCode(m02) ^
+            Platform.hashCode(m10) ^ Platform.hashCode(m11) ^ Platform.hashCode(m12);
     }
 
     @Override

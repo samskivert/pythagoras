@@ -4,6 +4,8 @@
 
 package pythagoras.d;
 
+import pythagoras.util.Platform;
+
 /**
  * Provides most of the implementation of {@link IDimension}, obtaining only width and height from
  * the derived class.
@@ -17,8 +19,8 @@ public abstract class AbstractDimension implements IDimension
 
     @Override
     public int hashCode () {
-        long bits = Double.doubleToLongBits(getWidth());
-        bits += Double.doubleToLongBits(getHeight()) * 37;
+        long bits = Platform.hashCode(getWidth());
+        bits += Platform.hashCode(getHeight()) * 37;
         return (((int) bits) ^ ((int) (bits >> 32)));
     }
 

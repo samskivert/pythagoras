@@ -41,6 +41,7 @@
 
   <target name="compile" depends="-prepare" description="Compiles the code.">
     <mkdir dir="${classes.dir}"/>
+    <copy todir="${classes.dir}"><fileset dir="src/main/resources" includes="**"/></copy>
     <javac srcdir="${src.dir}" destdir="${classes.dir}" includeAntRuntime="false"
            debug="on" optimize="${build.optimize}" source="1.6" target="1.6" encoding="utf-8">
       <classpath refid="classpath"/>
@@ -63,9 +64,7 @@
     <mkdir dir="${javadoc.dir}"/>
     <javadoc windowtitle="${ant.project.name} API" doctitle="${ant.project.name} API"
              access="public" destdir="${javadoc.dir}" additionalparam="-breakiterator">
-      <packageset dir="${src.dir}">
-        <exclude name="**/impl/**"/>
-      </packageset>
+      <packageset dir="${src.dir}"/>
       <classpath refid="classpath"/>
       <link href="http://download.oracle.com/javase/1.5.0/docs/api/"/>
     </javadoc>
@@ -91,8 +90,9 @@
   <!-- todo: depend on tests target -->
   <target name="package" depends="compile" description="Compiles code and builds jar file.">
     <jar destfile="${target.dir}/${ant.project.name}.jar">
-      <fileset dir="${classes.dir}" includes="**"/>
       <fileset dir="${src.dir}" includes="**"/> <!-- for use by GWT apps -->
+      <!-- this must follow src.dir so that Platform.java is properly overwritten -->
+      <fileset dir="${classes.dir}" includes="**"/>
     </jar>
   </target>
 

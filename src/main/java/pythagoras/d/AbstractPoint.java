@@ -4,6 +4,8 @@
 
 package pythagoras.d;
 
+import pythagoras.util.Platform;
+
 /**
  * Provides most of the implementation of {@link IPoint}, obtaining only the location from the
  * derived class.
@@ -49,9 +51,7 @@ public abstract class AbstractPoint implements IPoint
 
     @Override
     public int hashCode () {
-        long bits = Double.doubleToLongBits(getX());
-        bits += Double.doubleToLongBits(getY()) * 37;
-        return (((int) bits) ^ ((int) (bits >> 32)));
+        return Platform.hashCode(getX()) ^ Platform.hashCode(getY());
     }
 
     @Override

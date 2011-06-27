@@ -3,4 +3,5 @@
   <source path="f"/>
   <source path="d"/>
   <source path="i"/>
+  <source path="util"/>
 </module>

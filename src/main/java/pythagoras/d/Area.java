@@ -6,6 +6,8 @@ package pythagoras.d;
 
 import java.util.NoSuchElementException;
 
+import pythagoras.util.Platform;
+
 /**
  * Stores and manipulates an enclosed area of 2D space.
  * See http://download.oracle.com/javase/6/docs/api/java/awt/geom/Area.html
@@ -277,7 +279,7 @@ public class Area implements IShape, Cloneable
         return area.isEmpty();
     }
 
-    @Override // from Cloneable
+    // @Override // can't declare @Override due to GWT
     public Area clone () {
         Area area = new Area();
         copy(this, area);
@@ -1038,11 +1040,11 @@ public class Area implements IShape, Cloneable
 
     private void copy (Area src, Area dst) {
         dst.coordsSize = src.coordsSize;
-        dst.coords = src.coords.clone();
+        dst.coords = Platform.clone(src.coords);
         dst.rulesSize = src.rulesSize;
-        dst.rules = src.rules.clone();
+        dst.rules = Platform.clone(src.rules);
         dst.moveToCount = src.moveToCount;
-        dst.offsets = src.offsets.clone();
+        dst.offsets = Platform.clone(src.offsets);
     }
 
     private int containsExact (double x, double y) {

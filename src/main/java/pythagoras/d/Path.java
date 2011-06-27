@@ -6,6 +6,8 @@ package pythagoras.d;
 
 import java.util.NoSuchElementException;
 
+import pythagoras.util.Platform;
+
 /**
  * Represents a path constructed from lines and curves and which can contain subpaths.
  */
@@ -248,16 +250,9 @@ public final class Path implements IShape, Cloneable
         return new FlatteningPathIterator(getPathIterator(t), flatness);
     }
 
-    @Override
+    // @Override // can't declare @Override due to GWT
     public Path clone () {
-        try {
-            Path p = (Path)super.clone();
-            p.types = types.clone();
-            p.points = points.clone();
-            return p;
-        } catch (CloneNotSupportedException e) {
-            throw new InternalError();
-        }
+        return new Path(rule, Platform.clone(types), Platform.clone(points), typeSize, pointSize);
     }
 
     /**
@@ -291,6 +286,14 @@ public final class Path implements IShape, Cloneable
     protected boolean isInside (int cross) {
         return (rule == WIND_NON_ZERO) ? Crossing.isInsideNonZero(cross) :
             Crossing.isInsideEvenOdd(cross);
+    }
+
+    private Path (int rule, byte[] types, double[] points, int typeSize, int pointSize) {
+        this.types = types;
+        this.points = points;
+        this.typeSize = typeSize;
+        this.pointSize = pointSize;
+        setWindingRule(rule);
     }
 
     /** An iterator over a {@link Path}. */

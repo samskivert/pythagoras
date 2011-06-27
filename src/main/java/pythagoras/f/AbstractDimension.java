@@ -4,6 +4,8 @@
 
 package pythagoras.f;
 
+import pythagoras.util.Platform;
+
 /**
  * Provides most of the implementation of {@link IDimension}, obtaining only width and height from
  * the derived class.
@@ -17,7 +19,7 @@ public abstract class AbstractDimension implements IDimension
 
     @Override
     public int hashCode () {
-        return Float.floatToIntBits(getWidth()) ^ Float.floatToIntBits(getHeight());
+        return Platform.hashCode(getWidth()) ^ Platform.hashCode(getHeight());
     }
 
     @Override
