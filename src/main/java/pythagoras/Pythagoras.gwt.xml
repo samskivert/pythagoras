@@ -1,0 +1,6 @@
+<!-- defines our GWT module -->
+<module>
+  <source path="f"/>
+  <source path="d"/>
+  <source path="i"/>
+</module>
