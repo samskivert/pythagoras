@@ -4,8 +4,6 @@
 
 package pythagoras.i;
 
-import java.util.NoSuchElementException;
-
 /**
  * Provides most of the implementation of {@link IRectangle}, obtaining only the location and
  * dimensions from the derived class.
