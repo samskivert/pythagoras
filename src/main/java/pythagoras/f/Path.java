@@ -289,11 +289,11 @@ public final class Path implements IShape, Cloneable
     }
 
     private Path (int rule, byte[] types, float[] points, int typeSize, int pointSize) {
+        this.rule = rule;
         this.types = types;
         this.points = points;
         this.typeSize = typeSize;
         this.pointSize = pointSize;
-        setWindingRule(rule);
     }
 
     /** An iterator over a {@link Path}. */
