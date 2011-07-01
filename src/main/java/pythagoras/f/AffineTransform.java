@@ -29,29 +29,15 @@ public class AffineTransform implements Cloneable, Serializable
     public static final int TYPE_MASK_ROTATION = TYPE_QUADRANT_ROTATION | TYPE_GENERAL_ROTATION;
 
     public AffineTransform () {
-        this.type = TYPE_IDENTITY;
-        this.m00 = this.m11 = 1f;
-        this.m10 = this.m01 = this.m02 = this.m12 = 0;
+        setToIdentity();
     }
 
     public AffineTransform (AffineTransform t) {
-        this.type = t.type;
-        this.m00 = t.m00;
-        this.m10 = t.m10;
-        this.m01 = t.m01;
-        this.m11 = t.m11;
-        this.m02 = t.m02;
-        this.m12 = t.m12;
+        setTransform(t);
     }
 
     public AffineTransform (float m00, float m10, float m01, float m11, float m02, float m12) {
-        this.type = TYPE_UNKNOWN;
-        this.m00 = m00;
-        this.m10 = m10;
-        this.m01 = m01;
-        this.m11 = m11;
-        this.m02 = m02;
-        this.m12 = m12;
+        setTransform(m00, m10, m01, m11, m02, m12);
     }
 
     public AffineTransform (float[] matrix) {
@@ -176,8 +162,8 @@ public class AffineTransform implements Cloneable, Serializable
     }
 
     public void setTransform (AffineTransform t) {
-        type = t.type;
         setTransform(t.m00, t.m10, t.m01, t.m11, t.m02, t.m12);
+        type = t.type;
     }
 
     public void setToIdentity () {
