@@ -311,6 +311,8 @@ public class AffineTransform implements Cloneable, Serializable
     /**
      * Sets this transform to a simple rotation using the supplied values. Any existing transform
      * values are overwritten.
+     *
+     * @param angle the angle of rotation (in radians).
      */
     public void setToRotation (double angle) {
         double sin = Math.sin(angle);
@@ -332,6 +334,10 @@ public class AffineTransform implements Cloneable, Serializable
     /**
      * Sets this transform to a simple rotation using the supplied values. Any existing transform
      * values are overwritten.
+     *
+     * @param angle the angle of rotation (in radians).
+     * @param px the x-coordinate of the point around which to rotate.
+     * @param py the y-coordinate of the point around which to rotate.
      */
     public void setToRotation (double angle, double px, double py) {
         setToRotation(angle);
@@ -590,9 +596,7 @@ public class AffineTransform implements Cloneable, Serializable
 
     // @Override // can't declare @Override due to GWT
     public AffineTransform clone () {
-        AffineTransform xform = new AffineTransform(m00, m01, m02, m10, m11, m12);
-        xform.type = this.type;
-        return xform;
+        return new AffineTransform(this);
     }
 
     @Override
@@ -618,8 +622,8 @@ public class AffineTransform implements Cloneable, Serializable
      * Multiplies two transforms, storing the result in the target transform.
      * @return the supplied target transform.
      */
-    protected AffineTransform multiply (AffineTransform t1, AffineTransform t2,
-                                        AffineTransform into) {
+    protected static AffineTransform multiply (AffineTransform t1, AffineTransform t2,
+                                               AffineTransform into) {
         into.setTransform(t1.m00 * t2.m00 + t1.m10 * t2.m01, // m00
                           t1.m00 * t2.m10 + t1.m10 * t2.m11, // m01
                           t1.m01 * t2.m00 + t1.m11 * t2.m01, // m10
