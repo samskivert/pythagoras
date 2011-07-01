@@ -262,64 +262,50 @@ public class AffineTransform implements Cloneable, Serializable
     }
 
     public void translate (float mx, float my) {
-        concatenate(AffineTransform.getTranslateInstance(mx, my));
+        concatenate(getTranslateInstance(mx, my));
     }
 
     public void scale (float scx, float scy) {
-        concatenate(AffineTransform.getScaleInstance(scx, scy));
+        concatenate(getScaleInstance(scx, scy));
     }
 
     public void shear (float shx, float shy) {
-        concatenate(AffineTransform.getShearInstance(shx, shy));
+        concatenate(getShearInstance(shx, shy));
     }
 
     public void rotate (float angle) {
-        concatenate(AffineTransform.getRotateInstance(angle));
+        concatenate(getRotateInstance(angle));
     }
 
     public void rotate (float angle, float px, float py) {
-        concatenate(AffineTransform.getRotateInstance(angle, px, py));
-    }
-
-    /**
-     * Multiply matrix of two AffineTransform objects
-     *
-     * @param t1
-     *            - the AffineTransform object is a multiplicand
-     * @param t2
-     *            - the AffineTransform object is a multiplier
-     * @return an AffineTransform object that is a result of t1 multiplied by
-     *         matrix t2.
-     */
-    AffineTransform multiply (AffineTransform t1, AffineTransform t2) {
-        return new AffineTransform(t1.m00 * t2.m00 + t1.m10 * t2.m01, // m00
-                t1.m00 * t2.m10 + t1.m10 * t2.m11, // m01
-                t1.m01 * t2.m00 + t1.m11 * t2.m01, // m10
-                t1.m01 * t2.m10 + t1.m11 * t2.m11, // m11
-                t1.m02 * t2.m00 + t1.m12 * t2.m01 + t2.m02, // m02
-                t1.m02 * t2.m10 + t1.m12 * t2.m11 + t2.m12);// m12
+        concatenate(getRotateInstance(angle, px, py));
     }
 
     public void concatenate (AffineTransform t) {
-        setTransform(multiply(t, this));
+        multiply(t, this, this);
     }
 
     public void preConcatenate (AffineTransform t) {
-        setTransform(multiply(this, t));
+        multiply(this, t, this);
     }
 
-    public AffineTransform createInverse () throws NoninvertibleTransformException {
+    public AffineTransform createInverse (AffineTransform target)
+        throws NoninvertibleTransformException {
         float det = getDeterminant();
         if (Math.abs(det) < ZERO) {
             throw new NoninvertibleTransformException("Determinant is zero");
         }
-        return new AffineTransform(m11 / det, // m00
-                -m10 / det, // m10
-                -m01 / det, // m01
-                m00 / det, // m11
-                (m01 * m12 - m11 * m02) / det, // m02
-                (m10 * m02 - m00 * m12) / det // m12
-        );
+        target.setTransform(m11 / det,  // m00
+                            -m10 / det, // m10
+                            -m01 / det, // m01
+                            m00 / det,  // m11
+                            (m01 * m12 - m11 * m02) / det,  // m02
+                            (m10 * m02 - m00 * m12) / det); // m12
+        return target;
+    }
+
+    public AffineTransform createInverse () throws NoninvertibleTransformException {
+        return createInverse(new AffineTransform());
     }
 
     public Point transform (IPoint src, Point dst) {
@@ -449,6 +435,21 @@ public class AffineTransform implements Cloneable, Serializable
                 m10 == t.m10 && m11 == t.m11 && m12 == t.m12;
         }
         return false;
+    }
+
+    /**
+     * Multiplies two transforms, storing the result in the target transform.
+     * @return the supplied target transform.
+     */
+    protected AffineTransform multiply (AffineTransform t1, AffineTransform t2,
+                                        AffineTransform into) {
+        into.setTransform(t1.m00 * t2.m00 + t1.m10 * t2.m01, // m00
+                          t1.m00 * t2.m10 + t1.m10 * t2.m11, // m01
+                          t1.m01 * t2.m00 + t1.m11 * t2.m01, // m10
+                          t1.m01 * t2.m10 + t1.m11 * t2.m11, // m11
+                          t1.m02 * t2.m00 + t1.m12 * t2.m01 + t2.m02,  // m02
+                          t1.m02 * t2.m10 + t1.m12 * t2.m11 + t2.m12); // m12
+        return into;
     }
 
     // the values of transformation matrix
