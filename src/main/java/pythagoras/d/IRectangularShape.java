@@ -23,17 +23,26 @@ public interface IRectangularShape extends IShape
     /** Returns the height of the framing rectangle. */
     double getHeight ();
 
+    /** Returns the minimum x,y-coordinate of the framing rectangle. */
+    Point getMin ();
+
     /** Returns the minimum x-coordinate of the framing rectangle. */
     double getMinX ();
 
     /** Returns the minimum y-coordinate of the framing rectangle. */
     double getMinY ();
 
+    /** Returns the maximum x,y-coordinate of the framing rectangle. */
+    Point getMax ();
+
     /** Returns the maximum x-coordinate of the framing rectangle. */
     double getMaxX ();
 
     /** Returns the maximum y-coordinate of the framing rectangle. */
     double getMaxY ();
+
+    /** Returns the center of the framing rectangle. */
+    Point getCenter ();
 
     /** Returns the x-coordinate of the center of the framing rectangle. */
     double getCenterX ();

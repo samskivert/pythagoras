@@ -42,12 +42,12 @@ public interface IRectangle extends IShape, Cloneable
     int getMinY ();
 
     /** Returns the maximum x-coordinate of the framing rectangle. <em>Note:</em> this method
-     * differs from its inting-point counterparts in that it considers {@code (x + width - 1)} to
+     * differs from its floating-point counterparts in that it considers {@code (x + width - 1)} to
      * be a rectangle's maximum x-coordinate. */
     int getMaxX ();
 
     /** Returns the maximum y-coordinate of the framing rectangle. <em>Note:</em> this method
-     * differs from its inting-point counterparts in that it considers {@code (y + height - 1)}
+     * differs from its floating-point counterparts in that it considers {@code (y + height - 1)}
      * to be a rectangle's maximum x-coordinate. */
     int getMaxY ();
 

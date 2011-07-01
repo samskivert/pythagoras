@@ -81,6 +81,12 @@ public abstract class RectangularShape implements IRectangularShape
     }
 
     @Override // from IRectangularShape
+    public Point getMin ()
+    {
+        return new Point(getMinX(), getMinY());
+    }
+
+    @Override // from IRectangularShape
     public float getMinX () {
         return getX();
     }
@@ -91,6 +97,12 @@ public abstract class RectangularShape implements IRectangularShape
     }
 
     @Override // from IRectangularShape
+    public Point getMax ()
+    {
+        return new Point(getMaxX(), getMaxY());
+    }
+
+    @Override // from IRectangularShape
     public float getMaxX () {
         return getX() + getWidth();
     }
@@ -98,6 +110,12 @@ public abstract class RectangularShape implements IRectangularShape
     @Override // from IRectangularShape
     public float getMaxY () {
         return getY() + getHeight();
+    }
+
+    @Override // from IRectangularShape
+    public Point getCenter ()
+    {
+        return new Point(getCenterX(), getCenterY());
     }
 
     @Override // from IRectangularShape
