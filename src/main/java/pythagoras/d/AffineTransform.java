@@ -29,6 +29,51 @@ public class AffineTransform implements Cloneable, Serializable
     public static final int TYPE_MASK_ROTATION = TYPE_QUADRANT_ROTATION | TYPE_GENERAL_ROTATION;
 
     /**
+     * Returns a transform that performs the specified translation.
+     */
+    public static AffineTransform getTranslateInstance (double tx, double ty) {
+        AffineTransform t = new AffineTransform();
+        t.setToTranslation(tx, ty);
+        return t;
+    }
+
+    /**
+     * Returns a transform that performs the specified scale.
+     */
+    public static AffineTransform getScaleInstance (double scx, double scY) {
+        AffineTransform t = new AffineTransform();
+        t.setToScale(scx, scY);
+        return t;
+    }
+
+    /**
+     * Returns a transform that performs the specified shear.
+     */
+    public static AffineTransform getShearInstance (double shx, double shy) {
+        AffineTransform m = new AffineTransform();
+        m.setToShear(shx, shy);
+        return m;
+    }
+
+    /**
+     * Returns a transform that performs the specified rotation.
+     */
+    public static AffineTransform getRotateInstance (double angle) {
+        AffineTransform t = new AffineTransform();
+        t.setToRotation(angle);
+        return t;
+    }
+
+    /**
+     * Returns a transform that performs the specified rotation.
+     */
+    public static AffineTransform getRotateInstance (double angle, double x, double y) {
+        AffineTransform t = new AffineTransform();
+        t.setToRotation(angle, x, y);
+        return t;
+    }
+
+    /**
      * Constructs an identity transform.
      */
     public AffineTransform () {
@@ -293,51 +338,6 @@ public class AffineTransform implements Cloneable, Serializable
         m02 = px * (1f - m00) + py * m10;
         m12 = py * (1f - m00) - px * m10;
         type = TYPE_UNKNOWN;
-    }
-
-    /**
-     * Returns a transform that performs the specified translation.
-     */
-    public static AffineTransform getTranslateInstance (double tx, double ty) {
-        AffineTransform t = new AffineTransform();
-        t.setToTranslation(tx, ty);
-        return t;
-    }
-
-    /**
-     * Returns a transform that performs the specified scale.
-     */
-    public static AffineTransform getScaleInstance (double scx, double scY) {
-        AffineTransform t = new AffineTransform();
-        t.setToScale(scx, scY);
-        return t;
-    }
-
-    /**
-     * Returns a transform that performs the specified shear.
-     */
-    public static AffineTransform getShearInstance (double shx, double shy) {
-        AffineTransform m = new AffineTransform();
-        m.setToShear(shx, shy);
-        return m;
-    }
-
-    /**
-     * Returns a transform that performs the specified rotation.
-     */
-    public static AffineTransform getRotateInstance (double angle) {
-        AffineTransform t = new AffineTransform();
-        t.setToRotation(angle);
-        return t;
-    }
-
-    /**
-     * Returns a transform that performs the specified rotation.
-     */
-    public static AffineTransform getRotateInstance (double angle, double x, double y) {
-        AffineTransform t = new AffineTransform();
-        t.setToRotation(angle, x, y);
-        return t;
     }
 
     /**
