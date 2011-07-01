@@ -6,6 +6,7 @@ package pythagoras.d;
 
 import java.io.Serializable;
 
+import pythagoras.util.NoninvertibleTransformException;
 import pythagoras.util.Platform;
 
 /**
