@@ -174,12 +174,12 @@ public class AffineTransform implements Cloneable, Serializable
         m10 = m01 = m02 = m12 = 0;
     }
 
-    public void setToTranslation (double mx, double my) {
+    public void setToTranslation (double tx, double ty) {
         m00 = m11 = 1f;
         m01 = m10 = 0;
-        m02 = mx;
-        m12 = my;
-        if (mx == 0 && my == 0) {
+        m02 = tx;
+        m12 = ty;
+        if (tx == 0 && ty == 0) {
             type = TYPE_IDENTITY;
         } else {
             type = TYPE_TRANSLATION;
@@ -233,9 +233,9 @@ public class AffineTransform implements Cloneable, Serializable
         type = TYPE_UNKNOWN;
     }
 
-    public static AffineTransform getTranslateInstance (double mx, double my) {
+    public static AffineTransform getTranslateInstance (double tx, double ty) {
         AffineTransform t = new AffineTransform();
-        t.setToTranslation(mx, my);
+        t.setToTranslation(tx, ty);
         return t;
     }
 
@@ -263,8 +263,8 @@ public class AffineTransform implements Cloneable, Serializable
         return t;
     }
 
-    public void translate (double mx, double my) {
-        concatenate(getTranslateInstance(mx, my));
+    public void translate (double tx, double ty) {
+        concatenate(getTranslateInstance(tx, ty));
     }
 
     public void scale (double scx, double scy) {
