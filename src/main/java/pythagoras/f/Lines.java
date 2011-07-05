@@ -81,7 +81,7 @@ public class Lines
      * Returns the distance from the specified point to the specified line.
      */
     public static float pointLineDist (float px, float py, float x1, float y1, float x2, float y2) {
-        return (float)Math.sqrt(pointLineDistSq(px, py, x1, y1, x2, y2));
+        return FloatMath.sqrt(pointLineDistSq(px, py, x1, y1, x2, y2));
     }
 
     /**
@@ -119,7 +119,7 @@ public class Lines
      * Returns the distance between the specified point and the specified line segment.
      */
     public static float pointSegDist (float px, float py, float x1, float y1, float x2, float y2) {
-        return (float)Math.sqrt(pointSegDistSq(px, py, x1, y1, x2, y2));
+        return FloatMath.sqrt(pointSegDistSq(px, py, x1, y1, x2, y2));
     }
 
     /**

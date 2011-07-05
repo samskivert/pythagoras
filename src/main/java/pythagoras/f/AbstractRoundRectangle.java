@@ -141,7 +141,7 @@ public abstract class AbstractRoundRectangle extends RectangularShape implements
     };
 
     /** The coefficient to calculate control points of Bezier curves.  */
-    protected static final float U = 0.5f - 2f / 3f * ((float)Math.sqrt(2f) - 1f);
+    protected static final float U = 0.5f - 2f / 3f * (FloatMath.sqrt(2f) - 1f);
 
     /** The points coordinates calculation table. */
     protected static final float[][] POINTS = {

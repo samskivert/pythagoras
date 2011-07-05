@@ -9,7 +9,7 @@ package pythagoras.f;
  */
 public class GeometryUtil
 {
-    public static final float EPSILON = (float)Math.pow(10, -14);
+    public static final float EPSILON = FloatMath.pow(10, -14);
 
     public static int intersectLinesWithParams (float x1, float y1, float x2, float y2,
                                                 float x3, float y3, float x4, float y4,

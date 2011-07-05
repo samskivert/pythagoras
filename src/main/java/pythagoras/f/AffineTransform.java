@@ -313,8 +313,8 @@ public class AffineTransform implements Cloneable, Serializable
      * @param angle the angle of rotation (in radians).
      */
     public void setToRotation (float angle) {
-        float sin = (float)Math.sin(angle);
-        float cos = (float)Math.cos(angle);
+        float sin = FloatMath.sin(angle);
+        float cos = FloatMath.cos(angle);
         if (Math.abs(cos) < ZERO) {
             cos = 0;
             sin = sin > 0 ? 1f : -1f;

@@ -23,7 +23,7 @@ public class CubicCurves
 
     public static float getFlatness (float x1, float y1, float ctrlx1, float ctrly1,
                                      float ctrlx2, float ctrly2, float x2, float y2) {
-        return (float)Math.sqrt(getFlatnessSq(x1, y1, ctrlx1, ctrly1, ctrlx2, ctrly2, x2, y2));
+        return FloatMath.sqrt(getFlatnessSq(x1, y1, ctrlx1, ctrly1, ctrlx2, ctrly2, x2, y2));
     }
 
     public static float getFlatness (float[] coords, int offset) {

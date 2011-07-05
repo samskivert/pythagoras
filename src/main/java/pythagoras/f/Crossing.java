@@ -38,7 +38,7 @@ class Crossing
             if (d < 0f) {
                 return 0;
             }
-            d = (float)Math.sqrt(d);
+            d = FloatMath.sqrt(d);
             res[rc++] = (-b + d) / (a * 2f);
             // d != 0f
             if (d != 0f) {
@@ -72,15 +72,15 @@ class Crossing
         float n = -a / 3f;
 
         if (R2 < Q3) {
-            float t = (float)Math.acos(R / Math.sqrt(Q3)) / 3f;
-            float p = 2f * (float)Math.PI / 3f;
-            float m = -2f * (float)Math.sqrt(Q);
-            res[rc++] = m * (float)Math.cos(t) + n;
-            res[rc++] = m * (float)Math.cos(t + p) + n;
-            res[rc++] = m * (float)Math.cos(t - p) + n;
+            float t = FloatMath.acos(R / FloatMath.sqrt(Q3)) / 3f;
+            float p = 2f * FloatMath.PI / 3f;
+            float m = -2f * FloatMath.sqrt(Q);
+            res[rc++] = m * FloatMath.cos(t) + n;
+            res[rc++] = m * FloatMath.cos(t + p) + n;
+            res[rc++] = m * FloatMath.cos(t - p) + n;
         } else {
             // Debug.println("R2 >= Q3 (" + R2 + "/" + Q3 + ")");
-            float A = (float)Math.pow(Math.abs(R) + Math.sqrt(R2 - Q3), 1f / 3f);
+            float A = FloatMath.pow(Math.abs(R) + FloatMath.sqrt(R2 - Q3), 1f / 3f);
             if (R > 0f) {
                 A = -A;
             }

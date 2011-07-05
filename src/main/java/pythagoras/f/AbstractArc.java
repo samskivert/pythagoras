@@ -19,9 +19,9 @@ public abstract class AbstractArc extends RectangularShape implements IArc
 
     @Override // from interface IArc
     public Point getStartPoint (Point target) {
-        float a = (float)Math.toRadians(getAngleStart());
-        target.setLocation(getX() + (1f + (float)Math.cos(a)) * getWidth() / 2f,
-                           getY() + (1f - (float)Math.sin(a)) * getHeight() / 2f);
+        float a = FloatMath.toRadians(getAngleStart());
+        target.setLocation(getX() + (1f + FloatMath.cos(a)) * getWidth() / 2f,
+                           getY() + (1f - FloatMath.sin(a)) * getHeight() / 2f);
         return target;
     }
 
@@ -32,9 +32,9 @@ public abstract class AbstractArc extends RectangularShape implements IArc
 
     @Override // from interface IArc
     public Point getEndPoint (Point target) {
-        float a = (float)Math.toRadians(getAngleStart() + getAngleExtent());
-        target.setLocation(getX() + (1f + (float)Math.cos(a)) * getWidth() / 2f,
-                           getY() + (1f - (float)Math.sin(a)) * getHeight() / 2f);
+        float a = FloatMath.toRadians(getAngleStart() + getAngleExtent());
+        target.setLocation(getX() + (1f + FloatMath.cos(a)) * getWidth() / 2f,
+                           getY() + (1f - FloatMath.sin(a)) * getHeight() / 2f);
         return target;
     }
 
@@ -82,7 +82,7 @@ public abstract class AbstractArc extends RectangularShape implements IArc
             return true;
         }
 
-        boolean containsAngle = containsAngle((float)Math.toDegrees(-Math.atan2(ny, nx)));
+        boolean containsAngle = containsAngle(FloatMath.toDegrees(-FloatMath.atan2(ny, nx)));
         if (getArcType() == PIE) {
             return containsAngle;
         }
@@ -195,7 +195,7 @@ public abstract class AbstractArc extends RectangularShape implements IArc
 
     /** Returns a normalized angle (bound between 0 and 360 degrees). */
     protected float getNormAngle (float angle) {
-        return angle - (float)Math.floor(angle / 360f) * 360f;
+        return angle - FloatMath.floor(angle / 360f) * 360f;
     }
 
     /** An iterator over an {@link IArc}. */
@@ -264,7 +264,7 @@ public abstract class AbstractArc extends RectangularShape implements IArc
             this.height = a.getHeight() / 2f;
             this.x = a.getX() + width;
             this.y = a.getY() + height;
-            this.angle = -(float)Math.toRadians(a.getAngleStart());
+            this.angle = -FloatMath.toRadians(a.getAngleStart());
             this.extent = -a.getAngleExtent();
             this.type = a.getArcType();
             this.t = t;
@@ -278,16 +278,16 @@ public abstract class AbstractArc extends RectangularShape implements IArc
 
             if (Math.abs(extent) >= 360f) {
                 arcCount = 4;
-                k = 4f / 3f * ((float)Math.sqrt(2f) - 1f);
-                step = (float)Math.PI / 2f;
+                k = 4f / 3f * (FloatMath.sqrt(2f) - 1f);
+                step = FloatMath.PI / 2f;
                 if (extent < 0f) {
                     step = -step;
                     k = -k;
                 }
             } else {
                 arcCount = (int)Math.rint(Math.abs(extent) / 90f);
-                step = (float)Math.toRadians(extent / arcCount);
-                k = 4f / 3f * (1f - (float)Math.cos(step / 2f)) / (float)Math.sin(step / 2f);
+                step = FloatMath.toRadians(extent / arcCount);
+                k = 4f / 3f * (1f - FloatMath.cos(step / 2f)) / FloatMath.sin(step / 2f);
             }
 
             lineCount = 0;
@@ -319,8 +319,8 @@ public abstract class AbstractArc extends RectangularShape implements IArc
             if (index == 0) {
                 type = SEG_MOVETO;
                 count = 1;
-                cos = (float)Math.cos(angle);
-                sin = (float)Math.sin(angle);
+                cos = FloatMath.cos(angle);
+                sin = FloatMath.sin(angle);
                 kx = k * width * sin;
                 ky = k * height * cos;
                 coords[0] = mx = x + cos * width;
@@ -331,8 +331,8 @@ public abstract class AbstractArc extends RectangularShape implements IArc
                 coords[0] = mx - kx;
                 coords[1] = my + ky;
                 angle += step;
-                cos = (float)Math.cos(angle);
-                sin = (float)Math.sin(angle);
+                cos = FloatMath.cos(angle);
+                sin = FloatMath.sin(angle);
                 kx = k * width * sin;
                 ky = k * height * cos;
                 coords[4] = mx = x + cos * width;

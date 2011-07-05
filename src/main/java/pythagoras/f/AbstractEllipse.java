@@ -117,7 +117,7 @@ public abstract class AbstractEllipse extends RectangularShape implements IEllip
     // the arc.
 
     /** The coefficient to calculate control points of Bezier curves. */
-    private static final float U = 2f / 3f * ((float)Math.sqrt(2) - 1f);
+    private static final float U = 2f / 3f * (FloatMath.sqrt(2) - 1f);
 
     /** The points coordinates calculation table. */
     private static final float[][] POINTS = {

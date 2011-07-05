@@ -174,16 +174,16 @@ public class Arc extends AbstractArc implements Serializable
      */
     public void setArcByTangent (IPoint p1, IPoint p2, IPoint p3, float radius) {
         // use simple geometric calculations of arc center, radius and angles by tangents
-        float a1 = -(float)Math.atan2(p1.getY() - p2.getY(), p1.getX() - p2.getX());
-        float a2 = -(float)Math.atan2(p3.getY() - p2.getY(), p3.getX() - p2.getX());
+        float a1 = -FloatMath.atan2(p1.getY() - p2.getY(), p1.getX() - p2.getX());
+        float a2 = -FloatMath.atan2(p3.getY() - p2.getY(), p3.getX() - p2.getX());
         float am = (a1 + a2) / 2f;
         float ah = a1 - am;
-        float d = radius / Math.abs((float)Math.sin(ah));
-        float x = p2.getX() + d * (float)Math.cos(am);
-        float y = p2.getY() - d * (float)Math.sin(am);
-        ah = ah >= 0f ? (float)Math.PI * 1.5f - ah : (float)Math.PI * 0.5f - ah;
-        a1 = getNormAngle((float)Math.toDegrees(am - ah));
-        a2 = getNormAngle((float)Math.toDegrees(am + ah));
+        float d = radius / Math.abs(FloatMath.sin(ah));
+        float x = p2.getX() + d * FloatMath.cos(am);
+        float y = p2.getY() - d * FloatMath.sin(am);
+        ah = ah >= 0f ? FloatMath.PI * 1.5f - ah : FloatMath.PI * 0.5f - ah;
+        a1 = getNormAngle(FloatMath.toDegrees(am - ah));
+        a2 = getNormAngle(FloatMath.toDegrees(am + ah));
         float delta = a2 - a1;
         if (delta <= 0f) {
             delta += 360f;
@@ -196,8 +196,8 @@ public class Arc extends AbstractArc implements Serializable
      * the center of this arc.
      */
     public void setAngleStart (IPoint point) {
-        float angle = (float)Math.atan2(point.getY() - getCenterY(), point.getX() - getCenterX());
-        setAngleStart(getNormAngle(-(float)Math.toDegrees(angle)));
+        float angle = FloatMath.atan2(point.getY() - getCenterY(), point.getX() - getCenterX());
+        setAngleStart(getNormAngle(-FloatMath.toDegrees(angle)));
     }
 
     /**
@@ -210,8 +210,8 @@ public class Arc extends AbstractArc implements Serializable
     public void setAngles (float x1, float y1, float x2, float y2) {
         float cx = getCenterX();
         float cy = getCenterY();
-        float a1 = getNormAngle(-(float)Math.toDegrees(Math.atan2(y1 - cy, x1 - cx)));
-        float a2 = getNormAngle(-(float)Math.toDegrees(Math.atan2(y2 - cy, x2 - cx)));
+        float a1 = getNormAngle(-FloatMath.toDegrees(FloatMath.atan2(y1 - cy, x1 - cx)));
+        float a2 = getNormAngle(-FloatMath.toDegrees(FloatMath.atan2(y2 - cy, x2 - cx)));
         a2 -= a1;
         if (a2 <= 0f) {
             a2 += 360f;
