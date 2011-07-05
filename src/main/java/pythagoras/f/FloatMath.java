@@ -281,7 +281,7 @@ public class FloatMath
      */
     public static float normal (float normal, float mean, float stddev)
     {
-        return stddev*normal() + mean;
+        return stddev*normal + mean;
     }
 
     /**
