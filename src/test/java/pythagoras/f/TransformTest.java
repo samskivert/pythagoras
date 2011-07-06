@@ -67,15 +67,18 @@ public class TransformTest
                     Transform t2 = proto.clone();
                     t2.setRotation(angle);
 
+                    Transform t = t1.clone().rotate(angle);
                     Transform tpost = t2.concatenate(t1);
                     Transform tpre = t1.preConcatenate(t2);
                     for (Point point : POINTS) {
                         Point expect = point.add(trans.x, trans.y).rotateLocal(angle);
+                        test(t, point, expect);
                         test(tpost, point, expect);
                         test(tpre, point, expect);
                     }
                     for (Vector vector : VECTORS) {
                         Vector expect = vector.rotate(angle);
+                        test(t, vector, expect);
                         test(tpost, vector, expect);
                         test(tpre, vector, expect);
                     }
@@ -129,15 +132,18 @@ public class TransformTest
                     Transform t2 = proto.clone();
                     t2.setUniformScale(scale);
 
+                    Transform t = t1.clone().uniformScale(scale);
                     Transform tpost = t2.concatenate(t1);
                     Transform tpre = t1.preConcatenate(t2);
                     for (Point point : POINTS) {
                         Point expect = point.add(trans.x, trans.y).multLocal(scale);
+                        test(t, point, expect);
                         test(tpost, point, expect);
                         test(tpre, point, expect);
                     }
                     for (Vector vector : VECTORS) {
                         Vector expect = vector.mult(scale);
+                        test(t, vector, expect);
                         test(tpost, vector, expect);
                         test(tpre, vector, expect);
                     }
@@ -191,15 +197,18 @@ public class TransformTest
                     Transform t2 = proto.clone();
                     t2.setUniformScale(scale);
 
+                    Transform t = t1.clone().uniformScale(scale);
                     Transform tpost = t2.concatenate(t1);
                     Transform tpre = t1.preConcatenate(t2);
                     for (Point point : POINTS) {
                         Point expect = point.rotate(angle).multLocal(scale);
+                        test(t, point, expect);
                         test(tpost, point, expect);
                         test(tpre, point, expect);
                     }
                     for (Vector vector : VECTORS) {
                         Vector expect = vector.rotate(angle).multLocal(scale);
+                        test(t, vector, expect);
                         test(tpost, vector, expect);
                         test(tpre, vector, expect);
                     }

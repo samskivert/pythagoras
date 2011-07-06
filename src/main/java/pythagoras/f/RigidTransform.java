@@ -77,6 +77,30 @@ public class RigidTransform extends AbstractTransform
     }
 
     @Override // from Transform
+    public Transform rotate (float angle) {
+        float otx = this.tx, oty = this.ty;
+        if (otx != 0 || oty != 0) {
+            float sina = FloatMath.sin(angle), cosa = FloatMath.cos(angle);
+            this.tx = otx*cosa - oty*sina;
+            this.ty = otx*sina + oty*cosa;
+        }
+        this.rotation += angle;
+        return this;
+    }
+
+    @Override // from Transform
+    public Transform translateX (float tx) {
+        this.tx += tx;
+        return this;
+    }
+
+    @Override // from Transform
+    public Transform translateY (float ty) {
+        this.ty += ty;
+        return this;
+    }
+
+    @Override // from Transform
     public Transform invert () {
         Vector t = getTranslation().negateLocal().rotateLocal(-rotation);
         return new RigidTransform(-rotation, t.x, t.y);

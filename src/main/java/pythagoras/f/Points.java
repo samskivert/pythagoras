@@ -58,9 +58,9 @@ public class Points
     public static String pointToString (float x, float y) {
         StringBuilder buf = new StringBuilder();
         if (x >= 0) buf.append("+");
-        buf.append(x);
+        buf.append(FloatMath.toString(x));
         if (y >= 0) buf.append("+");
-        buf.append(y);
+        buf.append(FloatMath.toString(y));
         return buf.toString();
     }
 }

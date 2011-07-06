@@ -103,6 +103,51 @@ public class NonUniformTransform extends AbstractTransform
     }
 
     @Override // from Transform
+    public Transform uniformScale (float scale) {
+        return scale(scale, scale);
+    }
+
+    @Override // from Transform
+    public Transform scaleX (float scaleX) {
+        if (scaleX == 0) throw new IllegalArgumentException("Scale (x) must not be zero.");
+        this.tx *= scaleX;
+        this.scaleX *= scaleX;
+        return this;
+    }
+
+    @Override // from Transform
+    public Transform scaleY (float scaleY) {
+        if (scaleY == 0) throw new IllegalArgumentException("Scale (y) must not be zero.");
+        this.ty *= scaleX;
+        this.scaleY *= scaleY;
+        return this;
+    }
+
+    @Override // from Transform
+    public Transform rotate (float angle) {
+        float otx = this.tx, oty = this.ty;
+        if (otx != 0 || oty != 0) {
+            float sina = FloatMath.sin(angle), cosa = FloatMath.cos(angle);
+            this.tx = otx*cosa - oty*sina;
+            this.ty = otx*sina + oty*cosa;
+        }
+        this.rotation += angle;
+        return this;
+    }
+
+    @Override // from Transform
+    public Transform translateX (float tx) {
+        this.tx += tx;
+        return this;
+    }
+
+    @Override // from Transform
+    public Transform translateY (float ty) {
+        this.ty += ty;
+        return this;
+    }
+
+    @Override // from Transform
     public Transform invert () {
         Vector iscale = new Vector(1f / scaleX, 1f / scaleY);
         Vector t = new Vector(tx, ty).negateLocal().rotateLocal(-rotation).multLocal(iscale);

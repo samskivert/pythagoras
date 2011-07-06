@@ -54,6 +54,50 @@ public abstract class AbstractTransform implements Transform
     }
 
     @Override // from Transform
+    public Transform uniformScale (float scale) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override // from Transform
+    public Transform scale (float scaleX, float scaleY) {
+        scaleX(scaleX);
+        scaleY(scaleY);
+        return this;
+    }
+
+    @Override // from Transform
+    public Transform scaleX (float scaleX) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override // from Transform
+    public Transform scaleY (float scaleY) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override // from Transform
+    public Transform rotate (float angle) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override // from Transform
+    public Transform translate (float tx, float ty) {
+        translateX(tx);
+        translateY(ty);
+        return this;
+    }
+
+    @Override // from Transform
+    public Transform translateX (float tx) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override // from Transform
+    public Transform translateY (float ty) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override // from Transform
     public Transform setTx (float tx) {
         throw new UnsupportedOperationException();
     }

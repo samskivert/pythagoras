@@ -48,19 +48,19 @@ public interface Transform
     /** Sets the x and y scale of this transform.
      * @return this instance, for chaining.
      * @throws IllegalArgumentException if either supplied scale is zero.
-     * @throws UnsupportedOperationException if the transform is not affine or greater. */
+     * @throws UnsupportedOperationException if the transform is not non-uniform or greater. */
     Transform setScale (float scaleX, float scaleY);
 
     /** Sets the x scale of this transform.
      * @return this instance, for chaining.
      * @throws IllegalArgumentException if the supplied scale is zero.
-     * @throws UnsupportedOperationException if the transform is not affine or greater. */
+     * @throws UnsupportedOperationException if the transform is not non-uniform or greater. */
     Transform setScaleX (float scaleX);
 
     /** Sets the y scale of this transform.
      * @return this instance, for chaining.
      * @throws IllegalArgumentException if the supplied scale is zero.
-     * @throws UnsupportedOperationException if the transform is not affine or greater. */
+     * @throws UnsupportedOperationException if the transform is not non-uniform or greater. */
     Transform setScaleY (float scaleY);
 
     /** Sets the rotation component of this transform.
@@ -88,6 +88,50 @@ public interface Transform
      * @throws UnsupportedOperationException if the transform is not affine or greater. */
     Transform setTransform (float m00, float m01, float m10, float m11,
                             float tx, float ty);
+
+    /** Scales this transform in a uniform manner by the specified amount.
+     * @return this instance, for chaining.
+     * @throws IllegalArgumentException if the supplied scale is zero.
+     * @throws UnsupportedOperationException if the transform is not uniform or greater. */
+    Transform uniformScale (float scale);
+
+    /** Scales this transform by the specified amount in the x and y dimensions.
+     * @return this instance, for chaining.
+     * @throws IllegalArgumentException if either supplied scale is zero.
+     * @throws UnsupportedOperationException if the transform is not non-uniform or greater. */
+    Transform scale (float scaleX, float scaleY);
+
+    /** Scales this transform by the specified amount in the x dimension.
+     * @return this instance, for chaining.
+     * @throws IllegalArgumentException if the supplied scale is zero.
+     * @throws UnsupportedOperationException if the transform is not non-uniform or greater. */
+    Transform scaleX (float scaleX);
+
+    /** Scales this transform by the specified amount in the y dimension.
+     * @return this instance, for chaining.
+     * @throws IllegalArgumentException if the supplied scale is zero.
+     * @throws UnsupportedOperationException if the transform is not non-uniform or greater. */
+    Transform scaleY (float scaleY);
+
+    /** Rotates this transform.
+     * @return this instance, for chaining.
+     * @throws UnsupportedOperationException if the transform is not rigid body or greater. */
+    Transform rotate (float angle);
+
+    /** Translates this transform.
+     * @return this instance, for chaining.
+     * @throws UnsupportedOperationException if the transform is not rigid body or greater. */
+    Transform translate (float tx, float ty);
+
+    /** Translates this transform in the x dimension.
+     * @return this instance, for chaining.
+     * @throws UnsupportedOperationException if the transform is not rigid body or greater. */
+    Transform translateX (float tx);
+
+    /** Translates this transform in the y dimension.
+     * @return this instance, for chaining.
+     * @throws UnsupportedOperationException if the transform is not rigid body or greater. */
+    Transform translateY (float ty);
 
     /** Returns a new transform that represents the inverse of this transform.
      * @throws NoninvertibleTransformException if the transform is not invertible. */

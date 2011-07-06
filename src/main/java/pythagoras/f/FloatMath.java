@@ -381,4 +381,15 @@ public class FloatMath
     {
         return (a > 0f ? PI : -PI) - a;
     }
+
+    /**
+     * Returns ~0 if the value is very close to zero, the string value of the float otherwise.
+     */
+    public static String toString (float value)
+    {
+        return Math.abs(value) < ZERO ? "~0" : String.valueOf(value);
+    }
+
+    /** The min value equivalent to zero. An absolute value < ZERO is rendered as ~0. */
+    private static final float ZERO = 1E-7f;
 }

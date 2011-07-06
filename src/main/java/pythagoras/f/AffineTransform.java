@@ -141,16 +141,9 @@ public class AffineTransform extends AbstractTransform
     public Transform setRotation (float angle) {
         // extract the scale, then reapply rotation and scale together
         float sx = getScaleX(), sy = getScaleY();
-        float sin = FloatMath.sin(angle), cos = FloatMath.cos(angle);
-        if (Math.abs(cos) < ZERO) {
-            cos = 0;
-            sin = sin > 0 ? 1f : -1f;
-        } else if (Math.abs(sin) < ZERO) {
-            sin = 0;
-            cos = cos > 0 ? 1f : -1f;
-        }
-        m00 = cos * sx; m01 = -sin * sx;
-        m10 = sin * sy; m11 =  cos * sy;
+        float sina = FloatMath.sin(angle), cosa = FloatMath.cos(angle);
+        m00 = cosa * sx; m01 = -sina * sx;
+        m10 = sina * sy; m11 =  cosa * sy;
         return this;
     }
 
@@ -185,6 +178,45 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
+    public Transform uniformScale (float scale) {
+        return scale(scale, scale);
+    }
+
+    @Override // from Transform
+    public Transform scaleX (float scaleX) {
+        m00 *= scaleX;
+        m01 *= scaleX;
+        tx  *= scaleX;
+        return this;
+    }
+
+    @Override // from Transform
+    public Transform scaleY (float scaleY) {
+        m10 *= scaleY;
+        m11 *= scaleY;
+        ty  *= scaleY;
+        return this;
+    }
+
+    @Override // from Transform
+    public Transform rotate (float angle) {
+        float sina = FloatMath.sin(angle), cosa = FloatMath.cos(angle);
+        return multiply(cosa, -sina, sina, cosa, 0, 0, this, this);
+    }
+
+    @Override // from Transform
+    public Transform translateX (float tx) {
+        this.tx += tx;
+        return this;
+    }
+
+    @Override // from Transform
+    public Transform translateY (float ty) {
+        this.ty += ty;
+        return this;
+    }
+
+    @Override // from Transform
     public Transform invert () {
         // compute the determinant, storing the subdeterminants for later use
         float det = m00*m11 - m10*m01;
@@ -204,8 +236,12 @@ public class AffineTransform extends AbstractTransform
         if (generality() < other.generality()) {
             return other.preConcatenate(this);
         }
-        return multiply((other instanceof AffineTransform) ?
-                        (AffineTransform)other : new AffineTransform(other));
+        if (other instanceof AffineTransform) {
+            return multiply(this, (AffineTransform)other, new AffineTransform());
+        } else {
+            AffineTransform oaff = new AffineTransform(other);
+            return multiply(this, oaff, oaff);
+        }
     }
 
     @Override // from Transform
@@ -213,8 +249,12 @@ public class AffineTransform extends AbstractTransform
         if (generality() < other.generality()) {
             return other.concatenate(this);
         }
-        return ((other instanceof AffineTransform) ?
-                (AffineTransform)other : new AffineTransform(other)).multiply(this);
+        if (other instanceof AffineTransform) {
+            return multiply((AffineTransform)other, this, new AffineTransform());
+        } else {
+            AffineTransform oaff = new AffineTransform(other);
+            return multiply(oaff, this, oaff);
+        }
     }
 
     @Override // from Transform
@@ -281,7 +321,8 @@ public class AffineTransform extends AbstractTransform
 
     @Override
     public String toString () {
-        return "affine [" + m00 + " " + m01 + " " + m10 + " " + m11 + " " + getTranslation() + "]";
+        return "affine [" + FloatMath.toString(m00) + " " + FloatMath.toString(m01) + " " +
+            FloatMath.toString(m10) + " " + FloatMath.toString(m11) + " " + getTranslation() + "]";
     }
 
     // we don't publicize this because it might encourage someone to do something stupid like
@@ -291,18 +332,36 @@ public class AffineTransform extends AbstractTransform
              other.getTx(), other.getTy());
     }
 
-    protected AffineTransform multiply (AffineTransform other) {
-        return multiply(other.m00, other.m01, other.m10, other.m11, other.tx, other.ty);
+    protected static AffineTransform multiply (
+        AffineTransform a, AffineTransform b, AffineTransform into) {
+        return multiply(a.m00, a.m01, a.m10, a.m11, a.tx, a.ty,
+                        b.m00, b.m01, b.m10, b.m11, b.tx, b.ty, into);
     }
 
-    protected AffineTransform multiply (float m00, float m01, float m10, float m11,
-                                        float tx, float ty) {
-        return new AffineTransform(
-            this.m00 * m00 + this.m01 * m10,           this.m00 * m01 + this.m01 * m11,
-            this.m10 * m00 + this.m11 * m10,           this.m10 * m01 + this.m11 * m11,
-            this.m00 *  tx + this.m01 *  ty + this.tx, this.m10 *  tx + this.m11 *  ty + this.ty);
+    protected static AffineTransform multiply (
+        AffineTransform a, float m00, float m01, float m10, float m11, float tx, float ty,
+        AffineTransform into) {
+        return multiply(a.m00, a.m01, a.m10, a.m11, a.tx, a.ty,
+                        m00, m01, m10, m11, tx, ty, into);
     }
 
-    /** The min value equivalent to zero. An absolute value < ZERO is considered to be zero. */
-    private static final float ZERO = 1E-7f;
+    protected static AffineTransform multiply (
+        float m00, float m01, float m10, float m11, float tx, float ty,
+        AffineTransform b, AffineTransform into) {
+        return multiply(m00, m01, m10, m11, tx, ty,
+                        b.m00, b.m01, b.m10, b.m11, b.tx, b.ty, into);
+    }
+
+    protected static AffineTransform multiply (
+        float am00, float am01, float am10, float am11, float atx, float aty,
+        float bm00, float bm01, float bm10, float bm11, float btx, float bty,
+        AffineTransform into) {
+        into.m00 = am00 * bm00 + am01 * bm10;
+        into.m01 = am00 * bm01 + am01 * bm11;
+        into.m10 = am10 * bm00 + am11 * bm10;
+        into.m11 = am10 * bm01 + am11 * bm11;
+        into.tx  = am00 *  btx + am01 *  bty + atx;
+        into.ty  = am10 *  btx + am11 *  bty + aty;
+        return into;
+    }
 }

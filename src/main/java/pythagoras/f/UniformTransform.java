@@ -89,6 +89,39 @@ public class UniformTransform extends AbstractTransform
     }
 
     @Override // from Transform
+    public Transform uniformScale (float scale) {
+        if (scale == 0) throw new IllegalArgumentException("Scale must be non-zero.");
+        this.tx *= scale;
+        this.ty *= scale;
+        this.scale *= scale;
+        return this;
+    }
+
+    @Override // from Transform
+    public Transform rotate (float angle) {
+        float otx = this.tx, oty = this.ty;
+        if (otx != 0 || oty != 0) {
+            float sina = FloatMath.sin(angle), cosa = FloatMath.cos(angle);
+            this.tx = otx*cosa - oty*sina;
+            this.ty = otx*sina + oty*cosa;
+        }
+        this.rotation += angle;
+        return this;
+    }
+
+    @Override // from Transform
+    public Transform translateX (float tx) {
+        this.tx += tx;
+        return this;
+    }
+
+    @Override // from Transform
+    public Transform translateY (float ty) {
+        this.ty += ty;
+        return this;
+    }
+
+    @Override // from Transform
     public Transform invert () {
         float nscale = 1f / scale, nrotation = -rotation;
         Vector t = getTranslation().negateLocal().rotateLocal(nrotation).multLocal(nscale);
