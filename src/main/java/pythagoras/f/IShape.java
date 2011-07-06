@@ -42,7 +42,7 @@ public interface IShape
      *
      * @param at if supplied, the points in the path are transformed using this.
      */
-    PathIterator getPathIterator (AffineTransform at);
+    PathIterator getPathIterator (Transform at);
 
     /**
      * Returns an iterator over the path described by this shape.
@@ -52,5 +52,5 @@ public interface IShape
      *        distance the lines are allowed to deviate from the approximated curve, thus a higher
      *        flatness value generally allows for a path with fewer segments.
      */
-    PathIterator getPathIterator (AffineTransform at, float flatness);
+    PathIterator getPathIterator (Transform at, float flatness);
 }

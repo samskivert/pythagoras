@@ -29,16 +29,6 @@ public class Vector extends AbstractVector
     public Vector () {
     }
 
-    @Override // from AbstractVector
-    public float getX () {
-        return x;
-    }
-
-    @Override // from AbstractVector
-    public float getY () {
-        return y;
-    }
-
     /** Negates this vector in-place.
      * @return a reference to this vector, for chaining. */
     public Vector negateLocal () {
@@ -117,5 +107,15 @@ public class Vector extends AbstractVector
         this.x = x;
         this.y = y;
         return this;
+    }
+
+    @Override // from AbstractVector
+    public float getX () {
+        return x;
+    }
+
+    @Override // from AbstractVector
+    public float getY () {
+        return y;
     }
 }

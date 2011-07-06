@@ -27,6 +27,31 @@ public interface IPoint extends Cloneable
     /** Returns the Euclidian distance between this point and the supplied point. */
     float distance (IPoint p);
 
+    /** Multiplies this point by a scale factor.
+     * @return a new point containing the result. */
+    Point mult (float s);
+
+    /** Multiplies this point by a scale factor and places the result in the supplied object.
+     * @return a reference to the result, for chaining. */
+    Point mult (float s, Point result);
+
+    /** Translates this point by the specified offset.
+     * @return a new point containing the result. */
+    Point add (float x, float y);
+
+    /** Translates this point by the specified offset and stores the result in the object provided.
+     * @return a reference to the result, for chaining. */
+    Point add (float x, float y, Point result);
+
+    /** Rotates this point around the origin by the specified angle.
+     * @return a new point containing the result. */
+    Point rotate (float angle);
+
+    /** Rotates this point around the origin by the specified angle, storing the result in the
+     * point provided.
+     * @return a reference to the result point, for chaining. */
+    Point rotate (float angle, Point result);
+
     /** Returns a mutable copy of this point. */
     Point clone ();
 }

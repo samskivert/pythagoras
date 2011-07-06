@@ -111,12 +111,12 @@ public abstract class AbstractCubicCurve implements ICubicCurve
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform t) {
+    public PathIterator getPathIterator (Transform t) {
         return new Iterator(this, t);
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform at, float flatness) {
+    public PathIterator getPathIterator (Transform at, float flatness) {
         return new FlatteningPathIterator(getPathIterator(at), flatness);
     }
 
@@ -124,10 +124,10 @@ public abstract class AbstractCubicCurve implements ICubicCurve
     protected static class Iterator implements PathIterator
     {
         private ICubicCurve c;
-        private AffineTransform t;
+        private Transform t;
         private int index;
 
-        Iterator (ICubicCurve c, AffineTransform t) {
+        Iterator (ICubicCurve c, Transform t) {
             this.c = c;
             this.t = t;
         }

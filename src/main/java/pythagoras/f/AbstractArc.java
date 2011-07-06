@@ -20,9 +20,8 @@ public abstract class AbstractArc extends RectangularShape implements IArc
     @Override // from interface IArc
     public Point getStartPoint (Point target) {
         float a = FloatMath.toRadians(getAngleStart());
-        target.setLocation(getX() + (1f + FloatMath.cos(a)) * getWidth() / 2f,
-                           getY() + (1f - FloatMath.sin(a)) * getHeight() / 2f);
-        return target;
+        return target.set(getX() + (1f + FloatMath.cos(a)) * getWidth() / 2f,
+                          getY() + (1f - FloatMath.sin(a)) * getHeight() / 2f);
     }
 
     @Override // from interface IArc
@@ -33,9 +32,8 @@ public abstract class AbstractArc extends RectangularShape implements IArc
     @Override // from interface IArc
     public Point getEndPoint (Point target) {
         float a = FloatMath.toRadians(getAngleStart() + getAngleExtent());
-        target.setLocation(getX() + (1f + FloatMath.cos(a)) * getWidth() / 2f,
-                           getY() + (1f - FloatMath.sin(a)) * getHeight() / 2f);
-        return target;
+        return target.set(getX() + (1f + FloatMath.cos(a)) * getWidth() / 2f,
+                          getY() + (1f - FloatMath.sin(a)) * getHeight() / 2f);
     }
 
     @Override // from interface IArc
@@ -189,7 +187,7 @@ public abstract class AbstractArc extends RectangularShape implements IArc
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform at) {
+    public PathIterator getPathIterator (Transform at) {
         return new Iterator(this, at);
     }
 
@@ -223,7 +221,7 @@ public abstract class AbstractArc extends RectangularShape implements IArc
         private int type;
 
         /** The path iterator transformation */
-        private AffineTransform t;
+        private Transform t;
 
         /** The current segment index */
         private int index;
@@ -259,7 +257,7 @@ public abstract class AbstractArc extends RectangularShape implements IArc
         /** The y coordinate of the first path point (MOVE_TO) */
         private float my;
 
-        Iterator (IArc a, AffineTransform t) {
+        Iterator (IArc a, Transform t) {
             this.width = a.getWidth() / 2f;
             this.height = a.getHeight() / 2f;
             this.x = a.getX() + width;

@@ -19,8 +19,7 @@ public abstract class AbstractLine implements ILine
 
     @Override // from interface ILine
     public Point getP1 (Point target) {
-        target.setLocation(getX1(), getY1());
-        return target;
+        return target.set(getX1(), getY1());
     }
 
     @Override // from interface ILine
@@ -30,8 +29,7 @@ public abstract class AbstractLine implements ILine
 
     @Override // from interface ILine
     public Point getP2 (Point target) {
-        target.setLocation(getX2(), getY2());
-        return target;
+        return target.set(getX2(), getY2());
     }
 
     @Override // from interface ILine
@@ -152,12 +150,12 @@ public abstract class AbstractLine implements ILine
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform at) {
+    public PathIterator getPathIterator (Transform at) {
         return new Iterator(this, at);
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform at, float flatness) {
+    public PathIterator getPathIterator (Transform at, float flatness) {
         return new Iterator(this, at);
     }
 
@@ -165,10 +163,10 @@ public abstract class AbstractLine implements ILine
     protected static class Iterator implements PathIterator
     {
         private float x1, y1, x2, y2;
-        private AffineTransform t;
+        private Transform t;
         private int index;
 
-        Iterator (ILine l, AffineTransform at) {
+        Iterator (ILine l, Transform at) {
             this.x1 = l.getX1();
             this.y1 = l.getY1();
             this.x2 = l.getX2();

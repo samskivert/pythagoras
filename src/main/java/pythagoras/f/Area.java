@@ -112,15 +112,15 @@ public class Area implements IShape, Cloneable
     /**
      * Transforms this area with the supplied transform.
      */
-    public void transform (AffineTransform t) {
-        copy(new Area(t.createTransformedShape(this)), this);
+    public void transform (Transform t) {
+        copy(new Area(Transforms.createTransformedShape(t, this)), this);
     }
 
     /**
      * Creates a new area equal to this area transformed by the supplied transform.
      */
-    public Area createTransformedArea (AffineTransform t) {
-        return new Area(t.createTransformedShape(this));
+    public Area createTransformedArea (Transform t) {
+        return new Area(Transforms.createTransformedShape(t, this));
     }
 
     /**
@@ -258,12 +258,12 @@ public class Area implements IShape, Cloneable
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform t) {
+    public PathIterator getPathIterator (Transform t) {
         return new AreaPathIterator(t);
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform t, float flatness) {
+    public PathIterator getPathIterator (Transform t, float flatness) {
         return new FlatteningPathIterator(getPathIterator(t), flatness);
     }
 
@@ -1159,11 +1159,11 @@ public class Area implements IShape, Cloneable
     // the internal class implements PathIterator
     private class AreaPathIterator implements PathIterator
     {
-        private final AffineTransform transform;
+        private final Transform transform;
         private int curRuleIndex = 0;
         private int curCoordIndex = 0;
 
-        AreaPathIterator (AffineTransform t) {
+        AreaPathIterator (Transform t) {
             this.transform = t;
         }
 

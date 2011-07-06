@@ -44,7 +44,7 @@ public abstract class AbstractEllipse extends RectangularShape implements IEllip
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform at) {
+    public PathIterator getPathIterator (Transform at) {
         return new Iterator(this, at);
     }
 
@@ -52,10 +52,10 @@ public abstract class AbstractEllipse extends RectangularShape implements IEllip
     protected static class Iterator implements PathIterator
     {
         private final float x, y, width, height;
-        private final AffineTransform t;
+        private final Transform t;
         private int index;
 
-        Iterator (IEllipse e, AffineTransform t) {
+        Iterator (IEllipse e, Transform t) {
             this.x = e.getX();
             this.y = e.getY();
             this.width = e.getWidth();

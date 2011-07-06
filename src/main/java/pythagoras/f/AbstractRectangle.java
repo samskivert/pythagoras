@@ -21,8 +21,7 @@ public abstract class AbstractRectangle extends RectangularShape implements IRec
 
     @Override // from interface IRectangle
     public Point getLocation (Point target) {
-        target.setLocation(getX(), getY());
-        return target;
+        return target.set(getX(), getY());
     }
 
     @Override // from interface IRectangle
@@ -129,12 +128,12 @@ public abstract class AbstractRectangle extends RectangularShape implements IRec
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform t) {
+    public PathIterator getPathIterator (Transform t) {
         return new Iterator(this, t);
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform t, float flatness) {
+    public PathIterator getPathIterator (Transform t, float flatness) {
         return new Iterator(this, t);
     }
 
@@ -167,12 +166,12 @@ public abstract class AbstractRectangle extends RectangularShape implements IRec
     protected static class Iterator implements PathIterator
     {
         private float x, y, width, height;
-        private AffineTransform t;
+        private Transform t;
 
         /** The current segment index. */
         private int index;
 
-        Iterator (IRectangle r, AffineTransform at) {
+        Iterator (IRectangle r, Transform at) {
             this.x = r.getX();
             this.y = r.getY();
             this.width = r.getWidth();

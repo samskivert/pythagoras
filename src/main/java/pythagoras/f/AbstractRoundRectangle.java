@@ -75,7 +75,7 @@ public abstract class AbstractRoundRectangle extends RectangularShape implements
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform at) {
+    public PathIterator getPathIterator (Transform at) {
         return new Iterator(this, at);
     }
 
@@ -83,10 +83,10 @@ public abstract class AbstractRoundRectangle extends RectangularShape implements
     protected static class Iterator implements PathIterator
     {
         private final float x, y, width, height, aw, ah;
-        private final AffineTransform t;
+        private final Transform t;
         private int index;
 
-        Iterator (IRoundRectangle rr, AffineTransform at) {
+        Iterator (IRoundRectangle rr, Transform at) {
             this.x = rr.getX();
             this.y = rr.getY();
             this.width = rr.getWidth();

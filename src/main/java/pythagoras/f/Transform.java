@@ -6,52 +6,32 @@ package pythagoras.f;
 
 /**
  * Represents a geometric transform. Specialized implementations exist for identity, rigid body,
- * uniform, affine and general transforms.
+ * uniform, non-uniform, and affine transforms.
  */
 public interface Transform
 {
-    /** Sets the translation component of this transform.
-     * @throws UnsupportedOperationException if the transform is not rigid body or greater. */
-    void setTranslation (float tx, float ty);
+    /** Returns the uniform scale applied by this transform. The uniform scale will be approximated
+     * for non-uniform transforms. */
+    float getUniformScale ();
 
-    /** Sets the x-component of this transform's translation.
-     * @throws UnsupportedOperationException if the transform is not rigid body or greater. */
-    void setTx (float tx);
+    /** Returns the scale vector for this transform. */
+    Vector getScale ();
 
-    /** Sets the y-component of this transform's translation.
-     * @throws UnsupportedOperationException if the transform is not rigid body or greater. */
-    void setTy (float ty);
+    /** Returns the x-component of the scale applied by this transform. Note that this will be
+     * extracted and therefore approximate for affine transforms. */
+    float getScaleX ();
 
-    /** Sets the rotation component of this transform.
-     * @throws UnsupportedOperationException if the transform is not rigid body or greater. */
-    void setRotation (float angle);
+    /** Returns the y-component of the scale applied by this transform. Note that this will be
+     * extracted and therefore approximate for affine transforms. */
+    float getScaleY ();
 
-    /** Sets the uniform scale of this transform.
-     * @throws UnsupportedOperationException if the transform is not uniform or greater. */
-    void setScale (float scale);
+    /** Returns the rotation applied by this transform. Note that the rotation is extracted and
+     * therefore approximate for affine transforms.
+     * @throws NoninvertibleTransformException if the transform is not invertible. */
+    float getRotation ();
 
-    /** Sets the x and y scale of this transform.
-     * @throws UnsupportedOperationException if the transform is not affine or greater. */
-    void setScale (float scaleX, float scaleY);
-
-    /** Sets the x scale of this transform.
-     * @throws UnsupportedOperationException if the transform is not affine or greater. */
-    void setScaleX (float scaleX);
-
-    /** Sets the y scale of this transform.
-     * @throws UnsupportedOperationException if the transform is not affine or greater. */
-    void setScaleY (float scaleY);
-
-    /** Sets the affine transform matrix.
-     * @throws UnsupportedOperationException if the transform is not affine or greater. */
-    void setTransform (float m00, float m01, float m10, float m11,
-                       float tx, float ty);
-
-    /** Sets the general transform matrix.
-     * @throws UnsupportedOperationException if the transform is not general. */
-    void setTransform (float m00, float m01, float m02,
-                       float m10, float m11, float m12,
-                       float m20, float m21, float m22);
+    /** Returns the translation vector for this transform. */
+    Vector getTranslation ();
 
     /** Returns the x-coordinate of the translation component. */
     float getTx ();
@@ -59,45 +39,114 @@ public interface Transform
     /** Returns the y-coordinate of the translation component. */
     float getTy ();
 
-    /** Returns the rotation applied by this transform. Note that the rotation is extracted and
-     * therefore approximate for affine and general transforms. */
-    float getRotation (); // will be extracted from affine+
+    /** Sets the uniform scale of this transform.
+     * @return this instance, for chaining.
+     * @throws IllegalArgumentException if the supplied scale is zero.
+     * @throws UnsupportedOperationException if the transform is not uniform or greater. */
+    Transform setUniformScale (float scale);
 
-    /** Returns the uniform scale applied by this transform. Note that the uniform scale will be
-     * approximated for non-uniform transforms (affine and general). */
-    float getScale (); // will be extracted/approximated for affine+
+    /** Sets the x and y scale of this transform.
+     * @return this instance, for chaining.
+     * @throws IllegalArgumentException if either supplied scale is zero.
+     * @throws UnsupportedOperationException if the transform is not affine or greater. */
+    Transform setScale (float scaleX, float scaleY);
 
-    /** Returns the x-component of the scale applied by this transform. */
-    float getScaleX (); // will be extracted from affine+
+    /** Sets the x scale of this transform.
+     * @return this instance, for chaining.
+     * @throws IllegalArgumentException if the supplied scale is zero.
+     * @throws UnsupportedOperationException if the transform is not affine or greater. */
+    Transform setScaleX (float scaleX);
 
-    /** Returns the y-component of the scale applied by this transform. */
-    float getScaleY (); // will be extracted from affine+
+    /** Sets the y scale of this transform.
+     * @return this instance, for chaining.
+     * @throws IllegalArgumentException if the supplied scale is zero.
+     * @throws UnsupportedOperationException if the transform is not affine or greater. */
+    Transform setScaleY (float scaleY);
 
-    /** Returns the inverse of this transform.
+    /** Sets the rotation component of this transform.
+     * @return this instance, for chaining.
+     * @throws UnsupportedOperationException if the transform is not rigid body or greater. */
+    Transform setRotation (float angle);
+
+    /** Sets the translation component of this transform.
+     * @return this instance, for chaining.
+     * @throws UnsupportedOperationException if the transform is not rigid body or greater. */
+    Transform setTranslation (float tx, float ty);
+
+    /** Sets the x-component of this transform's translation.
+     * @return this instance, for chaining.
+     * @throws UnsupportedOperationException if the transform is not rigid body or greater. */
+    Transform setTx (float tx);
+
+    /** Sets the y-component of this transform's translation.
+     * @return this instance, for chaining.
+     * @throws UnsupportedOperationException if the transform is not rigid body or greater. */
+    Transform setTy (float ty);
+
+    /** Sets the affine transform matrix.
+     * @return this instance, for chaining.
+     * @throws UnsupportedOperationException if the transform is not affine or greater. */
+    Transform setTransform (float m00, float m01, float m10, float m11,
+                            float tx, float ty);
+
+    /** Returns a new transform that represents the inverse of this transform.
      * @throws NoninvertibleTransformException if the transform is not invertible. */
     Transform invert ();
 
-    /** Composes this transform with the supplied transform (i.e. {@code this x other}). */
-    Transform compose (Transform other);
+    /** Returns a new transform comprised of the concatenation of {@code other} to this transform
+     * (i.e. {@code this x other}). */
+    Transform concatenate (Transform other);
 
-    /** Returns the linear interpolation between this transform and the specified other. */
+    /** Returns a new transform comprised of the concatenation of this transform to {@code other}
+     * (i.e. {@code other x this}). */
+    Transform preConcatenate (Transform other);
+
+    /** Returns a new transform comprised of the linear interpolation between this transform and
+     * the specified other. */
     Transform lerp (Transform other, float t);
 
-    /** Transforms the supplied point, writing the result into {@code into}, which may reference
-     * the same object as {@code p}. */
-    void transform (IPoint p, Point into);
+    /** Transforms the supplied point, writing the result into {@code into}.
+     * @param into a point into which to store the result, may be the same object as {@code p}.
+     * @return {@code into} for chaining. */
+    Point transform (IPoint p, Point into);
 
-    /** Inverse transforms the supplied point, writing the result into {@code into}, which may
-     * reference the same object as {@code p}.
+    /** Transforms the supplied points.
+     * @param src the points to be transformed.
+     * @param srcOff the offset into the {@code src} array at which to start.
+     * @param dst the points into which to store the transformed points. May be {@code src}.
+     * @param dstOff the offset into the {@code dst} array at which to start.
+     * @param count the number of points to transform. */
+    void transform (IPoint[] src, int srcOff, Point[] dst, int dstOff, int count);
+
+    /** Transforms the supplied points.
+     * @param src the points to be transformed (as {@code [x, y, x, y, ...]}).
+     * @param srcOff the offset into the {@code src} array at which to start.
+     * @param dst the points into which to store the transformed points. May be {@code src}.
+     * @param dstOff the offset into the {@code dst} array at which to start.
+     * @param count the number of points to transform. */
+    void transform (float[] src, int srcOff, float[] dst, int dstOff, int count);
+
+    /** Inverse transforms the supplied point, writing the result into {@code into}.
+     * @param into a point into which to store the result, may be the same object as {@code p}.
+     * @return {@code into}, for chaining.
      * @throws NoninvertibleTransformException if the transform is not invertible. */
-    void inverseTransform (IPoint p, Point into);
+    Point inverseTransform (IPoint p, Point into);
 
-    /** Transforms the supplied vector, writing the result into {@code into}, which may reference
-     * the same object as {@code v}. */
-    void transform (IVector v, Vector into);
+    /** Transforms the supplied vector, writing the result into {@code into}.
+     * @param into a vector into which to store the result, may be the same object as {@code v}.
+     * @return {@code into}, for chaining. */
+    Vector transform (IVector v, Vector into);
 
-    /** Inverse transforms the supplied vector, writing the result into {@code into}, which may
-     * reference the same object as {@code v}.
+    /** Inverse transforms the supplied vector, writing the result into {@code into}.
+     * @param into a vector into which to store the result, may be the same object as {@code v}.
+     * @return {@code into}, for chaining.
      * @throws NoninvertibleTransformException if the transform is not invertible. */
-    void inverseTransform (IVector v, Vector into);
+    Vector inverseTransform (IVector v, Vector into);
+
+    /** Returns a clone of this transform. */
+    Transform clone ();
+
+    /** Returns an integer that increases monotonically with the generality of the transform
+     * implementation. Used internally when combining transforms. */
+    int generality ();
 }

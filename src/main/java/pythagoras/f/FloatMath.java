@@ -12,17 +12,20 @@ public class FloatMath
     /** The ratio of a circle's circumference to its diameter. */
     public static final float PI = (float)Math.PI;
 
-    /** The circle constant, tau (&#964;) http://tauday.com/ */
-    public static final float TWO_PI = (float)(Math.PI * 2);
+    /** The circle constant, Tau (&#964;) http://tauday.com/ */
+    public static final float TAU = (float)(Math.PI * 2);
+
+    /** Twice Pi. */
+    public static final float TWO_PI = TAU;
 
     /** Pi times one half. */
-    public static final float HALF_PI = PI * 0.5f;
+    public static final float HALF_PI = (float)(Math.PI * 0.5);
 
     /** The base value of the natural logarithm. */
     public static final float E = (float)Math.E;
 
     /** A small number. */
-    public static final float EPSILON = 0.000001f;
+    public static final float EPSILON = 0.00001f;
 
     /**
      * Computes and returns the sine of the given angle.

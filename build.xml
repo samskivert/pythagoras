@@ -14,8 +14,9 @@
   <target name="-prepare" depends="-init-ooo">
     <mkdir dir="${target.dir}"/>
     <mavendep pom="pom.xml"/>
+    <mavendep pom="pom.xml" id="test" scope="test"/>
     <path id="test.classpath">
-      <path refid="pom.xml.path"/>
+      <path refid="test.path"/>
       <pathelement location="${classes.dir}"/>
       <pathelement location="${tclasses.dir}"/>
     </path>
@@ -30,7 +31,6 @@
     <copy todir="${classes.dir}"><fileset dir="src/main/resources" includes="**"/></copy>
     <ooojavac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="pom.xml.path"/>
 
-<!--
     <mkdir dir="${tclasses.dir}"/>
     <javac srcdir="${test.dir}" destdir="${tclasses.dir}" includeAntRuntime="false"
            debug="on" optimize="${build.optimize}" source="1.6" target="1.6" encoding="utf-8">
@@ -38,7 +38,6 @@
       <compilerarg value="-Xlint"/>
       <compilerarg value="-Xlint:-serial"/>
     </javac>
--->
   </target>
 
   <target name="javadoc" depends="-prepare" description="Generates javadoc documentation.">
@@ -51,10 +50,10 @@
     </javadoc>
   </target>
 
-  <target name="tests" depends="compile" description="Runs the unit tests.">
+  <target name="test" depends="compile" description="Runs the unit tests.">
     <!-- allows passing -Dtest=NamePrefix to restrict to subset of tests -->
     <property name="test" value=""/>
-    <taskdef name="unit" classpathref="classpath"
+    <taskdef name="unit" classpathref="test.path"
       classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask"/>
     <mkdir dir="${target.dir}/test-reports"/>
     <unit printsummary="off" haltonfailure="yes" fork="${junit.fork}">

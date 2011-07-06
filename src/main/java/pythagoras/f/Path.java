@@ -157,11 +157,11 @@ public final class Path implements IShape, Cloneable
         pointSize = 0;
     }
 
-    public void transform (AffineTransform t) {
+    public void transform (Transform t) {
         t.transform(points, 0, points, 0, pointSize / 2);
     }
 
-    public IShape createTransformedShape (AffineTransform t) {
+    public IShape createTransformedShape (Transform t) {
         Path p = clone();
         if (t != null) {
             p.transform(t);
@@ -241,12 +241,12 @@ public final class Path implements IShape, Cloneable
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform t) {
+    public PathIterator getPathIterator (Transform t) {
         return new Iterator(this, t);
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform t, float flatness) {
+    public PathIterator getPathIterator (Transform t, float flatness) {
         return new FlatteningPathIterator(getPathIterator(t), flatness);
     }
 
@@ -309,13 +309,13 @@ public final class Path implements IShape, Cloneable
         private Path p;
 
         /** The path iterator transformation. */
-        private AffineTransform t;
+        private Transform t;
 
         Iterator (Path path) {
             this(path, null);
         }
 
-        Iterator (Path path, AffineTransform at) {
+        Iterator (Path path, Transform at) {
             this.p = path;
             this.t = at;
         }

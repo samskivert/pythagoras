@@ -102,12 +102,12 @@ public abstract class AbstractQuadCurve implements IQuadCurve
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform t) {
+    public PathIterator getPathIterator (Transform t) {
         return new Iterator(this, t);
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform t, float flatness) {
+    public PathIterator getPathIterator (Transform t, float flatness) {
         return new FlatteningPathIterator(getPathIterator(t), flatness);
     }
 
@@ -115,10 +115,10 @@ public abstract class AbstractQuadCurve implements IQuadCurve
     protected static class Iterator implements PathIterator
     {
         private IQuadCurve c;
-        private AffineTransform t;
+        private Transform t;
         private int index;
 
-        Iterator (IQuadCurve q, AffineTransform t) {
+        Iterator (IQuadCurve q, Transform t) {
             this.c = q;
             this.t = t;
         }

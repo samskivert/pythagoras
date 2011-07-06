@@ -26,6 +26,50 @@ public class Vectors
     public static final IVector MAX_VALUE = new Vector(Float.MAX_VALUE, Float.MAX_VALUE);
 
     /**
+     * Returns the magnitude of the specified vector.
+     */
+    public static final float length (float x, float y) {
+        return FloatMath.sqrt(lengthSq(x, y));
+    }
+
+    /**
+     * Returns the square of the magnitude of the specified vector.
+     */
+    public static final float lengthSq (float x, float y) {
+        return (x*x + y*y);
+    }
+
+    /**
+     * Transforms a point as specified, storing the result in the point provided.
+     * @return a reference to the result vector, for chaining.
+     */
+    public static Vector transform (float x, float y, float sx, float sy, float rotation,
+                                   Vector result) {
+        return transform(x, y, sx, sy, FloatMath.sin(rotation), FloatMath.cos(rotation), result);
+    }
+
+    /**
+     * Transforms a vector as specified, storing the result in the vector provided.
+     * @return a reference to the result vector, for chaining.
+     */
+    public static Vector transform (float x, float y, float sx, float sy, float sina, float cosa,
+                                    Vector result) {
+        return result.set((x*cosa - y*sina) * sx, (x*sina + y*cosa) * sy);
+    }
+
+    /**
+     * Inverse transforms a point as specified, storing the result in the point provided.
+     * @return a reference to the result vector, for chaining.
+     */
+    public static Vector inverseTransform (float x, float y, float sx, float sy, float rotation,
+                                           Vector result) {
+        float sinnega = FloatMath.sin(-rotation), cosnega = FloatMath.cos(-rotation);
+        float nx = (x * cosnega - y * sinnega); // unrotate
+        float ny = (x * sinnega + y * cosnega);
+        return result.set(nx / sx, ny / sy); // unscale
+    }
+
+    /**
      * Returns a string describing the supplied vector, of the form <code>+x+y</code>,
      * <code>+x-y</code>, <code>-x-y</code>, etc.
      */
