@@ -1,10 +1,10 @@
 # Pythagoras
 
-Pythagoras is a collection of geometry classes, the implementations of which
-were adapted from the Apache Harmony project. The Pythagoras library aims to
-provide performant, portable geometry routines for projects that cannot make
-use of `java.awt.geom` (for example for use in GWT projects or Android
-projects).
+Pythagoras is a collection of geometry classes that aims to provide performant,
+portable geometry routines for projects that cannot make use of `java.awt.geom`
+(for example for use in GWT projects or Android projects). In addition to
+original work, it contains code adapted from the [Apache Harmony] project and
+the [Clyde] library.
 
 * [API documentation] is available.
 
@@ -58,3 +58,5 @@ web.
 
 [API documentation]: http://samskivert.github.com/pythagoras/apidocs/overview-summary.html
 [jar file]: http://repo2.maven.org/maven2/com/samskivert/pythagoras/1.0/pythagoras-1.0.jar
+[Apache Harmony]: http://harmony.apache.org/
+[Clyde]: https://github.com/threerings/clyde
