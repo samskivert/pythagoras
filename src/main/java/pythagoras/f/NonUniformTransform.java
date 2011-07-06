@@ -148,11 +148,12 @@ public class NonUniformTransform extends AbstractTransform
             return other.lerp(this, -t); // TODO: is this correct?
         }
 
-        Vector nt = getTranslation().lerpLocal(other.getTranslation(), t);
+        float ntx = FloatMath.lerpa(tx, other.getTx(), t);
+        float nty = FloatMath.lerpa(ty, other.getTy(), t);
         float nrotation = FloatMath.lerpa(rotation, other.getRotation(), t);
         float nscaleX = FloatMath.lerp(scaleX, other.getScaleX(), t);
         float nscaleY = FloatMath.lerp(scaleY, other.getScaleY(), t);
-        return new NonUniformTransform(nscaleX, nscaleY, nrotation, nt.x, nt.y);
+        return new NonUniformTransform(nscaleX, nscaleY, nrotation, ntx, nty);
     }
 
     @Override // from Transform
