@@ -9,6 +9,9 @@ package pythagoras.f;
  */
 public class Points
 {
+    /** The point at the origin. */
+    public static final IPoint ZERO = new Point(0f, 0f);
+
     /**
      * Returns the squared Euclidean distance between the specified two points.
      */
