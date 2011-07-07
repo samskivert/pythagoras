@@ -32,12 +32,7 @@
     <ooojavac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="pom.xml.path"/>
 
     <mkdir dir="${tclasses.dir}"/>
-    <javac srcdir="${test.dir}" destdir="${tclasses.dir}" includeAntRuntime="false"
-           debug="on" optimize="${build.optimize}" source="1.6" target="1.6" encoding="utf-8">
-      <classpath refid="test.classpath"/>
-      <compilerarg value="-Xlint"/>
-      <compilerarg value="-Xlint:-serial"/>
-    </javac>
+    <ooojavac srcdir="${test.dir}" destdir="${tclasses.dir}" classpathref="test.classpath"/>
   </target>
 
   <target name="javadoc" depends="-prepare" description="Generates javadoc documentation.">
