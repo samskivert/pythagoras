@@ -74,11 +74,6 @@ public class Vectors
      * <code>+x-y</code>, <code>-x-y</code>, etc.
      */
     public static String vectorToString (float x, float y) {
-        StringBuilder buf = new StringBuilder();
-        if (x >= 0) buf.append("+");
-        buf.append(x);
-        if (y >= 0) buf.append("+");
-        buf.append(y);
-        return buf.toString();
+        return FloatMath.toString(x) + FloatMath.toString(y);
     }
 }

@@ -373,13 +373,40 @@ public class FloatMath
     }
 
     /**
-     * Returns ~0 if the value is very close to zero, the string value of the float otherwise.
+     * Sets the number of decimal places to show when formatting values. By default, they are
+     * formatted to three decimal places.
+     */
+    public static void setToStringDecimalPlaces (int places) {
+        if (places < 0) throw new IllegalArgumentException("Decimal places must be >= 0.");
+        TO_STRING_DECIMAL_PLACES = places;
+    }
+
+    /**
+     * Formats the supplied floating point value, truncated to the currently configured number of
+     * decimal places. The value is also always preceded by a sign (e.g. +1.0 or -0.5).
      */
     public static String toString (float value)
     {
-        return Math.abs(value) < ZERO ? "~0" : String.valueOf(value);
+        StringBuilder buf = new StringBuilder();
+        buf.append(value >= 0 ? "+" : "-");
+        int ivalue = (int)value;
+        buf.append(ivalue);
+        if (TO_STRING_DECIMAL_PLACES > 0) {
+            buf.append(".");
+            for (int ii = 0; ii < TO_STRING_DECIMAL_PLACES; ii++) {
+                value = (value - ivalue) * 10;
+                ivalue = (int)value;
+                buf.append(ivalue);
+            }
+            // trim trailing zeros
+            for (int ii = 0; ii < TO_STRING_DECIMAL_PLACES-1; ii++) {
+                if (buf.charAt(buf.length()-1) == '0') {
+                    buf.setLength(buf.length()-1);
+                }
+            }
+        }
+        return buf.toString();
     }
 
-    /** The min value equivalent to zero. An absolute value < ZERO is rendered as ~0. */
-    private static final float ZERO = 1E-7f;
+    protected static int TO_STRING_DECIMAL_PLACES = 3;
 }
