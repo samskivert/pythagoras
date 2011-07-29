@@ -388,7 +388,11 @@ public class FloatMath
     public static String toString (float value)
     {
         StringBuilder buf = new StringBuilder();
-        buf.append(value >= 0 ? "+" : "-");
+        if (value >= 0) buf.append("+");
+        else {
+            buf.append("-");
+            value = -value;
+        }
         int ivalue = (int)value;
         buf.append(ivalue);
         if (TO_STRING_DECIMAL_PLACES > 0) {
