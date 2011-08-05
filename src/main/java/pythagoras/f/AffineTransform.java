@@ -9,9 +9,9 @@ import pythagoras.util.NoninvertibleTransformException;
 /**
  * Implements an affine (3x2 matrix) transform. The transformation matrix has the form:
  * <pre>{@code
- * [ m00, m10, 0 ]
- * [ m01, m11, 0 ]
- * [  tx,  ty, 1 ]
+ * [ m00, m10, tx ]
+ * [ m01, m11, ty ]
+ * [   0,   0,  1 ]
  * }</pre>
  */
 public class AffineTransform extends AbstractTransform
@@ -38,9 +38,9 @@ public class AffineTransform extends AbstractTransform
     /** Creates an affine transform from the supplied scale, rotation and translation. */
     public AffineTransform (float scaleX, float scaleY, float angle, float tx, float ty) {
         float sina = FloatMath.sin(angle), cosa = FloatMath.cos(angle);
-        this.m00 = cosa * scaleX; this.m01 = -sina * scaleX;
-        this.m10 = sina * scaleY; this.m11 =  cosa * scaleY;
-        this.tx  = tx;            this.ty  =  ty;
+        this.m00 =  cosa * scaleX; this.m01 = sina * scaleY;
+        this.m10 = -sina * scaleX; this.m11 = cosa * scaleY;
+        this.tx  =  tx;            this.ty  = ty;
     }
 
     /** Creates an affine transform with the specified transform matrix. */
@@ -142,8 +142,8 @@ public class AffineTransform extends AbstractTransform
         // extract the scale, then reapply rotation and scale together
         float sx = getScaleX(), sy = getScaleY();
         float sina = FloatMath.sin(angle), cosa = FloatMath.cos(angle);
-        m00 = cosa * sx; m01 = -sina * sx;
-        m10 = sina * sy; m11 =  cosa * sy;
+        m00 =  cosa * sx; m01 = sina * sx;
+        m10 = -sina * sy; m11 = cosa * sy;
         return this;
     }
 
@@ -201,7 +201,7 @@ public class AffineTransform extends AbstractTransform
     @Override // from Transform
     public Transform rotate (float angle) {
         float sina = FloatMath.sin(angle), cosa = FloatMath.cos(angle);
-        return Transforms.multiply(cosa, -sina, sina, cosa, 0, 0, this, this);
+        return Transforms.multiply(cosa, sina, -sina, cosa, 0, 0, this, this);
     }
 
     @Override // from Transform
@@ -226,9 +226,9 @@ public class AffineTransform extends AbstractTransform
         }
         float rdet = 1f / det;
         return new AffineTransform(
-            +m11 * rdet,              -m01 * rdet,
-            -m10 * rdet,              +m00 * rdet,
-            (m01*ty - m11*tx) * rdet, (m10*tx - m00*ty) * rdet);
+            +m11 * rdet,              -m10 * rdet,
+            -m01 * rdet,              +m00 * rdet,
+            (m10*ty - m11*tx) * rdet, (m01*tx - m00*ty) * rdet);
     }
 
     @Override // from Transform
@@ -274,7 +274,7 @@ public class AffineTransform extends AbstractTransform
     @Override // from Transform
     public Point transform (IPoint p, Point into) {
         float x = p.getX(), y = p.getY();
-        return into.set(m00*x + m01*y + tx, m10*x + m11*y + ty);
+        return into.set(m00*x + m10*y + tx, m01*x + m11*y + ty);
     }
 
     @Override // from Transform
@@ -288,8 +288,8 @@ public class AffineTransform extends AbstractTransform
     public void transform (float[] src, int srcOff, float[] dst, int dstOff, int count) {
         for (int ii = 0; ii < count; ii++) {
             float x = src[srcOff++], y = src[srcOff++];
-            dst[dstOff++] = m00*x + m01*y + tx;
-            dst[dstOff++] = m10*x + m11*y + ty;
+            dst[dstOff++] = m00*x + m10*y + tx;
+            dst[dstOff++] = m01*x + m11*y + ty;
         }
     }
 
@@ -302,14 +302,14 @@ public class AffineTransform extends AbstractTransform
             throw new NoninvertibleTransformException(this.toString());
         }
         float rdet = 1 / det;
-	    return into.set((x * m11 - y * m01) * rdet,
-                        (y * m00 - x * m10) * rdet);
+	    return into.set((x * m11 - y * m10) * rdet,
+                        (y * m00 - x * m01) * rdet);
     }
 
     @Override // from Transform
     public Vector transform (IVector v, Vector into) {
         float x = v.getX(), y = v.getY();
-        return into.set(m00*x + m01*y, m10*x + m11*y);
+        return into.set(m00*x + m10*y, m01*x + m11*y);
     }
 
     @Override // from Transform
@@ -321,8 +321,8 @@ public class AffineTransform extends AbstractTransform
             throw new NoninvertibleTransformException(this.toString());
         }
         float rdet = 1 / det;
-	    return into.set((x * m11 - y * m01) * rdet,
-                        (y * m00 - x * m10) * rdet);
+	    return into.set((x * m11 - y * m10) * rdet,
+                        (y * m00 - x * m01) * rdet);
     }
 
     @Override // from Transform

@@ -69,12 +69,12 @@ public class Transforms
         float am00, float am01, float am10, float am11, float atx, float aty,
         float bm00, float bm01, float bm10, float bm11, float btx, float bty,
         AffineTransform into) {
-        into.m00 = am00 * bm00 + am01 * bm10;
-        into.m01 = am00 * bm01 + am01 * bm11;
-        into.m10 = am10 * bm00 + am11 * bm10;
-        into.m11 = am10 * bm01 + am11 * bm11;
-        into.tx  = am00 *  btx + am01 *  bty + atx;
-        into.ty  = am10 *  btx + am11 *  bty + aty;
+        into.m00 = am00 * bm00 + am10 * bm01;
+        into.m01 = am01 * bm00 + am11 * bm01;
+        into.m10 = am00 * bm10 + am10 * bm11;
+        into.m11 = am01 * bm10 + am11 * bm11;
+        into.tx  = am00 *  btx + am10 *  bty + atx;
+        into.ty  = am01 *  btx + am11 *  bty + aty;
         return into;
     }
 }
