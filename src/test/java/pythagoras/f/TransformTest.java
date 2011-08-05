@@ -338,8 +338,10 @@ public class TransformTest
     }
 
     protected void assertPointsEqual (String desc, Point p1, Point p2) {
-        assertEquals(desc + " = " + p1, p1.x, p2.x, FloatMath.EPSILON);
-        assertEquals(desc + " = " + p1, p1.y, p2.y, FloatMath.EPSILON);
+        if (Math.abs(p1.x - p2.x) > FloatMath.EPSILON ||
+            Math.abs(p1.y - p2.y) > FloatMath.EPSILON) {
+            fail(desc + " want " + p1 + " got " + p2);
+        }
     }
 
     protected void test (Transform t, Vector v, Vector expect) {
@@ -355,8 +357,10 @@ public class TransformTest
     }
 
     protected void assertVectorsEqual (String desc, Vector v1, Vector v2) {
-        assertEquals(desc + " = " + v1, v1.x, v2.x, FloatMath.EPSILON);
-        assertEquals(desc + " = " + v1, v1.y, v2.y, FloatMath.EPSILON);
+        if (Math.abs(v1.x - v2.x) > FloatMath.EPSILON ||
+            Math.abs(v1.y - v2.y) > FloatMath.EPSILON) {
+            fail(desc + " want " + v1 + " got " + v2);
+        }
     }
 
     protected Transform[] createTransforms () {
