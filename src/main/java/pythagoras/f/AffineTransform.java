@@ -111,7 +111,7 @@ public class AffineTransform extends AbstractTransform
 
     @Override // from Transform
     public float getTy () {
-        return this.tx;
+        return this.ty;
     }
 
     @Override // from Transform
