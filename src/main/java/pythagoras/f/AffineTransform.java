@@ -256,7 +256,7 @@ public class AffineTransform extends AbstractTransform
             return Transforms.multiply((AffineTransform)other, this, new AffineTransform());
         } else {
             AffineTransform oaff = new AffineTransform(other);
-            return Transforms.multiplay(oaff, this, oaff);
+            return Transforms.multiply(oaff, this, oaff);
         }
     }
 
