@@ -205,15 +205,18 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
+    public Transform translate (float tx, float ty) {
+        return Transforms.multiply(this, 1, 0, 0, 1, tx, ty, this);
+    }
+
+    @Override // from Transform
     public Transform translateX (float tx) {
-        this.tx += tx;
-        return this;
+        return Transforms.multiply(this, 1, 0, 0, 1, tx, 0, this);
     }
 
     @Override // from Transform
     public Transform translateY (float ty) {
-        this.ty += ty;
-        return this;
+        return Transforms.multiply(this, 1, 0, 0, 1, 0, ty, this);
     }
 
     @Override // from Transform
@@ -253,7 +256,7 @@ public class AffineTransform extends AbstractTransform
             return Transforms.multiply((AffineTransform)other, this, new AffineTransform());
         } else {
             AffineTransform oaff = new AffineTransform(other);
-            return Transforms.multiply(oaff, this, oaff);
+            return Transforms.multiplay(oaff, this, oaff);
         }
     }
 
