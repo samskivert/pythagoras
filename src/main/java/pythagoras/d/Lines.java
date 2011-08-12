@@ -80,8 +80,7 @@ public class Lines
     /**
      * Returns the distance from the specified point to the specified line.
      */
-    public static double pointLineDist (double px, double py,
-                                        double x1, double y1, double x2, double y2) {
+    public static double pointLineDist (double px, double py, double x1, double y1, double x2, double y2) {
         return Math.sqrt(pointLineDistSq(px, py, x1, y1, x2, y2));
     }
 
@@ -119,8 +118,7 @@ public class Lines
     /**
      * Returns the distance between the specified point and the specified line segment.
      */
-    public static double pointSegDist (double px, double py,
-                                       double x1, double y1, double x2, double y2) {
+    public static double pointSegDist (double px, double py, double x1, double y1, double x2, double y2) {
         return Math.sqrt(pointSegDistSq(px, py, x1, y1, x2, y2));
     }
 
@@ -130,8 +128,7 @@ public class Lines
      *
      * See http://download.oracle.com/javase/6/docs/api/java/awt/geom/Line2D.html
      */
-    public static int relativeCCW (double px, double py,
-                                   double x1, double y1, double x2, double y2) {
+    public static int relativeCCW (double px, double py, double x1, double y1, double x2, double y2) {
         // A = (x2-x1, y2-y1)
         // P = (px-x1, py-y1)
         x2 -= x1;

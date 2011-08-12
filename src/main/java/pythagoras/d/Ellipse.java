@@ -37,22 +37,22 @@ public class Ellipse extends AbstractEllipse implements Serializable
     }
 
     @Override // from interface IRectangularShape
-    public double getX () {
+    public double x () {
         return x;
     }
 
     @Override // from interface IRectangularShape
-    public double getY () {
+    public double y () {
         return y;
     }
 
     @Override // from interface IRectangularShape
-    public double getWidth () {
+    public double width () {
         return width;
     }
 
     @Override // from interface IRectangularShape
-    public double getHeight () {
+    public double height () {
         return height;
     }
 

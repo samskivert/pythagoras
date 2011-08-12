@@ -14,21 +14,21 @@ public abstract class AbstractRoundRectangle extends RectangularShape implements
 {
     @Override // from interface IRoundRectangle
     public RoundRectangle clone () {
-        return new RoundRectangle(getX(), getY(), getWidth(), getHeight(),
-                                  getArcWidth(), getArcHeight());
+        return new RoundRectangle(x(), y(), width(), height(),
+                                  arcWidth(), arcHeight());
     }
 
     @Override // from interface IShape
     public boolean contains (double px, double py) {
         if (isEmpty()) return false;
 
-        double rx1 = getX(), ry1 = getY();
-        double rx2 = rx1 + getWidth(), ry2 = ry1 + getHeight();
+        double rx1 = x(), ry1 = y();
+        double rx2 = rx1 + width(), ry2 = ry1 + height();
         if (px < rx1 || px >= rx2 || py < ry1 || py >= ry2) {
             return false;
         }
 
-        double aw = getArcWidth() / 2f, ah = getArcHeight() / 2f;
+        double aw = arcWidth() / 2f, ah = arcHeight() / 2f;
         double cx, cy;
         if (px < rx1 + aw) {
             cx = rx1 + aw;
@@ -62,7 +62,7 @@ public abstract class AbstractRoundRectangle extends RectangularShape implements
     public boolean intersects (double rx, double ry, double rw, double rh) {
         if (isEmpty() || rw <= 0f || rh <= 0f) return false;
 
-        double x1 = getX(), y1 = getY(), x2 = x1 + getWidth(), y2 = y1 + getHeight();
+        double x1 = x(), y1 = y(), x2 = x1 + width(), y2 = y1 + height();
         double rx1 = rx, ry1 = ry, rx2 = rx + rw, ry2 = ry + rh;
         if (rx2 < x1 || x2 < rx1 || ry2 < y1 || y2 < ry1) {
             return false;
@@ -75,7 +75,7 @@ public abstract class AbstractRoundRectangle extends RectangularShape implements
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform at) {
+    public PathIterator pathIterator (Transform at) {
         return new Iterator(this, at);
     }
 
@@ -83,23 +83,23 @@ public abstract class AbstractRoundRectangle extends RectangularShape implements
     protected static class Iterator implements PathIterator
     {
         private final double x, y, width, height, aw, ah;
-        private final AffineTransform t;
+        private final Transform t;
         private int index;
 
-        Iterator (IRoundRectangle rr, AffineTransform at) {
-            this.x = rr.getX();
-            this.y = rr.getY();
-            this.width = rr.getWidth();
-            this.height = rr.getHeight();
-            this.aw = Math.min(width, rr.getArcWidth());
-            this.ah = Math.min(height, rr.getArcHeight());
+        Iterator (IRoundRectangle rr, Transform at) {
+            this.x = rr.x();
+            this.y = rr.y();
+            this.width = rr.width();
+            this.height = rr.height();
+            this.aw = Math.min(width, rr.arcWidth());
+            this.ah = Math.min(height, rr.arcHeight());
             this.t = at;
             if (width < 0f || height < 0f || aw < 0f || ah < 0f) {
                 index = POINTS.length;
             }
         }
 
-        @Override public int getWindingRule () {
+        @Override public int windingRule () {
             return WIND_NON_ZERO;
         }
 

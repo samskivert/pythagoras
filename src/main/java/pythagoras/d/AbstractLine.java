@@ -13,80 +13,78 @@ import java.util.NoSuchElementException;
 public abstract class AbstractLine implements ILine
 {
     @Override // from interface ILine
-    public Point getP1 () {
-        return getP1(new Point());
+    public Point p1 () {
+        return p1(new Point());
     }
 
     @Override // from interface ILine
-    public Point getP1 (Point target) {
-        target.setLocation(getX1(), getY1());
-        return target;
+    public Point p1 (Point target) {
+        return target.set(x1(), y1());
     }
 
     @Override // from interface ILine
-    public Point getP2 () {
-        return getP2(new Point());
+    public Point p2 () {
+        return p2(new Point());
     }
 
     @Override // from interface ILine
-    public Point getP2 (Point target) {
-        target.setLocation(getX2(), getY2());
-        return target;
+    public Point p2 (Point target) {
+        return target.set(x2(), y2());
     }
 
     @Override // from interface ILine
     public double pointLineDistSq (double px, double py) {
-        return Lines.pointLineDistSq(px, py, getX1(), getY1(), getX2(), getY2());
+        return Lines.pointLineDistSq(px, py, x1(), y1(), x2(), y2());
     }
 
     @Override // from interface ILine
     public double pointLineDistSq (IPoint p) {
-        return Lines.pointLineDistSq(p.getX(), p.getY(), getX1(), getY1(), getX2(), getY2());
+        return Lines.pointLineDistSq(p.x(), p.y(), x1(), y1(), x2(), y2());
     }
 
     @Override // from interface ILine
     public double pointLineDist (double px, double py) {
-        return Lines.pointLineDist(px, py, getX1(), getY1(), getX2(), getY2());
+        return Lines.pointLineDist(px, py, x1(), y1(), x2(), y2());
     }
 
     @Override // from interface ILine
     public double pointLineDist (IPoint p) {
-        return Lines.pointLineDist(p.getX(), p.getY(), getX1(), getY1(), getX2(), getY2());
+        return Lines.pointLineDist(p.x(), p.y(), x1(), y1(), x2(), y2());
     }
 
     @Override // from interface ILine
     public double pointSegDistSq (double px, double py) {
-        return Lines.pointSegDistSq(px, py, getX1(), getY1(), getX2(), getY2());
+        return Lines.pointSegDistSq(px, py, x1(), y1(), x2(), y2());
     }
 
     @Override // from interface ILine
     public double pointSegDistSq (IPoint p) {
-        return Lines.pointSegDistSq(p.getX(), p.getY(), getX1(), getY1(), getX2(), getY2());
+        return Lines.pointSegDistSq(p.x(), p.y(), x1(), y1(), x2(), y2());
     }
 
     @Override // from interface ILine
     public double pointSegDist (double px, double py) {
-        return Lines.pointSegDist(px, py, getX1(), getY1(), getX2(), getY2());
+        return Lines.pointSegDist(px, py, x1(), y1(), x2(), y2());
     }
 
     @Override // from interface ILine
     public double pointSegDist (IPoint p) {
-        return Lines.pointSegDist(p.getX(), p.getY(), getX1(), getY1(), getX2(), getY2());
+        return Lines.pointSegDist(p.x(), p.y(), x1(), y1(), x2(), y2());
     }
 
     @Override // from interface ILine
     public int relativeCCW (double px, double py) {
-        return Lines.relativeCCW(px, py, getX1(), getY1(), getX2(), getY2());
+        return Lines.relativeCCW(px, py, x1(), y1(), x2(), y2());
     }
 
     @Override // from interface ILine
     public int relativeCCW (IPoint p) {
-        return Lines.relativeCCW(p.getX(), p.getY(), getX1(), getY1(), getX2(), getY2());
+        return Lines.relativeCCW(p.x(), p.y(), x1(), y1(), x2(), y2());
     }
 
     @Override // from interface ILine
     public Line clone () {
-        return new Line(getX1(), getY1(), getX2(), getY2());
+        return new Line(x1(), y1(), x2(), y2());
     }
 
     @Override // from interface IShape
@@ -116,7 +114,7 @@ public abstract class AbstractLine implements ILine
 
     @Override // from interface IShape
     public boolean intersects (double rx, double ry, double rw, double rh) {
-        return Lines.lineIntersectsRect(getX1(), getY1(), getX2(), getY2(), rx, ry, rw, rh);
+        return Lines.lineIntersectsRect(x1(), y1(), x2(), y2(), rx, ry, rw, rh);
     }
 
     @Override // from interface IShape
@@ -125,13 +123,13 @@ public abstract class AbstractLine implements ILine
     }
 
     @Override // from interface IShape
-    public Rectangle getBounds () {
-        return getBounds(new Rectangle());
+    public Rectangle bounds () {
+        return bounds(new Rectangle());
     }
 
     @Override // from interface IShape
-    public Rectangle getBounds (Rectangle target) {
-        double x1 = getX1(), x2 = getX2(), y1 = getY1(), y2 = getY2();
+    public Rectangle bounds (Rectangle target) {
+        double x1 = x1(), x2 = x2(), y1 = y1(), y2 = y2();
         double rx, ry, rw, rh;
         if (x1 < x2) {
             rx = x1;
@@ -152,12 +150,12 @@ public abstract class AbstractLine implements ILine
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform at) {
+    public PathIterator pathIterator (Transform at) {
         return new Iterator(this, at);
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform at, double flatness) {
+    public PathIterator pathIterator (Transform at, double flatness) {
         return new Iterator(this, at);
     }
 
@@ -165,18 +163,18 @@ public abstract class AbstractLine implements ILine
     protected static class Iterator implements PathIterator
     {
         private double x1, y1, x2, y2;
-        private AffineTransform t;
+        private Transform t;
         private int index;
 
-        Iterator (ILine l, AffineTransform at) {
-            this.x1 = l.getX1();
-            this.y1 = l.getY1();
-            this.x2 = l.getX2();
-            this.y2 = l.getY2();
+        Iterator (ILine l, Transform at) {
+            this.x1 = l.x1();
+            this.y1 = l.y1();
+            this.x2 = l.x2();
+            this.y2 = l.y2();
             this.t = at;
         }
 
-        @Override public int getWindingRule () {
+        @Override public int windingRule () {
             return WIND_NON_ZERO;
         }
 

@@ -15,39 +15,38 @@ import pythagoras.util.Platform;
 public abstract class AbstractRectangle extends RectangularShape implements IRectangle
 {
     @Override // from interface IRectangle
-    public Point getLocation () {
-        return getLocation(new Point());
+    public Point location () {
+        return location(new Point());
     }
 
     @Override // from interface IRectangle
-    public Point getLocation (Point target) {
-        target.setLocation(getX(), getY());
-        return target;
+    public Point location (Point target) {
+        return target.set(x(), y());
     }
 
     @Override // from interface IRectangle
-    public Dimension getSize () {
-        return getSize(new Dimension());
+    public Dimension size () {
+        return size(new Dimension());
     }
 
     @Override // from interface IRectangle
-    public Dimension getSize (Dimension target) {
-        target.setSize(getWidth(), getHeight());
+    public Dimension size (Dimension target) {
+        target.setSize(width(), height());
         return target;
     }
 
     @Override // from interface IRectangle
     public Rectangle intersection (double rx, double ry, double rw, double rh) {
-        double x1 = Math.max(getX(), rx);
-        double y1 = Math.max(getY(), ry);
-        double x2 = Math.min(getMaxX(), rx + rw);
-        double y2 = Math.min(getMaxY(), ry + rh);
+        double x1 = Math.max(x(), rx);
+        double y1 = Math.max(y(), ry);
+        double x2 = Math.min(maxX(), rx + rw);
+        double y2 = Math.min(maxY(), ry + rh);
         return new Rectangle(x1, y1, x2 - x1, y2 - y1);
     }
 
     @Override // from interface IRectangle
     public Rectangle intersection (IRectangle r) {
-        return intersection(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+        return intersection(r.x(), r.y(), r.width(), r.height());
     }
 
     @Override // from interface IRectangle
@@ -59,31 +58,31 @@ public abstract class AbstractRectangle extends RectangularShape implements IRec
 
     @Override // from interface IRectangle
     public boolean intersectsLine (double x1, double y1, double x2, double y2) {
-        return Lines.lineIntersectsRect(x1, y1, x2, y2, getX(), getY(), getWidth(), getHeight());
+        return Lines.lineIntersectsRect(x1, y1, x2, y2, x(), y(), width(), height());
     }
 
     @Override // from interface IRectangle
     public boolean intersectsLine (ILine l) {
-        return intersectsLine(l.getX1(), l.getY1(), l.getX2(), l.getY2());
+        return intersectsLine(l.x1(), l.y1(), l.x2(), l.y2());
     }
 
     @Override // from interface IRectangle
     public int outcode (double px, double py) {
         int code = 0;
 
-        if (getWidth() <= 0) {
+        if (width() <= 0) {
             code |= OUT_LEFT | OUT_RIGHT;
-        } else if (px < getX()) {
+        } else if (px < x()) {
             code |= OUT_LEFT;
-        } else if (px > getMaxX()) {
+        } else if (px > maxX()) {
             code |= OUT_RIGHT;
         }
 
-        if (getHeight() <= 0) {
+        if (height() <= 0) {
             code |= OUT_TOP | OUT_BOTTOM;
-        } else if (py < getY()) {
+        } else if (py < y()) {
             code |= OUT_TOP;
-        } else if (py > getMaxY()) {
+        } else if (py > maxY()) {
             code |= OUT_BOTTOM;
         }
 
@@ -92,7 +91,7 @@ public abstract class AbstractRectangle extends RectangularShape implements IRec
 
     @Override // from interface IRectangle
     public int outcode (IPoint p) {
-        return outcode(p.getX(), p.getY());
+        return outcode(p.x(), p.y());
     }
 
     @Override // from interface IRectangle
@@ -104,19 +103,19 @@ public abstract class AbstractRectangle extends RectangularShape implements IRec
     public boolean contains (double px, double py) {
         if (isEmpty()) return false;
 
-        double x = getX(), y = getY();
+        double x = x(), y = y();
         if (px < x || py < y) return false;
 
         px -= x;
         py -= y;
-        return px < getWidth() && py < getHeight();
+        return px < width() && py < height();
     }
 
     @Override // from interface IShape
     public boolean contains (double rx, double ry, double rw, double rh) {
         if (isEmpty()) return false;
 
-        double x1 = getX(), y1 = getY(), x2 = x1 + getWidth(), y2 = y1 + getHeight();
+        double x1 = x(), y1 = y(), x2 = x1 + width(), y2 = y1 + height();
         return (x1 <= rx) && (rx + rw <= x2) && (y1 <= ry) && (ry + rh <= y2);
     }
 
@@ -124,17 +123,17 @@ public abstract class AbstractRectangle extends RectangularShape implements IRec
     public boolean intersects (double rx, double ry, double rw, double rh) {
         if (isEmpty()) return false;
 
-        double x1 = getX(), y1 = getY(), x2 = x1 + getWidth(), y2 = y1 + getHeight();
+        double x1 = x(), y1 = y(), x2 = x1 + width(), y2 = y1 + height();
         return (rx + rw > x1) && (rx < x2) && (ry + rh > y1) && (ry < y2);
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform t) {
+    public PathIterator pathIterator (Transform t) {
         return new Iterator(this, t);
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform t, double flatness) {
+    public PathIterator pathIterator (Transform t, double flatness) {
         return new Iterator(this, t);
     }
 
@@ -145,45 +144,45 @@ public abstract class AbstractRectangle extends RectangularShape implements IRec
         }
         if (obj instanceof AbstractRectangle) {
             AbstractRectangle r = (AbstractRectangle)obj;
-            return r.getX() == getX() && r.getY() == getY() &&
-                r.getWidth() == getWidth() && r.getHeight() == getHeight();
+            return r.x() == x() && r.y() == y() &&
+                r.width() == width() && r.height() == height();
         }
         return false;
     }
 
     @Override // from Object
     public int hashCode () {
-        return Platform.hashCode(getX()) ^ Platform.hashCode(getY()) ^
-            Platform.hashCode(getWidth()) ^ Platform.hashCode(getHeight());
+        return Platform.hashCode(x()) ^ Platform.hashCode(y()) ^
+            Platform.hashCode(width()) ^ Platform.hashCode(height());
     }
 
     @Override // from Object
     public String toString () {
-        return Dimensions.dimenToString(getWidth(), getHeight()) +
-            Points.pointToString(getX(), getY());
+        return Dimensions.dimenToString(width(), height()) +
+            Points.pointToString(x(), y());
     }
 
     /** An iterator over an {@link IRectangle}. */
     protected static class Iterator implements PathIterator
     {
         private double x, y, width, height;
-        private AffineTransform t;
+        private Transform t;
 
         /** The current segment index. */
         private int index;
 
-        Iterator (IRectangle r, AffineTransform at) {
-            this.x = r.getX();
-            this.y = r.getY();
-            this.width = r.getWidth();
-            this.height = r.getHeight();
+        Iterator (IRectangle r, Transform at) {
+            this.x = r.x();
+            this.y = r.y();
+            this.width = r.width();
+            this.height = r.height();
             this.t = at;
             if (width < 0f || height < 0f) {
                 index = 6;
             }
         }
 
-        @Override public int getWindingRule () {
+        @Override public int windingRule () {
             return WIND_NON_ZERO;
         }
 

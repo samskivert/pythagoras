@@ -24,18 +24,18 @@ public interface IRectangle extends IRectangularShape, Cloneable
     int OUT_BOTTOM = 8;
 
     /** Returns a copy of this rectangle's upper-left corner. */
-    Point getLocation ();
+    Point location ();
 
     /** Initializes the supplied point with this rectangle's upper-left corner.
      * @return the supplied point. */
-    Point getLocation (Point target);
+    Point location (Point target);
 
     /** Returns a copy of this rectangle's size. */
-    Dimension getSize ();
+    Dimension size ();
 
     /** Initializes the supplied dimension with this rectangle's size.
      * @return the supplied dimension. */
-    Dimension getSize (Dimension target);
+    Dimension size (Dimension target);
 
     /** Returns the intersection of the specified rectangle and this rectangle (i.e. the largest
      * rectangle contained in both this and the specified rectangle). */

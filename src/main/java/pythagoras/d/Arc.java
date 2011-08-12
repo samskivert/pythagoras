@@ -47,8 +47,7 @@ public class Arc extends AbstractArc implements Serializable
      * Creates an arc of the specified type with the specified framing rectangle, starting angle
      * and angular extent.
      */
-    public Arc (double x, double y, double width, double height,
-                double start, double extent, int type) {
+    public Arc (double x, double y, double width, double height, double start, double extent, int type) {
         setArc(x, y, width, height, start, extent, type);
     }
 
@@ -57,42 +56,42 @@ public class Arc extends AbstractArc implements Serializable
      * angular extent.
      */
     public Arc (IRectangle bounds, double start, double extent, int type) {
-        setArc(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(),
+        setArc(bounds.x(), bounds.y(), bounds.width(), bounds.height(),
                start, extent, type);
     }
 
     @Override // from interface IArc
-    public int getArcType () {
+    public int arcType () {
         return type;
     }
 
     @Override // from interface IArc
-    public double getX () {
+    public double x () {
         return x;
     }
 
     @Override // from interface IArc
-    public double getY () {
+    public double y () {
         return y;
     }
 
     @Override // from interface IArc
-    public double getWidth () {
+    public double width () {
         return width;
     }
 
     @Override // from interface IArc
-    public double getHeight () {
+    public double height () {
         return height;
     }
 
     @Override // from interface IArc
-    public double getAngleStart () {
+    public double angleStart () {
         return start;
     }
 
     @Override // from interface IArc
-    public double getAngleExtent () {
+    public double angleExtent () {
         return extent;
     }
 
@@ -140,7 +139,7 @@ public class Arc extends AbstractArc implements Serializable
      * values.
      */
     public void setArc (IPoint point, IDimension size, double start, double extent, int type) {
-        setArc(point.getX(), point.getY(), size.getWidth(), size.getHeight(), start, extent, type);
+        setArc(point.x(), point.y(), size.width(), size.height(), start, extent, type);
     }
 
     /**
@@ -148,7 +147,7 @@ public class Arc extends AbstractArc implements Serializable
      * values.
      */
     public void setArc (IRectangle rect, double start, double extent, int type) {
-        setArc(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), start, extent, type);
+        setArc(rect.x(), rect.y(), rect.width(), rect.height(), start, extent, type);
     }
 
     /**
@@ -156,8 +155,8 @@ public class Arc extends AbstractArc implements Serializable
      * the supplied arc.
      */
     public void setArc (IArc arc) {
-        setArc(arc.getX(), arc.getY(), arc.getWidth(), arc.getHeight(), arc.getAngleStart(),
-               arc.getAngleExtent(), arc.getArcType());
+        setArc(arc.x(), arc.y(), arc.width(), arc.height(), arc.angleStart(),
+               arc.angleExtent(), arc.arcType());
     }
 
     /**
@@ -175,16 +174,16 @@ public class Arc extends AbstractArc implements Serializable
      */
     public void setArcByTangent (IPoint p1, IPoint p2, IPoint p3, double radius) {
         // use simple geometric calculations of arc center, radius and angles by tangents
-        double a1 = -Math.atan2(p1.getY() - p2.getY(), p1.getX() - p2.getX());
-        double a2 = -Math.atan2(p3.getY() - p2.getY(), p3.getX() - p2.getX());
+        double a1 = -Math.atan2(p1.y() - p2.y(), p1.x() - p2.x());
+        double a2 = -Math.atan2(p3.y() - p2.y(), p3.x() - p2.x());
         double am = (a1 + a2) / 2f;
         double ah = a1 - am;
         double d = radius / Math.abs(Math.sin(ah));
-        double x = p2.getX() + d * Math.cos(am);
-        double y = p2.getY() - d * Math.sin(am);
+        double x = p2.x() + d * Math.cos(am);
+        double y = p2.y() - d * Math.sin(am);
         ah = ah >= 0f ? Math.PI * 1.5f - ah : Math.PI * 0.5f - ah;
-        a1 = getNormAngle(Math.toDegrees(am - ah));
-        a2 = getNormAngle(Math.toDegrees(am + ah));
+        a1 = normAngle(Math.toDegrees(am - ah));
+        a2 = normAngle(Math.toDegrees(am + ah));
         double delta = a2 - a1;
         if (delta <= 0f) {
             delta += 360f;
@@ -197,8 +196,8 @@ public class Arc extends AbstractArc implements Serializable
      * the center of this arc.
      */
     public void setAngleStart (IPoint point) {
-        double angle = Math.atan2(point.getY() - getCenterY(), point.getX() - getCenterX());
-        setAngleStart(getNormAngle(-Math.toDegrees(angle)));
+        double angle = Math.atan2(point.y() - centerY(), point.x() - centerX());
+        setAngleStart(normAngle(-Math.toDegrees(angle)));
     }
 
     /**
@@ -209,10 +208,10 @@ public class Arc extends AbstractArc implements Serializable
      * counterclockwise from the first point around to the second point.
      */
     public void setAngles (double x1, double y1, double x2, double y2) {
-        double cx = getCenterX();
-        double cy = getCenterY();
-        double a1 = getNormAngle(-Math.toDegrees(Math.atan2(y1 - cy, x1 - cx)));
-        double a2 = getNormAngle(-Math.toDegrees(Math.atan2(y2 - cy, x2 - cx)));
+        double cx = centerX();
+        double cy = centerY();
+        double a1 = normAngle(-Math.toDegrees(Math.atan2(y1 - cy, x1 - cx)));
+        double a2 = normAngle(-Math.toDegrees(Math.atan2(y2 - cy, x2 - cx)));
         a2 -= a1;
         if (a2 <= 0f) {
             a2 += 360f;
@@ -229,12 +228,12 @@ public class Arc extends AbstractArc implements Serializable
      * counterclockwise from the first point around to the second point.
      */
     public void setAngles (IPoint p1, IPoint p2) {
-        setAngles(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+        setAngles(p1.x(), p1.y(), p2.x(), p2.y());
     }
 
     @Override // from RectangularShape
     public void setFrame (double x, double y, double width, double height) {
-        setArc(x, y, width, height, getAngleStart(), getAngleExtent(), type);
+        setArc(x, y, width, height, angleStart(), angleExtent(), type);
     }
 
     private int type;

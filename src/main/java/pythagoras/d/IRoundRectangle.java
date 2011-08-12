@@ -10,10 +10,10 @@ package pythagoras.d;
 public interface IRoundRectangle extends IRectangularShape, Cloneable
 {
     /** Returns the width of the corner arc. */
-    double getArcWidth ();
+    double arcWidth ();
 
     /** Returns the height of the corner arc. */
-    double getArcHeight ();
+    double arcHeight ();
 
     /** Returns a mutable copy of this round rectangle. */
     RoundRectangle clone ();

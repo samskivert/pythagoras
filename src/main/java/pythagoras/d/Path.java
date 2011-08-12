@@ -35,8 +35,8 @@ public final class Path implements IShape, Cloneable
 
     public Path (IShape shape) {
         this(WIND_NON_ZERO, BUFFER_SIZE);
-        PathIterator p = shape.getPathIterator(null);
-        setWindingRule(p.getWindingRule());
+        PathIterator p = shape.pathIterator(null);
+        setWindingRule(p.windingRule());
         append(p, false);
     }
 
@@ -47,7 +47,7 @@ public final class Path implements IShape, Cloneable
         this.rule = rule;
     }
 
-    public int getWindingRule () {
+    public int windingRule () {
         return rule;
     }
 
@@ -98,7 +98,7 @@ public final class Path implements IShape, Cloneable
     }
 
     public void append (IShape shape, boolean connect) {
-        PathIterator p = shape.getPathIterator(null);
+        PathIterator p = shape.pathIterator(null);
         append(p, connect);
     }
 
@@ -135,7 +135,7 @@ public final class Path implements IShape, Cloneable
         }
     }
 
-    public Point getCurrentPoint () {
+    public Point currentPoint () {
         if (typeSize == 0) {
             return null;
         }
@@ -157,11 +157,11 @@ public final class Path implements IShape, Cloneable
         pointSize = 0;
     }
 
-    public void transform (AffineTransform t) {
+    public void transform (Transform t) {
         t.transform(points, 0, points, 0, pointSize / 2);
     }
 
-    public IShape createTransformedShape (AffineTransform t) {
+    public IShape createTransformedShape (Transform t) {
         Path p = clone();
         if (t != null) {
             p.transform(t);
@@ -170,12 +170,12 @@ public final class Path implements IShape, Cloneable
     }
 
     @Override // from interface IShape
-    public Rectangle getBounds () {
-        return getBounds(new Rectangle());
+    public Rectangle bounds () {
+        return bounds(new Rectangle());
     }
 
     @Override // from interface IShape
-    public Rectangle getBounds (Rectangle target) {
+    public Rectangle bounds (Rectangle target) {
         double rx1, ry1, rx2, ry2;
         if (pointSize == 0) {
             rx1 = ry1 = rx2 = ry2 = 0f;
@@ -205,7 +205,7 @@ public final class Path implements IShape, Cloneable
     @Override // from interface IShape
     public boolean isEmpty () {
         // TODO: will this be insanely difficult to do correctly?
-        return getBounds().isEmpty();
+        return bounds().isEmpty();
     }
 
     @Override // from interface IShape
@@ -227,27 +227,27 @@ public final class Path implements IShape, Cloneable
 
     @Override // from interface IShape
     public boolean contains (IPoint p) {
-        return contains(p.getX(), p.getY());
+        return contains(p.x(), p.y());
     }
 
     @Override // from interface IShape
     public boolean contains (IRectangle r) {
-        return contains(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+        return contains(r.x(), r.y(), r.width(), r.height());
     }
 
     @Override // from interface IShape
     public boolean intersects (IRectangle r) {
-        return intersects(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+        return intersects(r.x(), r.y(), r.width(), r.height());
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform t) {
+    public PathIterator pathIterator (Transform t) {
         return new Iterator(this, t);
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform t, double flatness) {
-        return new FlatteningPathIterator(getPathIterator(t), flatness);
+    public PathIterator pathIterator (Transform t, double flatness) {
+        return new FlatteningPathIterator(pathIterator(t), flatness);
     }
 
     // @Override // can't declare @Override due to GWT
@@ -309,19 +309,19 @@ public final class Path implements IShape, Cloneable
         private Path p;
 
         /** The path iterator transformation. */
-        private AffineTransform t;
+        private Transform t;
 
         Iterator (Path path) {
             this(path, null);
         }
 
-        Iterator (Path path, AffineTransform at) {
+        Iterator (Path path, Transform at) {
             this.p = path;
             this.t = at;
         }
 
-        @Override public int getWindingRule () {
-            return p.getWindingRule();
+        @Override public int windingRule () {
+            return p.windingRule();
         }
 
         @Override public boolean isDone () {

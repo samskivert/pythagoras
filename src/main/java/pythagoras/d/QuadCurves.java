@@ -9,35 +9,35 @@ package pythagoras.d;
  */
 public class QuadCurves
 {
-    public static double getFlatnessSq (double x1, double y1, double ctrlx, double ctrly,
+    public static double flatnessSq (double x1, double y1, double ctrlx, double ctrly,
                                        double x2, double y2) {
         return Lines.pointSegDistSq(ctrlx, ctrly, x1, y1, x2, y2);
     }
 
-    public static double getFlatnessSq (double[] coords, int offset) {
+    public static double flatnessSq (double[] coords, int offset) {
         return Lines.pointSegDistSq(coords[offset + 2], coords[offset + 3],
                                     coords[offset + 0], coords[offset + 1],
                                     coords[offset + 4], coords[offset + 5]);
     }
 
-    public static double getFlatness (double x1, double y1, double ctrlx, double ctrly,
+    public static double flatness (double x1, double y1, double ctrlx, double ctrly,
                                      double x2, double y2) {
         return Lines.pointSegDist(ctrlx, ctrly, x1, y1, x2, y2);
     }
 
-    public static double getFlatness (double[] coords, int offset) {
+    public static double flatness (double[] coords, int offset) {
         return Lines.pointSegDist(coords[offset + 2], coords[offset + 3],
                                   coords[offset + 0], coords[offset + 1],
                                   coords[offset + 4], coords[offset + 5]);
     }
 
     public static void subdivide (IQuadCurve src, QuadCurve left, QuadCurve right) {
-        double x1 = src.getX1();
-        double y1 = src.getY1();
-        double cx = src.getCtrlX();
-        double cy = src.getCtrlY();
-        double x2 = src.getX2();
-        double y2 = src.getY2();
+        double x1 = src.x1();
+        double y1 = src.y1();
+        double cx = src.ctrlX();
+        double cy = src.ctrlY();
+        double x2 = src.x2();
+        double y2 = src.y2();
         double cx1 = (x1 + cx) / 2f;
         double cy1 = (y1 + cy) / 2f;
         double cx2 = (x2 + cx) / 2f;

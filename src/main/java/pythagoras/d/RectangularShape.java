@@ -19,7 +19,7 @@ public abstract class RectangularShape implements IRectangularShape
      * Sets the location and size of the framing rectangle of this shape to the supplied values.
      */
     public void setFrame (IPoint loc, IDimension size) {
-        setFrame(loc.getX(), loc.getY(), size.getWidth(), size.getHeight());
+        setFrame(loc.x(), loc.y(), size.width(), size.height());
     }
 
     /**
@@ -27,7 +27,7 @@ public abstract class RectangularShape implements IRectangularShape
      * supplied rectangle.
      */
     public void setFrame (IRectangle r) {
-        setFrame(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+        setFrame(r.x(), r.y(), r.width(), r.height());
     }
 
     /**
@@ -58,7 +58,7 @@ public abstract class RectangularShape implements IRectangularShape
      * diagonal line.
      */
     public void setFrameFromDiagonal (IPoint p1, IPoint p2) {
-        setFrameFromDiagonal(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+        setFrameFromDiagonal(p1.x(), p1.y(), p2.x(), p2.y());
     }
 
     /**
@@ -77,100 +77,100 @@ public abstract class RectangularShape implements IRectangularShape
      * center and corner points.
      */
     public void setFrameFromCenter (IPoint center, IPoint corner) {
-        setFrameFromCenter(center.getX(), center.getY(), corner.getX(), corner.getY());
+        setFrameFromCenter(center.x(), center.y(), corner.x(), corner.y());
     }
 
     @Override // from IRectangularShape
-    public Point getMin ()
+    public Point min ()
     {
-        return new Point(getMinX(), getMinY());
+        return new Point(minX(), minY());
     }
 
     @Override // from IRectangularShape
-    public double getMinX () {
-        return getX();
+    public double minX () {
+        return x();
     }
 
     @Override // from IRectangularShape
-    public double getMinY () {
-        return getY();
+    public double minY () {
+        return y();
     }
 
     @Override // from IRectangularShape
-    public Point getMax ()
+    public Point max ()
     {
-        return new Point(getMaxX(), getMaxY());
+        return new Point(maxX(), maxY());
     }
 
     @Override // from IRectangularShape
-    public double getMaxX () {
-        return getX() + getWidth();
+    public double maxX () {
+        return x() + width();
     }
 
     @Override // from IRectangularShape
-    public double getMaxY () {
-        return getY() + getHeight();
+    public double maxY () {
+        return y() + height();
     }
 
     @Override // from IRectangularShape
-    public Point getCenter ()
+    public Point center ()
     {
-        return new Point(getCenterX(), getCenterY());
+        return new Point(centerX(), centerY());
     }
 
     @Override // from IRectangularShape
-    public double getCenterX () {
-        return getX() + getWidth() / 2;
+    public double centerX () {
+        return x() + width() / 2;
     }
 
     @Override // from IRectangularShape
-    public double getCenterY () {
-        return getY() + getHeight() / 2;
+    public double centerY () {
+        return y() + height() / 2;
     }
 
     @Override // from IRectangularShape
-    public Rectangle getFrame () {
-        return getBounds();
+    public Rectangle frame () {
+        return bounds();
     }
 
     @Override // from IRectangularShape
-    public Rectangle getFrame (Rectangle target) {
-        return getBounds(target);
+    public Rectangle frame (Rectangle target) {
+        return bounds(target);
     }
 
     @Override // from interface IShape
     public boolean isEmpty () {
-        return getWidth() <= 0 || getHeight() <= 0;
+        return width() <= 0 || height() <= 0;
     }
 
     @Override // from interface IShape
     public boolean contains (IPoint point) {
-        return contains(point.getX(), point.getY());
+        return contains(point.x(), point.y());
     }
 
     @Override // from interface IShape
     public boolean contains (IRectangle rect) {
-        return contains(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+        return contains(rect.x(), rect.y(), rect.width(), rect.height());
     }
 
     @Override // from interface IShape
     public boolean intersects (IRectangle rect) {
-        return intersects(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+        return intersects(rect.x(), rect.y(), rect.width(), rect.height());
     }
 
     @Override // from interface IShape
-    public Rectangle getBounds () {
-        return getBounds(new Rectangle());
+    public Rectangle bounds () {
+        return bounds(new Rectangle());
     }
 
     @Override // from interface IShape
-    public Rectangle getBounds (Rectangle target) {
-        target.setBounds(getX(), getY(), getWidth(), getHeight());
+    public Rectangle bounds (Rectangle target) {
+        target.setBounds(x(), y(), width(), height());
         return target;
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform t, double flatness) {
-        return new FlatteningPathIterator(getPathIterator(t), flatness);
+    public PathIterator pathIterator (Transform t, double flatness) {
+        return new FlatteningPathIterator(pathIterator(t), flatness);
     }
 }

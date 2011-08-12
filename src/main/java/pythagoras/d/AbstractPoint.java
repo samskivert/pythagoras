@@ -12,27 +12,59 @@ import pythagoras.util.Platform;
  */
 public abstract class AbstractPoint implements IPoint
 {
-    @Override // from interface IPoint
+    @Override // from IPoint
     public double distanceSq (double px, double py) {
-        return Points.distanceSq(getX(), getY(), px, py);
+        return Points.distanceSq(x(), y(), px, py);
     }
 
-    @Override // from interface IPoint
+    @Override // from IPoint
     public double distanceSq (IPoint p) {
-        return Points.distanceSq(getX(), getY(), p.getX(), p.getY());
+        return Points.distanceSq(x(), y(), p.x(), p.y());
     }
 
-    @Override // from interface IPoint
+    @Override // from IPoint
     public double distance (double px, double py) {
-        return Points.distance(getX(), getY(), px, py);
+        return Points.distance(x(), y(), px, py);
     }
 
-    @Override // from interface IPoint
+    @Override // from IPoint
     public double distance (IPoint p) {
-        return Points.distance(getX(), getY(), p.getX(), p.getY());
+        return Points.distance(x(), y(), p.x(), p.y());
     }
 
-    @Override // from interface IPoint
+    @Override // from IPoint
+    public Point mult (double s) {
+        return mult(s, new Point());
+    }
+
+    @Override // from IPoint
+    public Point mult (double s, Point result) {
+        return result.set(x() * s, y() * s);
+    }
+
+    @Override // from IPoint
+    public Point add (double x, double y) {
+        return new Point(x() + x, y() + y);
+    }
+
+    @Override // from IPoint
+    public Point add (double x, double y, Point result) {
+        return result.set(x() + x, y() + y);
+    }
+
+    @Override // from IPoint
+    public Point rotate (double angle) {
+        return rotate(angle, new Point());
+    }
+
+    @Override // from IPoint
+    public Point rotate (double angle, Point result) {
+        double x = x(), y = y();
+        double sina = Math.sin(angle), cosa = Math.cos(angle);
+        return result.set(x*cosa - y*sina, x*sina + y*cosa);
+    }
+
+    @Override // from IPoint
     public Point clone () {
         return new Point(this);
     }
@@ -44,18 +76,18 @@ public abstract class AbstractPoint implements IPoint
         }
         if (obj instanceof AbstractPoint) {
             AbstractPoint p = (AbstractPoint)obj;
-            return getX() == p.getX() && getY() == p.getY();
+            return x() == p.x() && y() == p.y();
         }
         return false;
     }
 
     @Override
     public int hashCode () {
-        return Platform.hashCode(getX()) ^ Platform.hashCode(getY());
+        return Platform.hashCode(x()) ^ Platform.hashCode(y());
     }
 
     @Override
     public String toString () {
-        return Points.pointToString(getX(), getY());
+        return Points.pointToString(x(), y());
     }
 }

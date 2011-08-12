@@ -177,8 +177,8 @@ class CrossingHelper
                 IntersectPoint ip;
                 for (Iterator<IntersectPoint> i = isectPoints.iterator(); i.hasNext();) {
                     ip = i.next();
-                    if ((initBegin == ip.getBegIndex(true)) && (initEnd == ip.getEndIndex(true))) {
-                        if (compare(ip.getX(), ip.getY(), point[0], point[1]) > 0) {
+                    if ((initBegin == ip.begIndex(true)) && (initEnd == ip.endIndex(true))) {
+                        if (compare(ip.x(), ip.y(), point[0], point[1]) > 0) {
                             initEnd = -(isectPoints.indexOf(ip) + 1);
                             ip.setBegIndex1(-(isectPoints.size() + 1));
                         } else {
@@ -187,8 +187,8 @@ class CrossingHelper
                         }
                     }
 
-                    if ((addBegin == ip.getBegIndex(false)) && (addEnd == ip.getEndIndex(false))) {
-                        if (compare(ip.getX(), ip.getY(), point[0], point[1]) > 0) {
+                    if ((addBegin == ip.begIndex(false)) && (addEnd == ip.endIndex(false))) {
+                        if (compare(ip.x(), ip.y(), point[0], point[1]) > 0) {
                             addEnd = -(isectPoints.indexOf(ip) + 1);
                             ip.setBegIndex2(-(isectPoints.size() + 1));
                         } else {
@@ -256,7 +256,7 @@ class CrossingHelper
         IntersectPoint ipoint;
         for (Iterator<IntersectPoint> i = isectPoints.iterator(); i.hasNext();) {
             ipoint = i.next();
-            if (ipoint.getX() == point[0] && ipoint.getY() == point[1]) {
+            if (ipoint.x() == point[0] && ipoint.y() == point[1]) {
                 return true;
             }
         }

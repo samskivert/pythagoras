@@ -9,6 +9,9 @@ package pythagoras.d;
  */
 public class Points
 {
+    /** The point at the origin. */
+    public static final IPoint ZERO = new Point(0f, 0f);
+
     /**
      * Returns the squared Euclidean distance between the specified two points.
      */
@@ -25,16 +28,37 @@ public class Points
         return Math.sqrt(distanceSq(x1, y1, x2, y2));
     }
 
+    /** Transforms a point as specified, storing the result in the point provided.
+     * @return a reference to the result point, for chaining. */
+    public static Point transform (double x, double y, double sx, double sy, double rotation,
+                                   double tx, double ty, Point result) {
+        return transform(x, y, sx, sy, Math.sin(rotation), Math.cos(rotation), tx, ty,
+                         result);
+    }
+
+    /** Transforms a point as specified, storing the result in the point provided.
+     * @return a reference to the result point, for chaining. */
+    public static Point transform (double x, double y, double sx, double sy, double sina, double cosa,
+                                   double tx, double ty, Point result) {
+        return result.set((x*cosa - y*sina) * sx + tx, (x*sina + y*cosa) * sy + ty);
+    }
+
+    /** Inverse transforms a point as specified, storing the result in the point provided.
+     * @return a reference to the result point, for chaining. */
+    public static Point inverseTransform (double x, double y, double sx, double sy, double rotation,
+                                          double tx, double ty, Point result) {
+        x -= tx; y -= ty; // untranslate
+        double sinnega = Math.sin(-rotation), cosnega = Math.cos(-rotation);
+        double nx = (x * cosnega - y * sinnega); // unrotate
+        double ny = (x * sinnega + y * cosnega);
+        return result.set(nx / sx, ny / sy); // unscale
+    }
+
     /**
      * Returns a string describing the supplied point, of the form <code>+x+y</code>,
      * <code>+x-y</code>, <code>-x-y</code>, etc.
      */
     public static String pointToString (double x, double y) {
-        StringBuilder buf = new StringBuilder();
-        if (x >= 0) buf.append("+");
-        buf.append(x);
-        if (y >= 0) buf.append("+");
-        buf.append(y);
-        return buf.toString();
+        return MathUtil.toString(x) + MathUtil.toString(y);
     }
 }

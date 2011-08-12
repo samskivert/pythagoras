@@ -36,7 +36,7 @@ public interface PathIterator
     /**
      * Returns the winding rule used to determine the interior of this path.
      */
-    int getWindingRule ();
+    int windingRule ();
 
     /**
      * Returns true if this path has no additional segments.

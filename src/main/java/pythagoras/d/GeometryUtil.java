@@ -46,8 +46,8 @@ public class GeometryUtil
      *
      * @return 1 if two lines intersect in the defined interval, otherwise 0.
      */
-    public static int intersectLines (double x1, double y1, double x2, double y2,
-                                      double x3, double y3, double x4, double y4, double[] point) {
+    public static int intersectLines (double x1, double y1, double x2, double y2, double x3, double y3,
+                                      double x4, double y4, double[] point) {
         double A1 = -(y2 - y1);
         double B1 = (x2 - x1);
         double C1 = x1 * y2 - x2 * y1;
@@ -172,10 +172,9 @@ public class GeometryUtil
      *
      * @return the number of roots that lie in the interval.
      */
-    public static int intersectQuads (double x1, double y1, double x2, double y2,
-                                      double x3, double y3,
-                                      double qx1, double qy1, double qx2, double qy2,
-                                      double qx3, double qy3, double[] params) {
+    public static int intersectQuads (double x1, double y1, double x2, double y2, double x3, double y3,
+                                      double qx1, double qy1, double qx2, double qy2, double qx3,
+                                      double qy3, double[] params) {
         double[] initParams = new double[2];
         double[] xCoefs1 = new double[3];
         double[] yCoefs1 = new double[3];
@@ -288,11 +287,10 @@ public class GeometryUtil
      *
      * @return the number of intersection points that lie in the interval.
      */
-    public static int intersectCubics (double x1, double y1, double x2, double y2,
-                                       double x3, double y3, double x4, double y4,
-                                       double cx1, double cy1, double cx2, double cy2,
-                                       double cx3, double cy3, double cx4, double cy4,
-                                       double[] params) {
+    public static int intersectCubics (double x1, double y1, double x2, double y2, double x3, double y3,
+                                       double x4, double y4, double cx1, double cy1,
+                                       double cx2, double cy2, double cx3, double cy3,
+                                       double cx4, double cy4, double[] params) {
         int quantity = 0;
         double[] initParams = new double[3];
         double[] xCoefs1 = new double[4];

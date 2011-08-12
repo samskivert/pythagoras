@@ -13,35 +13,35 @@ import java.util.NoSuchElementException;
 public abstract class AbstractCubicCurve implements ICubicCurve
 {
     @Override // from interface ICubicCurve
-    public Point getP1 () {
-        return new Point(getX1(), getY1());
+    public Point p1 () {
+        return new Point(x1(), y1());
     }
 
     @Override // from interface ICubicCurve
-    public Point getCtrlP1 () {
-        return new Point(getCtrlX1(), getCtrlY1());
+    public Point ctrlP1 () {
+        return new Point(ctrlX1(), ctrlY1());
     }
 
     @Override // from interface ICubicCurve
-    public Point getCtrlP2 () {
-        return new Point(getCtrlX2(), getCtrlY2());
+    public Point ctrlP2 () {
+        return new Point(ctrlX2(), ctrlY2());
     }
 
     @Override // from interface ICubicCurve
-    public Point getP2 () {
-        return new Point(getX2(), getY2());
+    public Point p2 () {
+        return new Point(x2(), y2());
     }
 
     @Override // from interface ICubicCurve
-    public double getFlatnessSq () {
-        return CubicCurves.getFlatnessSq(getX1(), getY1(), getCtrlX1(), getCtrlY1(),
-                                         getCtrlX2(), getCtrlY2(), getX2(), getY2());
+    public double flatnessSq () {
+        return CubicCurves.flatnessSq(x1(), y1(), ctrlX1(), ctrlY1(),
+                                         ctrlX2(), ctrlY2(), x2(), y2());
     }
 
     @Override // from interface ICubicCurve
-    public double getFlatness () {
-        return CubicCurves.getFlatness(getX1(), getY1(), getCtrlX1(), getCtrlY1(),
-                                       getCtrlX2(), getCtrlY2(), getX2(), getY2());
+    public double flatness () {
+        return CubicCurves.flatness(x1(), y1(), ctrlX1(), ctrlY1(),
+                                       ctrlX2(), ctrlY2(), x2(), y2());
     }
 
     @Override // from interface ICubicCurve
@@ -51,8 +51,8 @@ public abstract class AbstractCubicCurve implements ICubicCurve
 
     @Override // from interface ICubicCurve
     public CubicCurve clone () {
-        return new CubicCurve(getX1(), getY1(), getCtrlX1(), getCtrlY1(),
-                              getCtrlX2(), getCtrlY2(), getX2(), getY2());
+        return new CubicCurve(x1(), y1(), ctrlX1(), ctrlY1(),
+                              ctrlX2(), ctrlY2(), x2(), y2());
     }
 
     @Override // from interface IShape
@@ -73,12 +73,12 @@ public abstract class AbstractCubicCurve implements ICubicCurve
 
     @Override // from interface IShape
     public boolean contains (IPoint p) {
-        return contains(p.getX(), p.getY());
+        return contains(p.x(), p.y());
     }
 
     @Override // from interface IShape
     public boolean contains (IRectangle r) {
-        return contains(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+        return contains(r.x(), r.y(), r.width(), r.height());
     }
 
     @Override // from interface IShape
@@ -89,19 +89,19 @@ public abstract class AbstractCubicCurve implements ICubicCurve
 
     @Override // from interface IShape
     public boolean intersects (IRectangle r) {
-        return intersects(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+        return intersects(r.x(), r.y(), r.width(), r.height());
     }
 
     @Override // from interface IShape
-    public Rectangle getBounds () {
-        return getBounds(new Rectangle());
+    public Rectangle bounds () {
+        return bounds(new Rectangle());
     }
 
     @Override // from interface IShape
-    public Rectangle getBounds (Rectangle target) {
-        double x1 = getX1(), y1 = getY1(), x2 = getX2(), y2 = getY2();
-        double ctrlx1 = getCtrlX1(), ctrly1 = getCtrlY1();
-        double ctrlx2 = getCtrlX2(), ctrly2 = getCtrlY2();
+    public Rectangle bounds (Rectangle target) {
+        double x1 = x1(), y1 = y1(), x2 = x2(), y2 = y2();
+        double ctrlx1 = ctrlX1(), ctrly1 = ctrlY1();
+        double ctrlx2 = ctrlX2(), ctrly2 = ctrlY2();
         double rx1 = Math.min(Math.min(x1, x2), Math.min(ctrlx1, ctrlx2));
         double ry1 = Math.min(Math.min(y1, y2), Math.min(ctrly1, ctrly2));
         double rx2 = Math.max(Math.max(x1, x2), Math.max(ctrlx1, ctrlx2));
@@ -111,28 +111,28 @@ public abstract class AbstractCubicCurve implements ICubicCurve
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform t) {
+    public PathIterator pathIterator (Transform t) {
         return new Iterator(this, t);
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform at, double flatness) {
-        return new FlatteningPathIterator(getPathIterator(at), flatness);
+    public PathIterator pathIterator (Transform at, double flatness) {
+        return new FlatteningPathIterator(pathIterator(at), flatness);
     }
 
     /** An iterator over an {@link ICubicCurve}. */
     protected static class Iterator implements PathIterator
     {
         private ICubicCurve c;
-        private AffineTransform t;
+        private Transform t;
         private int index;
 
-        Iterator (ICubicCurve c, AffineTransform t) {
+        Iterator (ICubicCurve c, Transform t) {
             this.c = c;
             this.t = t;
         }
 
-        @Override public int getWindingRule () {
+        @Override public int windingRule () {
             return WIND_NON_ZERO;
         }
 
@@ -152,17 +152,17 @@ public abstract class AbstractCubicCurve implements ICubicCurve
             int count;
             if (index == 0) {
                 type = SEG_MOVETO;
-                coords[0] = c.getX1();
-                coords[1] = c.getY1();
+                coords[0] = c.x1();
+                coords[1] = c.y1();
                 count = 1;
             } else {
                 type = SEG_CUBICTO;
-                coords[0] = c.getCtrlX1();
-                coords[1] = c.getCtrlY1();
-                coords[2] = c.getCtrlX2();
-                coords[3] = c.getCtrlY2();
-                coords[4] = c.getX2();
-                coords[5] = c.getY2();
+                coords[0] = c.ctrlX1();
+                coords[1] = c.ctrlY1();
+                coords[2] = c.ctrlX2();
+                coords[3] = c.ctrlY2();
+                coords[4] = c.x2();
+                coords[5] = c.y2();
                 count = 3;
             }
             if (t != null) {

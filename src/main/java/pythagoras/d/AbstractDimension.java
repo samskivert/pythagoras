@@ -19,9 +19,7 @@ public abstract class AbstractDimension implements IDimension
 
     @Override
     public int hashCode () {
-        long bits = Platform.hashCode(getWidth());
-        bits += Platform.hashCode(getHeight()) * 37;
-        return (((int) bits) ^ ((int) (bits >> 32)));
+        return Platform.hashCode(width()) ^ Platform.hashCode(height());
     }
 
     @Override
@@ -31,13 +29,13 @@ public abstract class AbstractDimension implements IDimension
         }
         if (obj instanceof AbstractDimension) {
             AbstractDimension d = (AbstractDimension)obj;
-            return (d.getWidth() == getWidth() && d.getHeight() == getHeight());
+            return (d.width() == width() && d.height() == height());
         }
         return false;
     }
 
     @Override
     public String toString () {
-        return Dimensions.dimenToString(getWidth(), getHeight());
+        return Dimensions.dimenToString(width(), height());
     }
 }

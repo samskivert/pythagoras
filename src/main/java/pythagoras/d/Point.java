@@ -27,53 +27,55 @@ public class Point extends AbstractPoint implements Serializable
      * Constructs a point at the specified coordinates.
      */
     public Point (double x, double y) {
-        setLocation(x, y);
+        set(x, y);
     }
 
     /**
      * Constructs a point with coordinates equal to the supplied point.
      */
     public Point (IPoint p) {
-        setLocation(p.getX(), p.getY());
+        set(p.x(), p.y());
     }
 
-    /**
-     * Sets the coordinates of this point to be equal to those of the supplied point.
-     */
-    public void setLocation (IPoint p) {
-        setLocation(p.getX(), p.getY());
+    /** Sets the coordinates of this point to be equal to those of the supplied point.
+     * @return a reference to this this, for chaining. */
+    public Point set (IPoint p) {
+        return set(p.x(), p.y());
     }
 
-    /**
-     * Sets the coordinates of this point to the supplied values.
-     */
-    public void setLocation (double x, double y) {
+    /** Sets the coordinates of this point to the supplied values.
+     * @return a reference to this this, for chaining. */
+    public Point set (double x, double y) {
         this.x = x;
         this.y = y;
+        return this;
     }
 
-    /**
-     * A synonym for {@link #setLocation}.
-     */
-    public void move (double x, double y) {
-        setLocation(x, y);
+    /** Multiplies this point by a scale factor.
+     * @return a a reference to this point, for chaining. */
+    public Point multLocal (double s) {
+        return mult(s, this);
     }
 
-    /**
-     * Translates this point by the specified offset.
-     */
-    public void translate (double dx, double dy) {
-        x += dx;
-        y += dy;
+    /** Translates this point by the specified offset.
+     * @return a reference to this point, for chaining. */
+    public Point addLocal (double dx, double dy) {
+        return add(dx, dy, this);
+    }
+
+    /** Rotates this point in-place by the specified angle.
+     * @return a reference to this point, for chaining. */
+    public Point rotateLocal (double angle) {
+        return rotate(angle, this);
     }
 
     @Override // from interface IPoint
-    public double getX () {
+    public double x () {
         return x;
     }
 
     @Override // from interface IPoint
-    public double getY () {
+    public double y () {
         return y;
     }
 }

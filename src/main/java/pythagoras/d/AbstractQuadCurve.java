@@ -13,28 +13,28 @@ import java.util.NoSuchElementException;
 public abstract class AbstractQuadCurve implements IQuadCurve
 {
     @Override // from interface IQuadCurve
-    public Point getP1 () {
-        return new Point(getX1(), getY1());
+    public Point p1 () {
+        return new Point(x1(), y1());
     }
 
     @Override // from interface IQuadCurve
-    public Point getCtrlP () {
-        return new Point(getCtrlX(), getCtrlY());
+    public Point ctrlP () {
+        return new Point(ctrlX(), ctrlY());
     }
 
     @Override // from interface IQuadCurve
-    public Point getP2 () {
-        return new Point(getX2(), getY2());
+    public Point p2 () {
+        return new Point(x2(), y2());
     }
 
     @Override // from interface IQuadCurve
-    public double getFlatnessSq () {
-        return Lines.pointSegDistSq(getCtrlX(), getCtrlY(), getX1(), getY1(), getX2(), getY2());
+    public double flatnessSq () {
+        return Lines.pointSegDistSq(ctrlX(), ctrlY(), x1(), y1(), x2(), y2());
     }
 
     @Override // from interface IQuadCurve
-    public double getFlatness () {
-        return Lines.pointSegDist(getCtrlX(), getCtrlY(), getX1(), getY1(), getX2(), getY2());
+    public double flatness () {
+        return Lines.pointSegDist(ctrlX(), ctrlY(), x1(), y1(), x2(), y2());
     }
 
     @Override // from interface IQuadCurve
@@ -44,7 +44,7 @@ public abstract class AbstractQuadCurve implements IQuadCurve
 
     @Override // from interface IQuadCurve
     public QuadCurve clone () {
-        return new QuadCurve(getX1(), getY1(), getCtrlX(), getCtrlY(), getX2(), getY2());
+        return new QuadCurve(x1(), y1(), ctrlX(), ctrlY(), x2(), y2());
     }
 
     @Override // from interface IShape
@@ -65,12 +65,12 @@ public abstract class AbstractQuadCurve implements IQuadCurve
 
     @Override // from interface IShape
     public boolean contains (IPoint p) {
-        return contains(p.getX(), p.getY());
+        return contains(p.x(), p.y());
     }
 
     @Override // from interface IShape
     public boolean contains (IRectangle r) {
-        return contains(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+        return contains(r.x(), r.y(), r.width(), r.height());
     }
 
     @Override // from interface IShape
@@ -81,18 +81,18 @@ public abstract class AbstractQuadCurve implements IQuadCurve
 
     @Override // from interface IShape
     public boolean intersects (IRectangle r) {
-        return intersects(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+        return intersects(r.x(), r.y(), r.width(), r.height());
     }
 
     @Override // from interface IShape
-    public Rectangle getBounds () {
-        return getBounds(new Rectangle());
+    public Rectangle bounds () {
+        return bounds(new Rectangle());
     }
 
     @Override // from interface IShape
-    public Rectangle getBounds (Rectangle target) {
-        double x1 = getX1(), y1 = getY1(), x2 = getX2(), y2 = getY2();
-        double ctrlx = getCtrlX(), ctrly = getCtrlY();
+    public Rectangle bounds (Rectangle target) {
+        double x1 = x1(), y1 = y1(), x2 = x2(), y2 = y2();
+        double ctrlx = ctrlX(), ctrly = ctrlY();
         double rx0 = Math.min(Math.min(x1, x2), ctrlx);
         double ry0 = Math.min(Math.min(y1, y2), ctrly);
         double rx1 = Math.max(Math.max(x1, x2), ctrlx);
@@ -102,28 +102,28 @@ public abstract class AbstractQuadCurve implements IQuadCurve
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform t) {
+    public PathIterator pathIterator (Transform t) {
         return new Iterator(this, t);
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform t, double flatness) {
-        return new FlatteningPathIterator(getPathIterator(t), flatness);
+    public PathIterator pathIterator (Transform t, double flatness) {
+        return new FlatteningPathIterator(pathIterator(t), flatness);
     }
 
     /** An iterator over an {@link IQuadCurve}. */
     protected static class Iterator implements PathIterator
     {
         private IQuadCurve c;
-        private AffineTransform t;
+        private Transform t;
         private int index;
 
-        Iterator (IQuadCurve q, AffineTransform t) {
+        Iterator (IQuadCurve q, Transform t) {
             this.c = q;
             this.t = t;
         }
 
-        @Override public int getWindingRule () {
+        @Override public int windingRule () {
             return WIND_NON_ZERO;
         }
 
@@ -143,15 +143,15 @@ public abstract class AbstractQuadCurve implements IQuadCurve
             int count;
             if (index == 0) {
                 type = SEG_MOVETO;
-                coords[0] = c.getX1();
-                coords[1] = c.getY1();
+                coords[0] = c.x1();
+                coords[1] = c.y1();
                 count = 1;
             } else {
                 type = SEG_QUADTO;
-                coords[0] = c.getCtrlX();
-                coords[1] = c.getCtrlY();
-                coords[2] = c.getX2();
-                coords[3] = c.getY2();
+                coords[0] = c.ctrlX();
+                coords[1] = c.ctrlY();
+                coords[2] = c.x2();
+                coords[3] = c.y2();
                 count = 2;
             }
             if (t != null) {

@@ -12,48 +12,48 @@ package pythagoras.d;
 public interface IRectangularShape extends IShape
 {
     /** Returns the x-coordinate of the upper-left corner of the framing rectangle. */
-    double getX ();
+    double x ();
 
     /** Returns the y-coordinate of the upper-left corner of the framing rectangle. */
-    double getY ();
+    double y ();
 
     /** Returns the width of the framing rectangle. */
-    double getWidth ();
+    double width ();
 
     /** Returns the height of the framing rectangle. */
-    double getHeight ();
+    double height ();
 
     /** Returns the minimum x,y-coordinate of the framing rectangle. */
-    Point getMin ();
+    Point min ();
 
     /** Returns the minimum x-coordinate of the framing rectangle. */
-    double getMinX ();
+    double minX ();
 
     /** Returns the minimum y-coordinate of the framing rectangle. */
-    double getMinY ();
+    double minY ();
 
     /** Returns the maximum x,y-coordinate of the framing rectangle. */
-    Point getMax ();
+    Point max ();
 
     /** Returns the maximum x-coordinate of the framing rectangle. */
-    double getMaxX ();
+    double maxX ();
 
     /** Returns the maximum y-coordinate of the framing rectangle. */
-    double getMaxY ();
+    double maxY ();
 
     /** Returns the center of the framing rectangle. */
-    Point getCenter ();
+    Point center ();
 
     /** Returns the x-coordinate of the center of the framing rectangle. */
-    double getCenterX ();
+    double centerX ();
 
     /** Returns the y-coordinate of the center of the framing rectangle. */
-    double getCenterY ();
+    double centerY ();
 
     /** Returns a copy of this shape's framing rectangle. */
-    Rectangle getFrame ();
+    Rectangle frame ();
 
     /** Initializes the supplied rectangle with this shape's framing rectangle.
      * @return the supplied rectangle. */
-    Rectangle getFrame (Rectangle target);
+    Rectangle frame (Rectangle target);
 }

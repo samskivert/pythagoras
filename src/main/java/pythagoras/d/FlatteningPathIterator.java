@@ -34,18 +34,18 @@ class FlatteningPathIterator implements PathIterator
         this.bufIndex = bufSize;
     }
 
-    public double getFlatness () {
+    public double flatness () {
         return flatness;
     }
 
-    public int getRecursionLimit () {
+    public int recursionLimit () {
         return bufLimit;
     }
 
     @Override
     // from interface PathIterator
-    public int getWindingRule () {
-        return p.getWindingRule();
+    public int windingRule () {
+        return p.windingRule();
     }
 
     @Override
@@ -81,7 +81,7 @@ class FlatteningPathIterator implements PathIterator
     }
 
     /** Calculates flat path points for the current segment of the source shape. Line segment is
-     * flat by itself. Flatness of quad and cubic curves are evaluated by the getFlatnessSq()
+     * flat by itself. Flatness of quad and cubic curves are evaluated by the flatnessSq()
      * method. Curves are subdivided until current flatness is bigger than user defined value and
      * subdivision limit isn't exhausted. Single source segments are translated to a series of
      * buffer points. The smaller the flatness the bigger the series. Every currentSegment() call
@@ -109,7 +109,7 @@ class FlatteningPathIterator implements PathIterator
             }
 
             while (bufSubdiv < bufLimit) {
-                if (QuadCurves.getFlatnessSq(buf, bufIndex) < flatness2) {
+                if (QuadCurves.flatnessSq(buf, bufIndex) < flatness2) {
                     break;
                 }
 
@@ -150,7 +150,7 @@ class FlatteningPathIterator implements PathIterator
             }
 
             while (bufSubdiv < bufLimit) {
-                if (CubicCurves.getFlatnessSq(buf, bufIndex) < flatness2) {
+                if (CubicCurves.flatnessSq(buf, bufIndex) < flatness2) {
                     break;
                 }
 

@@ -57,26 +57,26 @@ public class Line extends AbstractLine implements Serializable
      * Sets the start and end of this line to the specified points.
      */
     public void setLine (IPoint p1, IPoint p2) {
-        setLine(p1.getX(), p1.getY(), p2.getY(), p2.getY());
+        setLine(p1.x(), p1.y(), p2.y(), p2.y());
     }
 
     @Override // from interface ILine
-    public double getX1 () {
+    public double x1 () {
         return x1;
     }
 
     @Override // from interface ILine
-    public double getY1 () {
+    public double y1 () {
         return y1;
     }
 
     @Override // from interface ILine
-    public double getX2 () {
+    public double x2 () {
         return x2;
     }
 
     @Override // from interface ILine
-    public double getY2 () {
+    public double y2 () {
         return y2;
     }
 }

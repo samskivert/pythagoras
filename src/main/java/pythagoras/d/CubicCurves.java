@@ -9,34 +9,34 @@ package pythagoras.d;
  */
 public class CubicCurves
 {
-    public static double getFlatnessSq (double x1, double y1, double ctrlx1, double ctrly1,
+    public static double flatnessSq (double x1, double y1, double ctrlx1, double ctrly1,
                                        double ctrlx2, double ctrly2, double x2, double y2) {
         return Math.max(Lines.pointSegDistSq(ctrlx1, ctrly1, x1, y1, x2, y2),
                         Lines.pointSegDistSq(ctrlx2, ctrly2, x1, y1, x2, y2));
     }
 
-    public static double getFlatnessSq (double[] coords, int offset) {
-        return getFlatnessSq(coords[offset + 0], coords[offset + 1], coords[offset + 2],
+    public static double flatnessSq (double[] coords, int offset) {
+        return flatnessSq(coords[offset + 0], coords[offset + 1], coords[offset + 2],
                              coords[offset + 3], coords[offset + 4], coords[offset + 5],
                              coords[offset + 6], coords[offset + 7]);
     }
 
-    public static double getFlatness (double x1, double y1, double ctrlx1, double ctrly1,
+    public static double flatness (double x1, double y1, double ctrlx1, double ctrly1,
                                      double ctrlx2, double ctrly2, double x2, double y2) {
-        return Math.sqrt(getFlatnessSq(x1, y1, ctrlx1, ctrly1, ctrlx2, ctrly2, x2, y2));
+        return Math.sqrt(flatnessSq(x1, y1, ctrlx1, ctrly1, ctrlx2, ctrly2, x2, y2));
     }
 
-    public static double getFlatness (double[] coords, int offset) {
-        return getFlatness(coords[offset + 0], coords[offset + 1], coords[offset + 2],
+    public static double flatness (double[] coords, int offset) {
+        return flatness(coords[offset + 0], coords[offset + 1], coords[offset + 2],
                            coords[offset + 3], coords[offset + 4], coords[offset + 5],
                            coords[offset + 6], coords[offset + 7]);
     }
 
     public static void subdivide (ICubicCurve src, CubicCurve left, CubicCurve right) {
-        double x1 = src.getX1(), y1 = src.getY1();
-        double cx1 = src.getCtrlX1(), cy1 = src.getCtrlY1();
-        double cx2 = src.getCtrlX2(), cy2 = src.getCtrlY2();
-        double x2 = src.getX2(), y2 = src.getY2();
+        double x1 = src.x1(), y1 = src.y1();
+        double cx1 = src.ctrlX1(), cy1 = src.ctrlY1();
+        double cx2 = src.ctrlX2(), cy2 = src.ctrlY2();
+        double x2 = src.x2(), y2 = src.y2();
         double cx = (cx1 + cx2) / 2f, cy = (cy1 + cy2) / 2f;
         cx1 = (x1 + cx1) / 2f;
         cy1 = (y1 + cy1) / 2f;

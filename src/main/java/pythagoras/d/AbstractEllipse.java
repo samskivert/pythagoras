@@ -14,14 +14,14 @@ public abstract class AbstractEllipse extends RectangularShape implements IEllip
 {
     @Override // from IEllipse
     public Ellipse clone () {
-        return new Ellipse(getX(), getY(), getWidth(), getHeight());
+        return new Ellipse(x(), y(), width(), height());
     }
 
     @Override // from interface IShape
     public boolean contains (double px, double py) {
         if (isEmpty()) return false;
-        double a = (px - getX()) / getWidth() - 0.5f;
-        double b = (py - getY()) / getHeight() - 0.5f;
+        double a = (px - x()) / width() - 0.5f;
+        double b = (py - y()) / height() - 0.5f;
         return a * a + b * b < 0.25f;
     }
 
@@ -35,8 +35,8 @@ public abstract class AbstractEllipse extends RectangularShape implements IEllip
     @Override // from interface IShape
     public boolean intersects (double rx, double ry, double rw, double rh) {
         if (isEmpty() || rw <= 0f || rh <= 0f) return false;
-        double cx = getX() + getWidth() / 2f;
-        double cy = getY() + getHeight() / 2f;
+        double cx = x() + width() / 2f;
+        double cy = y() + height() / 2f;
         double rx1 = rx, ry1 = ry, rx2 = rx + rw, ry2 = ry + rh;
         double nx = cx < rx1 ? rx1 : (cx > rx2 ? rx2 : cx);
         double ny = cy < ry1 ? ry1 : (cy > ry2 ? ry2 : cy);
@@ -44,7 +44,7 @@ public abstract class AbstractEllipse extends RectangularShape implements IEllip
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform at) {
+    public PathIterator pathIterator (Transform at) {
         return new Iterator(this, at);
     }
 
@@ -52,21 +52,21 @@ public abstract class AbstractEllipse extends RectangularShape implements IEllip
     protected static class Iterator implements PathIterator
     {
         private final double x, y, width, height;
-        private final AffineTransform t;
+        private final Transform t;
         private int index;
 
-        Iterator (IEllipse e, AffineTransform t) {
-            this.x = e.getX();
-            this.y = e.getY();
-            this.width = e.getWidth();
-            this.height = e.getHeight();
+        Iterator (IEllipse e, Transform t) {
+            this.x = e.x();
+            this.y = e.y();
+            this.width = e.width();
+            this.height = e.height();
             this.t = t;
             if (width < 0f || height < 0f) {
                 index = 6;
             }
         }
 
-        @Override public int getWindingRule () {
+        @Override public int windingRule () {
             return WIND_NON_ZERO;
         }
 

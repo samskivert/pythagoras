@@ -36,31 +36,31 @@ class IntersectPoint
         this.y = y;
     }
 
-    public int getBegIndex (boolean isCurrentArea) {
+    public int begIndex (boolean isCurrentArea) {
         return isCurrentArea ? begIndex1 : begIndex2;
     }
 
-    public int getEndIndex (boolean isCurrentArea) {
+    public int endIndex (boolean isCurrentArea) {
         return isCurrentArea ? endIndex1 : endIndex2;
     }
 
-    public int getRuleIndex (boolean isCurrentArea) {
+    public int ruleIndex (boolean isCurrentArea) {
         return isCurrentArea ? ruleIndex1 : ruleIndex2;
     }
 
-    public double getParam (boolean isCurrentArea) {
+    public double param (boolean isCurrentArea) {
         return isCurrentArea ? param1 : param2;
     }
 
-    public int getRule (boolean isCurrentArea) {
+    public int rule (boolean isCurrentArea) {
         return isCurrentArea ? rule1 : rule2;
     }
 
-    public double getX () {
+    public double x () {
         return x;
     }
 
-    public double getY () {
+    public double y () {
         return y;
     }
 

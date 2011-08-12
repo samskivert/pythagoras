@@ -30,7 +30,7 @@ public class Area implements IShape, Cloneable
         int rulesIndex = 0;
         int coordsIndex = 0;
 
-        for (PathIterator pi = s.getPathIterator(null); !pi.isDone(); pi.next()) {
+        for (PathIterator pi = s.pathIterator(null); !pi.isDone(); pi.next()) {
             coords = adjustSize(coords, coordsIndex + 6);
             rules = adjustSize(rules, rulesIndex + 1);
             offsets = adjustSize(offsets, rulesIndex + 1);
@@ -112,15 +112,15 @@ public class Area implements IShape, Cloneable
     /**
      * Transforms this area with the supplied transform.
      */
-    public void transform (AffineTransform t) {
-        copy(new Area(t.createTransformedShape(this)), this);
+    public void transform (Transform t) {
+        copy(new Area(Transforms.createTransformedShape(t, this)), this);
     }
 
     /**
      * Creates a new area equal to this area transformed by the supplied transform.
      */
-    public Area createTransformedArea (AffineTransform t) {
-        return new Area(t.createTransformedShape(this));
+    public Area createTransformedArea (Transform t) {
+        return new Area(Transforms.createTransformedShape(t, this));
     }
 
     /**
@@ -140,7 +140,7 @@ public class Area implements IShape, Cloneable
             addCurvePolygon(area);
         }
 
-        if (getAreaBoundsSquare() < GeometryUtil.EPSILON) {
+        if (areaBoundsSquare() < GeometryUtil.EPSILON) {
             reset();
         }
     }
@@ -162,7 +162,7 @@ public class Area implements IShape, Cloneable
             intersectCurvePolygon(area);
         }
 
-        if (getAreaBoundsSquare() < GeometryUtil.EPSILON) {
+        if (areaBoundsSquare() < GeometryUtil.EPSILON) {
             reset();
         }
     }
@@ -181,7 +181,7 @@ public class Area implements IShape, Cloneable
             subtractCurvePolygon(area);
         }
 
-        if (getAreaBoundsSquare() < GeometryUtil.EPSILON) {
+        if (areaBoundsSquare() < GeometryUtil.EPSILON) {
             reset();
         }
     }
@@ -209,25 +209,25 @@ public class Area implements IShape, Cloneable
 
     @Override // from interface IShape
     public boolean contains (double x, double y, double width, double height) {
-        int crossCount = Crossing.intersectPath(getPathIterator(null), x, y, width, height);
+        int crossCount = Crossing.intersectPath(pathIterator(null), x, y, width, height);
         return crossCount != Crossing.CROSSING && Crossing.isInsideEvenOdd(crossCount);
     }
 
     @Override // from interface IShape
     public boolean contains (IPoint p) {
-        return contains(p.getX(), p.getY());
+        return contains(p.x(), p.y());
     }
 
     @Override // from interface IShape
     public boolean contains (IRectangle r) {
-        return contains(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+        return contains(r.x(), r.y(), r.width(), r.height());
     }
 
     @Override // from interface IShape
     public boolean intersects (double x, double y, double width, double height) {
         if ((width <= 0f) || (height <= 0f)) {
             return false;
-        } else if (!getBounds().intersects(x, y, width, height)) {
+        } else if (!bounds().intersects(x, y, width, height)) {
             return false;
         }
         int crossCount = Crossing.intersectShape(this, x, y, width, height);
@@ -236,16 +236,16 @@ public class Area implements IShape, Cloneable
 
     @Override // from interface IShape
     public boolean intersects (IRectangle r) {
-        return intersects(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+        return intersects(r.x(), r.y(), r.width(), r.height());
     }
 
     @Override // from interface IShape
-    public Rectangle getBounds () {
-        return getBounds(new Rectangle());
+    public Rectangle bounds () {
+        return bounds(new Rectangle());
     }
 
     @Override // from interface IShape
-    public Rectangle getBounds (Rectangle target) {
+    public Rectangle bounds (Rectangle target) {
         double maxX = coords[0], maxY = coords[1];
         double minX = coords[0], minY = coords[1];
         for (int i = 0; i < coordsSize;) {
@@ -258,13 +258,13 @@ public class Area implements IShape, Cloneable
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform t) {
+    public PathIterator pathIterator (Transform t) {
         return new AreaPathIterator(t);
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (AffineTransform t, double flatness) {
-        return new FlatteningPathIterator(getPathIterator(t), flatness);
+    public PathIterator pathIterator (Transform t, double flatness) {
+        return new FlatteningPathIterator(pathIterator(t), flatness);
     }
 
     @Override // from Object
@@ -296,9 +296,9 @@ public class Area implements IShape, Cloneable
         IntersectPoint[] intersectPoints = crossHelper.findCrossing();
 
         if (intersectPoints.length == 0) {
-            if (area.contains(getBounds())) {
+            if (area.contains(bounds())) {
                 copy(area, this);
-            } else if (!contains(area.getBounds())) {
+            } else if (!contains(area.bounds())) {
                 coords = adjustSize(coords, coordsSize + area.coordsSize);
                 System.arraycopy(area.coords, 0, coords, coordsSize, area.coordsSize);
                 coordsSize += area.coordsSize;
@@ -324,9 +324,9 @@ public class Area implements IShape, Cloneable
         resultOffsets[resultRulesPos++] = resultCoordPos;
 
         do {
-            resultCoords[resultCoordPos++] = point.getX();
-            resultCoords[resultCoordPos++] = point.getY();
-            int curIndex = point.getEndIndex(true);
+            resultCoords[resultCoordPos++] = point.x();
+            resultCoords[resultCoordPos++] = point.y();
+            int curIndex = point.endIndex(true);
             if (curIndex < 0) {
                 isCurrentArea = !isCurrentArea;
             } else if (area.containsExact(coords[2 * curIndex], coords[2 * curIndex + 1]) > 0) {
@@ -335,13 +335,13 @@ public class Area implements IShape, Cloneable
                 isCurrentArea = true;
             }
 
-            IntersectPoint nextPoint = getNextIntersectPoint(intersectPoints, point, isCurrentArea);
+            IntersectPoint nextPoint = nextIntersectPoint(intersectPoints, point, isCurrentArea);
             double[] coords = (isCurrentArea) ? this.coords : area.coords;
             int[] offsets = (isCurrentArea) ? this.offsets : area.offsets;
             int[] rules = (isCurrentArea) ? this.rules : area.rules;
-            int offset = point.getRuleIndex(isCurrentArea);
+            int offset = point.ruleIndex(isCurrentArea);
             boolean isCopyUntilZero = false;
-            if ((point.getRuleIndex(isCurrentArea) > nextPoint.getRuleIndex(isCurrentArea))) {
+            if ((point.ruleIndex(isCurrentArea) > nextPoint.ruleIndex(isCurrentArea))) {
                 int rulesSize = (isCurrentArea) ? this.rulesSize : area.rulesSize;
                 resultCoordPos = includeCoordsAndRules(offset + 1, rulesSize, rules, offsets,
                         resultRules, resultOffsets, resultCoords, coords, resultRulesPos,
@@ -351,7 +351,7 @@ public class Area implements IShape, Cloneable
                 isCopyUntilZero = true;
             }
 
-            int length = nextPoint.getRuleIndex(isCurrentArea) - offset + 1;
+            int length = nextPoint.ruleIndex(isCurrentArea) - offset + 1;
             if (isCopyUntilZero) {
                 offset = 0;
             }
@@ -379,9 +379,9 @@ public class Area implements IShape, Cloneable
         IntersectPoint[] intersectPoints = crossHelper.findCrossing();
 
         if (intersectPoints.length == 0) {
-            if (area.contains(getBounds())) {
+            if (area.contains(bounds())) {
                 copy(area, this);
-            } else if (!contains(area.getBounds())) {
+            } else if (!contains(area.bounds())) {
                 coords = adjustSize(coords, coordsSize + area.coordsSize);
                 System.arraycopy(area.coords, 0, coords, coordsSize, area.coordsSize);
                 coordsSize += area.coordsSize;
@@ -406,11 +406,11 @@ public class Area implements IShape, Cloneable
         resultOffsets[resultRulesPos++] = resultCoordPos;
 
         do {
-            resultCoords[resultCoordPos++] = point.getX();
-            resultCoords[resultCoordPos++] = point.getY();
+            resultCoords[resultCoordPos++] = point.x();
+            resultCoords[resultCoordPos++] = point.y();
             resultRules[resultRulesPos] = PathIterator.SEG_LINETO;
             resultOffsets[resultRulesPos++] = resultCoordPos - 2;
-            int curIndex = point.getEndIndex(true);
+            int curIndex = point.endIndex(true);
             if (curIndex < 0) {
                 isCurrentArea = !isCurrentArea;
             } else if (area.containsExact(coords[2 * curIndex], coords[2 * curIndex + 1]) > 0) {
@@ -419,11 +419,11 @@ public class Area implements IShape, Cloneable
                 isCurrentArea = true;
             }
 
-            IntersectPoint nextPoint = getNextIntersectPoint(intersectPoints, point, isCurrentArea);
+            IntersectPoint nextPoint = nextIntersectPoint(intersectPoints, point, isCurrentArea);
             double[] coords = (isCurrentArea) ? this.coords : area.coords;
-            int offset = 2 * point.getEndIndex(isCurrentArea);
+            int offset = 2 * point.endIndex(isCurrentArea);
             if ((offset >= 0) &&
-                (nextPoint.getBegIndex(isCurrentArea) < point.getEndIndex(isCurrentArea))) {
+                (nextPoint.begIndex(isCurrentArea) < point.endIndex(isCurrentArea))) {
                 int coordSize = (isCurrentArea) ? this.coordsSize : area.coordsSize;
                 int length = coordSize - offset;
                 System.arraycopy(coords, offset, resultCoords, resultCoordPos, length);
@@ -438,7 +438,7 @@ public class Area implements IShape, Cloneable
             }
 
             if (offset >= 0) {
-                int length = 2 * nextPoint.getBegIndex(isCurrentArea) - offset + 2;
+                int length = 2 * nextPoint.begIndex(isCurrentArea) - offset + 2;
                 System.arraycopy(coords, offset, resultCoords, resultCoordPos, length);
 
                 for (int i = 0; i < length / 2; i++) {
@@ -469,9 +469,9 @@ public class Area implements IShape, Cloneable
             new int[][] { offsets, area.offsets });
         IntersectPoint[] intersectPoints = crossHelper.findCrossing();
         if (intersectPoints.length == 0) {
-            if (contains(area.getBounds())) {
+            if (contains(area.bounds())) {
                 copy(area, this);
-            } else if (!area.contains(getBounds())) {
+            } else if (!area.contains(bounds())) {
                 reset();
             }
             return;
@@ -490,10 +490,10 @@ public class Area implements IShape, Cloneable
         resultOffsets[resultRulesPos++] = resultCoordPos;
 
         do {
-            resultCoords[resultCoordPos++] = point.getX();
-            resultCoords[resultCoordPos++] = point.getY();
+            resultCoords[resultCoordPos++] = point.x();
+            resultCoords[resultCoordPos++] = point.y();
 
-            int curIndex = point.getEndIndex(true);
+            int curIndex = point.endIndex(true);
             if ((curIndex < 0) ||
                 (area.containsExact(coords[2 * curIndex], coords[2 * curIndex + 1]) == 0)) {
                 isCurrentArea = !isCurrentArea;
@@ -503,14 +503,14 @@ public class Area implements IShape, Cloneable
                 isCurrentArea = false;
             }
 
-            nextPoint = getNextIntersectPoint(intersectPoints, point, isCurrentArea);
+            nextPoint = nextIntersectPoint(intersectPoints, point, isCurrentArea);
             double[] coords = (isCurrentArea) ? this.coords : area.coords;
             int[] offsets = (isCurrentArea) ? this.offsets : area.offsets;
             int[] rules = (isCurrentArea) ? this.rules : area.rules;
-            int offset = point.getRuleIndex(isCurrentArea);
+            int offset = point.ruleIndex(isCurrentArea);
             boolean isCopyUntilZero = false;
 
-            if (point.getRuleIndex(isCurrentArea) > nextPoint.getRuleIndex(isCurrentArea)) {
+            if (point.ruleIndex(isCurrentArea) > nextPoint.ruleIndex(isCurrentArea)) {
                 int rulesSize = (isCurrentArea) ? this.rulesSize : area.rulesSize;
                 resultCoordPos = includeCoordsAndRules(
                     offset + 1, rulesSize, rules, offsets, resultRules, resultOffsets,
@@ -521,17 +521,17 @@ public class Area implements IShape, Cloneable
                 isCopyUntilZero = true;
             }
 
-            int length = nextPoint.getRuleIndex(isCurrentArea) - offset + 1;
+            int length = nextPoint.ruleIndex(isCurrentArea) - offset + 1;
 
             if (isCopyUntilZero) {
                 offset = 0;
                 isCopyUntilZero = false;
             }
             if ((length == offset) &&
-                (nextPoint.getRule(isCurrentArea) != PathIterator.SEG_LINETO) &&
-                (nextPoint.getRule(isCurrentArea) != PathIterator.SEG_CLOSE) &&
-                (point.getRule(isCurrentArea) != PathIterator.SEG_LINETO) &&
-                (point.getRule(isCurrentArea) != PathIterator.SEG_CLOSE)) {
+                (nextPoint.rule(isCurrentArea) != PathIterator.SEG_LINETO) &&
+                (nextPoint.rule(isCurrentArea) != PathIterator.SEG_CLOSE) &&
+                (point.rule(isCurrentArea) != PathIterator.SEG_LINETO) &&
+                (point.rule(isCurrentArea) != PathIterator.SEG_CLOSE)) {
                 isCopyUntilZero = true;
                 length++;
             }
@@ -548,8 +548,8 @@ public class Area implements IShape, Cloneable
         if (resultRules[resultRulesPos - 1] == PathIterator.SEG_LINETO) {
             resultRules[resultRulesPos - 1] = PathIterator.SEG_CLOSE;
         } else {
-            resultCoords[resultCoordPos++] = nextPoint.getX();
-            resultCoords[resultCoordPos++] = nextPoint.getY();
+            resultCoords[resultCoordPos++] = nextPoint.x();
+            resultCoords[resultCoordPos++] = nextPoint.y();
             resultRules[resultRulesPos++] = PathIterator.SEG_CLOSE;
         }
 
@@ -567,9 +567,9 @@ public class Area implements IShape, Cloneable
             new int[] { coordsSize, area.coordsSize });
         IntersectPoint[] intersectPoints = crossHelper.findCrossing();
         if (intersectPoints.length == 0) {
-            if (contains(area.getBounds())) {
+            if (contains(area.bounds())) {
                 copy(area, this);
-            } else if (!area.contains(getBounds())) {
+            } else if (!area.contains(bounds())) {
                 reset();
             }
             return;
@@ -587,11 +587,11 @@ public class Area implements IShape, Cloneable
         resultOffsets[resultRulesPos++] = resultCoordPos;
 
         do {
-            resultCoords[resultCoordPos++] = point.getX();
-            resultCoords[resultCoordPos++] = point.getY();
+            resultCoords[resultCoordPos++] = point.x();
+            resultCoords[resultCoordPos++] = point.y();
             resultRules[resultRulesPos] = PathIterator.SEG_LINETO;
             resultOffsets[resultRulesPos++] = resultCoordPos - 2;
-            int curIndex = point.getEndIndex(true);
+            int curIndex = point.endIndex(true);
 
             if ((curIndex < 0) ||
                 (area.containsExact(coords[2 * curIndex], coords[2 * curIndex + 1]) == 0)) {
@@ -602,11 +602,11 @@ public class Area implements IShape, Cloneable
                 isCurrentArea = false;
             }
 
-            IntersectPoint nextPoint = getNextIntersectPoint(intersectPoints, point, isCurrentArea);
+            IntersectPoint nextPoint = nextIntersectPoint(intersectPoints, point, isCurrentArea);
             double[] coords = (isCurrentArea) ? this.coords : area.coords;
-            int offset = 2 * point.getEndIndex(isCurrentArea);
+            int offset = 2 * point.endIndex(isCurrentArea);
             if ((offset >= 0) &&
-                (nextPoint.getBegIndex(isCurrentArea) < point.getEndIndex(isCurrentArea))) {
+                (nextPoint.begIndex(isCurrentArea) < point.endIndex(isCurrentArea))) {
                 int coordSize = (isCurrentArea) ? this.coordsSize : area.coordsSize;
                 int length = coordSize - offset;
                 System.arraycopy(coords, offset, resultCoords, resultCoordPos, length);
@@ -621,7 +621,7 @@ public class Area implements IShape, Cloneable
             }
 
             if (offset >= 0) {
-                int length = 2 * nextPoint.getBegIndex(isCurrentArea) - offset + 2;
+                int length = 2 * nextPoint.begIndex(isCurrentArea) - offset + 2;
                 System.arraycopy(coords, offset, resultCoords, resultCoordPos, length);
 
                 for (int i = 0; i < length / 2; i++) {
@@ -651,7 +651,7 @@ public class Area implements IShape, Cloneable
             new int[] { rulesSize, area.rulesSize },
             new int[][] { offsets, area.offsets });
         IntersectPoint[] intersectPoints = crossHelper.findCrossing();
-        if (intersectPoints.length == 0 && contains(area.getBounds())) {
+        if (intersectPoints.length == 0 && contains(area.bounds())) {
             copy(area, this);
             return;
         }
@@ -668,9 +668,9 @@ public class Area implements IShape, Cloneable
         resultOffsets[resultRulesPos++] = resultCoordPos;
 
         do {
-            resultCoords[resultCoordPos++] = point.getX();
-            resultCoords[resultCoordPos++] = point.getY();
-            int curIndex = offsets[point.getRuleIndex(true)] % coordsSize;
+            resultCoords[resultCoordPos++] = point.x();
+            resultCoords[resultCoordPos++] = point.y();
+            int curIndex = offsets[point.ruleIndex(true)] % coordsSize;
             if (area.containsExact(coords[curIndex], coords[curIndex + 1]) == 0) {
                 isCurrentArea = !isCurrentArea;
             } else if (area.containsExact(coords[curIndex], coords[curIndex + 1]) > 0) {
@@ -680,19 +680,19 @@ public class Area implements IShape, Cloneable
             }
 
             IntersectPoint nextPoint = (isCurrentArea) ?
-                getNextIntersectPoint(intersectPoints, point, isCurrentArea) :
-                getPrevIntersectPoint(intersectPoints, point, isCurrentArea);
+                nextIntersectPoint(intersectPoints, point, isCurrentArea) :
+                prevIntersectPoint(intersectPoints, point, isCurrentArea);
             double[] coords = (isCurrentArea) ? this.coords : area.coords;
             int[] offsets = (isCurrentArea) ? this.offsets : area.offsets;
             int[] rules = (isCurrentArea) ? this.rules : area.rules;
-            int offset = (isCurrentArea) ? point.getRuleIndex(isCurrentArea) :
-                nextPoint.getRuleIndex(isCurrentArea);
+            int offset = (isCurrentArea) ? point.ruleIndex(isCurrentArea) :
+                nextPoint.ruleIndex(isCurrentArea);
             boolean isCopyUntilZero = false;
 
             if (((isCurrentArea) &&
-                 (point.getRuleIndex(isCurrentArea) > nextPoint.getRuleIndex(isCurrentArea))) ||
+                 (point.ruleIndex(isCurrentArea) > nextPoint.ruleIndex(isCurrentArea))) ||
                 ((!isCurrentArea) &&
-                 (nextPoint.getRuleIndex(isCurrentArea) > nextPoint.getRuleIndex(isCurrentArea)))) {
+                 (nextPoint.ruleIndex(isCurrentArea) > nextPoint.ruleIndex(isCurrentArea)))) {
                 int rulesSize = (isCurrentArea) ? this.rulesSize : area.rulesSize;
                 resultCoordPos = includeCoordsAndRules(
                     offset + 1, rulesSize, rules, offsets, resultRules, resultOffsets, resultCoords,
@@ -702,7 +702,7 @@ public class Area implements IShape, Cloneable
                 isCopyUntilZero = true;
             }
 
-            int length = nextPoint.getRuleIndex(isCurrentArea) - offset + 1;
+            int length = nextPoint.ruleIndex(isCurrentArea) - offset + 1;
 
             if (isCopyUntilZero) {
                 offset = 0;
@@ -740,7 +740,7 @@ public class Area implements IShape, Cloneable
             new int[] { coordsSize, area.coordsSize });
         IntersectPoint[] intersectPoints = crossHelper.findCrossing();
         if (intersectPoints.length == 0) {
-            if (contains(area.getBounds())) {
+            if (contains(area.bounds())) {
                 copy(area, this);
                 return;
             }
@@ -763,18 +763,18 @@ public class Area implements IShape, Cloneable
         resultOffsets[resultRulesPos++] = resultCoordPos;
 
         do {
-            resultCoords[resultCoordPos++] = point.getX();
-            resultCoords[resultCoordPos++] = point.getY();
+            resultCoords[resultCoordPos++] = point.x();
+            resultCoords[resultCoordPos++] = point.y();
             resultRules[resultRulesPos] = PathIterator.SEG_LINETO;
             resultOffsets[resultRulesPos++] = resultCoordPos - 2;
-            int curIndex = point.getEndIndex(true);
+            int curIndex = point.endIndex(true);
 
             if ((curIndex < 0) ||
                 (area.isVertex(coords[2 * curIndex], coords[2 * curIndex + 1]) &&
                  crossHelper.containsPoint(new double[] { coords[2 * curIndex],
                                                          coords[2 * curIndex + 1] }) &&
-                 (coords[2 * curIndex] != point.getX() ||
-                  coords[2 * curIndex + 1] != point.getY()))) {
+                 (coords[2 * curIndex] != point.x() ||
+                  coords[2 * curIndex + 1] != point.y()))) {
                 isCurrentArea = !isCurrentArea;
             } else if (area.containsExact(coords[2 * curIndex], coords[2 * curIndex + 1]) > 0) {
                 isCurrentArea = false;
@@ -793,18 +793,18 @@ public class Area implements IShape, Cloneable
             }
 
             IntersectPoint nextPoint = (isCurrentArea) ?
-                getNextIntersectPoint(intersectPoints, point, isCurrentArea) :
-                getPrevIntersectPoint(intersectPoints, point, isCurrentArea);
+                nextIntersectPoint(intersectPoints, point, isCurrentArea) :
+                prevIntersectPoint(intersectPoints, point, isCurrentArea);
             double[] coords = (isCurrentArea) ? this.coords : area.coords;
 
-            int offset = (isCurrentArea) ? 2 * point.getEndIndex(isCurrentArea) :
-                2 * nextPoint.getEndIndex(isCurrentArea);
+            int offset = (isCurrentArea) ? 2 * point.endIndex(isCurrentArea) :
+                2 * nextPoint.endIndex(isCurrentArea);
 
             if ((offset > 0) &&
                 (((isCurrentArea) &&
-                  (nextPoint.getBegIndex(isCurrentArea) < point.getEndIndex(isCurrentArea))) ||
+                  (nextPoint.begIndex(isCurrentArea) < point.endIndex(isCurrentArea))) ||
                  ((!isCurrentArea) &&
-                  (nextPoint.getEndIndex(isCurrentArea) < nextPoint.getBegIndex(isCurrentArea))))) {
+                  (nextPoint.endIndex(isCurrentArea) < nextPoint.begIndex(isCurrentArea))))) {
 
                 int coordSize = (isCurrentArea) ? this.coordsSize : area.coordsSize;
                 int length = coordSize - offset;
@@ -829,8 +829,8 @@ public class Area implements IShape, Cloneable
 
             if (offset >= 0) {
                 int length = (isCurrentArea) ?
-                    2 * nextPoint.getBegIndex(isCurrentArea) - offset + 2 :
-                    2 * point.getBegIndex(isCurrentArea) - offset + 2;
+                    2 * nextPoint.begIndex(isCurrentArea) - offset + 2 :
+                    2 * point.begIndex(isCurrentArea) - offset + 2;
 
                 if (isCurrentArea) {
                     System.arraycopy(coords, offset, resultCoords, resultCoordPos, length);
@@ -861,10 +861,10 @@ public class Area implements IShape, Cloneable
         rulesSize = resultRulesPos;
     }
 
-    private IntersectPoint getNextIntersectPoint (IntersectPoint[] iPoints,
+    private IntersectPoint nextIntersectPoint (IntersectPoint[] iPoints,
                                                   IntersectPoint isectPoint,
                                                   boolean isCurrentArea) {
-        int endIndex = isectPoint.getEndIndex(isCurrentArea);
+        int endIndex = isectPoint.endIndex(isCurrentArea);
         if (endIndex < 0) {
             return iPoints[Math.abs(endIndex) - 1];
         }
@@ -872,11 +872,11 @@ public class Area implements IShape, Cloneable
         IntersectPoint firstIsectPoint = null;
         IntersectPoint nextIsectPoint = null;
         for (IntersectPoint point : iPoints) {
-            int begIndex = point.getBegIndex(isCurrentArea);
+            int begIndex = point.begIndex(isCurrentArea);
             if (begIndex >= 0) {
                 if (firstIsectPoint == null) {
                     firstIsectPoint = point;
-                } else if (begIndex < firstIsectPoint.getBegIndex(isCurrentArea)) {
+                } else if (begIndex < firstIsectPoint.begIndex(isCurrentArea)) {
                     firstIsectPoint = point;
                 }
             }
@@ -884,7 +884,7 @@ public class Area implements IShape, Cloneable
             if (endIndex <= begIndex) {
                 if (nextIsectPoint == null) {
                     nextIsectPoint = point;
-                } else if (begIndex < nextIsectPoint.getBegIndex(isCurrentArea)) {
+                } else if (begIndex < nextIsectPoint.begIndex(isCurrentArea)) {
                     nextIsectPoint = point;
                 }
             }
@@ -893,10 +893,10 @@ public class Area implements IShape, Cloneable
         return (nextIsectPoint != null) ? nextIsectPoint : firstIsectPoint;
     }
 
-    private IntersectPoint getPrevIntersectPoint (IntersectPoint[] iPoints,
+    private IntersectPoint prevIntersectPoint (IntersectPoint[] iPoints,
                                                   IntersectPoint isectPoint,
                                                   boolean isCurrentArea) {
-        int begIndex = isectPoint.getBegIndex(isCurrentArea);
+        int begIndex = isectPoint.begIndex(isCurrentArea);
         if (begIndex < 0) {
             return iPoints[Math.abs(begIndex) - 1];
         }
@@ -904,11 +904,11 @@ public class Area implements IShape, Cloneable
         IntersectPoint firstIsectPoint = null;
         IntersectPoint predIsectPoint = null;
         for (IntersectPoint point : iPoints) {
-            int endIndex = point.getEndIndex(isCurrentArea);
+            int endIndex = point.endIndex(isCurrentArea);
             if (endIndex >= 0) {
                 if (firstIsectPoint == null) {
                     firstIsectPoint = point;
-                } else if (endIndex < firstIsectPoint.getEndIndex(isCurrentArea)) {
+                } else if (endIndex < firstIsectPoint.endIndex(isCurrentArea)) {
                     firstIsectPoint = point;
                 }
             }
@@ -916,7 +916,7 @@ public class Area implements IShape, Cloneable
             if (endIndex <= begIndex) {
                 if (predIsectPoint == null) {
                     predIsectPoint = point;
-                } else if (endIndex > predIsectPoint.getEndIndex(isCurrentArea)) {
+                } else if (endIndex > predIsectPoint.endIndex(isCurrentArea)) {
                     predIsectPoint = point;
                 }
             }
@@ -976,7 +976,7 @@ public class Area implements IShape, Cloneable
                 resultRules[resultRulesPos] = PathIterator.SEG_LINETO;
                 resultOffsets[resultRulesPos++] = resultCoordPos + 2;
                 boolean isLeft = CrossingHelper.compare(
-                    coords[index], coords[index + 1], point.getX(), point.getY()) > 0;
+                    coords[index], coords[index + 1], point.x(), point.y()) > 0;
                 if (way || !isLeft) {
                     temp[coordsCount++] = coords[index];
                     temp[coordsCount++] = coords[index + 1];
@@ -990,13 +990,13 @@ public class Area implements IShape, Cloneable
                     coords[index - 2], coords[index - 1],
                     coords[index], coords[index + 1], coords[index + 2], coords[index + 3] };
                 isLeft = CrossingHelper.compare(
-                    coords[index - 2], coords[index - 1], point.getX(), point.getY()) > 0;
+                    coords[index - 2], coords[index - 1], point.x(), point.y()) > 0;
 
                 if ((!additional) && (operation == 0 || operation == 2)) {
                     isLeft = !isLeft;
                     way = false;
                 }
-                GeometryUtil.subQuad(coefs, point.getParam(isCurrentArea), isLeft);
+                GeometryUtil.subQuad(coefs, point.param(isCurrentArea), isLeft);
 
                 if (way || isLeft) {
                     temp[coordsCount++] = coefs[2];
@@ -1014,8 +1014,8 @@ public class Area implements IShape, Cloneable
                                       coords[index + 1], coords[index + 2], coords[index + 3],
                                       coords[index + 4], coords[index + 5] };
                 isLeft = CrossingHelper.compare(
-                    coords[index - 2], coords[index - 1], point.getX(), point.getY()) > 0;
-                GeometryUtil.subCubic(coefs, point.getParam(isCurrentArea), !isLeft);
+                    coords[index - 2], coords[index - 1], point.x(), point.y()) > 0;
+                GeometryUtil.subCubic(coefs, point.param(isCurrentArea), !isLeft);
 
                 if (isLeft) {
                     System.arraycopy(coefs, 2, temp, coordsCount, 6);
@@ -1048,7 +1048,7 @@ public class Area implements IShape, Cloneable
     }
 
     private int containsExact (double x, double y) {
-        PathIterator pi = getPathIterator(null);
+        PathIterator pi = pathIterator(null);
         int crossCount = Crossing.crossPath(pi, x, y);
         if (Crossing.isInsideEvenOdd(crossCount)) {
             return 1;
@@ -1062,7 +1062,7 @@ public class Area implements IShape, Cloneable
         double moveX = -1;
         double moveY = -1;
 
-        for (pi = getPathIterator(null); !pi.isDone(); pi.next()) {
+        for (pi = pathIterator(null); !pi.isDone(); pi.next()) {
             rule = pi.currentSegment(segmentCoords);
             switch (rule) {
             case PathIterator.SEG_MOVETO:
@@ -1123,9 +1123,9 @@ public class Area implements IShape, Cloneable
         }
     }
 
-    private double getAreaBoundsSquare () {
-        Rectangle bounds = getBounds();
-        return bounds.getHeight() * bounds.getWidth();
+    private double areaBoundsSquare () {
+        Rectangle bounds = bounds();
+        return bounds.height() * bounds.width();
     }
 
     private boolean isVertex (double x, double y) {
@@ -1159,15 +1159,15 @@ public class Area implements IShape, Cloneable
     // the internal class implements PathIterator
     private class AreaPathIterator implements PathIterator
     {
-        private final AffineTransform transform;
+        private final Transform transform;
         private int curRuleIndex = 0;
         private int curCoordIndex = 0;
 
-        AreaPathIterator (AffineTransform t) {
+        AreaPathIterator (Transform t) {
             this.transform = t;
         }
 
-        @Override public int getWindingRule () {
+        @Override public int windingRule () {
             return WIND_EVEN_ODD;
         }
 

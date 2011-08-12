@@ -58,7 +58,7 @@ public class QuadCurve extends AbstractQuadCurve implements Serializable
      * Configures the start, control, and end points for this curve.
      */
     public void setCurve (IPoint p1, IPoint cp, IPoint p2) {
-        setCurve(p1.getX(), p1.getY(), cp.getX(), cp.getY(), p2.getX(), p2.getY());
+        setCurve(p1.x(), p1.y(), cp.x(), cp.y(), p2.x(), p2.y());
     }
 
     /**
@@ -76,9 +76,9 @@ public class QuadCurve extends AbstractQuadCurve implements Serializable
      * specified offset in the {@code points} array.
      */
     public void setCurve (IPoint[] points, int offset) {
-        setCurve(points[offset + 0].getX(), points[offset + 0].getY(),
-                 points[offset + 1].getX(), points[offset + 1].getY(),
-                 points[offset + 2].getX(), points[offset + 2].getY());
+        setCurve(points[offset + 0].x(), points[offset + 0].y(),
+                 points[offset + 1].x(), points[offset + 1].y(),
+                 points[offset + 2].x(), points[offset + 2].y());
     }
 
     /**
@@ -86,37 +86,37 @@ public class QuadCurve extends AbstractQuadCurve implements Serializable
      * curve.
      */
     public void setCurve (IQuadCurve curve) {
-        setCurve(curve.getX1(), curve.getY1(), curve.getCtrlX(), curve.getCtrlY(),
-                 curve.getX2(), curve.getY2());
+        setCurve(curve.x1(), curve.y1(), curve.ctrlX(), curve.ctrlY(),
+                 curve.x2(), curve.y2());
     }
 
     @Override // from interface IQuadCurve
-    public double getX1 () {
+    public double x1 () {
         return x1;
     }
 
     @Override // from interface IQuadCurve
-    public double getY1 () {
+    public double y1 () {
         return y1;
     }
 
     @Override // from interface IQuadCurve
-    public double getCtrlX () {
+    public double ctrlX () {
         return ctrlx;
     }
 
     @Override // from interface IQuadCurve
-    public double getCtrlY () {
+    public double ctrlY () {
         return ctrly;
     }
 
     @Override // from interface IQuadCurve
-    public double getX2 () {
+    public double x2 () {
         return x2;
     }
 
     @Override // from interface IQuadCurve
-    public double getY2 () {
+    public double y2 () {
         return y2;
     }
 }

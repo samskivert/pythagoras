@@ -10,30 +10,30 @@ package pythagoras.d;
 public interface ILine extends IShape, Cloneable
 {
     /** Returns the x-coordinate of the start of this line. */
-    double getX1 ();
+    double x1 ();
 
     /** Returns the y-coordinate of the start of this line. */
-    double getY1 ();
+    double y1 ();
 
     /** Returns the x-coordinate of the end of this line. */
-    double getX2 ();
+    double x2 ();
 
     /** Returns the y-coordinate of the end of this line. */
-    double getY2 ();
+    double y2 ();
 
     /** Returns a copy of the starting point of this line. */
-    Point getP1 ();
+    Point p1 ();
 
     /** Initializes the supplied point with this line's starting point.
      * @return the supplied point. */
-    Point getP1 (Point target);
+    Point p1 (Point target);
 
     /** Returns a copy of the ending point of this line. */
-    Point getP2 ();
+    Point p2 ();
 
     /** Initializes the supplied point with this line's ending point.
      * @return the supplied point.  */
-    Point getP2 (Point target);
+    Point p2 (Point target);
 
     /** Returns the square of the distance from the specified point to the line defined by this
      * line segment. */

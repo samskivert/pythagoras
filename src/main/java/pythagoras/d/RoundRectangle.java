@@ -61,37 +61,37 @@ public class RoundRectangle extends AbstractRoundRectangle implements Serializab
      * rectangle.
      */
     public void setRoundRect (IRoundRectangle rr) {
-        setRoundRect(rr.getX(), rr.getY(), rr.getWidth(), rr.getHeight(),
-                     rr.getArcWidth(), rr.getArcHeight());
+        setRoundRect(rr.x(), rr.y(), rr.width(), rr.height(),
+                     rr.arcWidth(), rr.arcHeight());
     }
 
     @Override // from interface IRoundRectangle
-    public double getArcWidth () {
+    public double arcWidth () {
         return arcwidth;
     }
 
     @Override // from interface IRoundRectangle
-    public double getArcHeight () {
+    public double arcHeight () {
         return archeight;
     }
 
     @Override // from interface IRectangularShape
-    public double getX () {
+    public double x () {
         return x;
     }
 
     @Override // from interface IRectangularShape
-    public double getY () {
+    public double y () {
         return y;
     }
 
     @Override // from interface IRectangularShape
-    public double getWidth () {
+    public double width () {
         return width;
     }
 
     @Override // from interface IRectangularShape
-    public double getHeight () {
+    public double height () {
         return height;
     }
 
