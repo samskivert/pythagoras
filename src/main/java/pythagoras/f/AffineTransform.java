@@ -96,7 +96,7 @@ public class AffineTransform extends AbstractTransform
             // compute the difference; if it's small enough, we're done
             float d00 = n00 - o00, d10 = n10 - o10;
             float d01 = n01 - o01, d11 = n11 - o11;
-            if (d00*d00 + d10*d10 + d01*d01 + d11*d11 < FloatMath.EPSILON) {
+            if (d00*d00 + d10*d10 + d01*d01 + d11*d11 < MathUtil.EPSILON) {
                 break;
             }
         }
@@ -340,8 +340,8 @@ public class AffineTransform extends AbstractTransform
 
     @Override
     public String toString () {
-        return "affine [" + FloatMath.toString(m00) + " " + FloatMath.toString(m01) + " " +
-            FloatMath.toString(m10) + " " + FloatMath.toString(m11) + " " + translation() + "]";
+        return "affine [" + MathUtil.toString(m00) + " " + MathUtil.toString(m01) + " " +
+            MathUtil.toString(m10) + " " + MathUtil.toString(m11) + " " + translation() + "]";
     }
 
     // we don't publicize this because it might encourage someone to do something stupid like

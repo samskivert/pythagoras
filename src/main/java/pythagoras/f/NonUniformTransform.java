@@ -165,7 +165,7 @@ public class NonUniformTransform extends AbstractTransform
         float ntx = (otx*cosa - oty*sina) * scaleX + tx();
         float nty = (otx*sina + oty*cosa) * scaleY + ty();
 
-        float nrotation = FloatMath.normalizeAngle(rotation + other.rotation());
+        float nrotation = MathUtil.normalizeAngle(rotation + other.rotation());
         float nscaleX = scaleX * other.scaleX();
         float nscaleY = scaleY * other.scaleY();
         return new NonUniformTransform(nscaleX, nscaleY, nrotation, ntx, nty);
@@ -181,7 +181,7 @@ public class NonUniformTransform extends AbstractTransform
         float sina = FloatMath.sin(other.rotation()), cosa = FloatMath.cos(other.rotation());
         float ntx = (tx*cosa - ty*sina) * other.scaleX() + other.tx();
         float nty = (tx*sina + ty*cosa) * other.scaleY() + other.ty();
-        float nrotation = FloatMath.normalizeAngle(other.rotation() + rotation);
+        float nrotation = MathUtil.normalizeAngle(other.rotation() + rotation);
         float nscaleX = other.scaleX() * scaleX;
         float nscaleY = other.scaleY() * scaleY;
         return new NonUniformTransform(nscaleX, nscaleY, nrotation, ntx, nty);
@@ -193,11 +193,11 @@ public class NonUniformTransform extends AbstractTransform
             return other.lerp(this, -t); // TODO: is this correct?
         }
 
-        float ntx = FloatMath.lerpa(tx, other.tx(), t);
-        float nty = FloatMath.lerpa(ty, other.ty(), t);
-        float nrotation = FloatMath.lerpa(rotation, other.rotation(), t);
-        float nscaleX = FloatMath.lerp(scaleX, other.scaleX(), t);
-        float nscaleY = FloatMath.lerp(scaleY, other.scaleY(), t);
+        float ntx = MathUtil.lerpa(tx, other.tx(), t);
+        float nty = MathUtil.lerpa(ty, other.ty(), t);
+        float nrotation = MathUtil.lerpa(rotation, other.rotation(), t);
+        float nscaleX = MathUtil.lerp(scaleX, other.scaleX(), t);
+        float nscaleY = MathUtil.lerp(scaleY, other.scaleY(), t);
         return new NonUniformTransform(nscaleX, nscaleY, nrotation, ntx, nty);
     }
 

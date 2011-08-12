@@ -114,7 +114,7 @@ public class RigidTransform extends AbstractTransform
 
         Vector nt = other.translation();
         nt.rotateAndAdd(rotation, translation(), nt);
-        float nrotation = FloatMath.normalizeAngle(rotation + other.rotation());
+        float nrotation = MathUtil.normalizeAngle(rotation + other.rotation());
         return new RigidTransform(nrotation, nt.x, nt.y);
     }
 
@@ -126,7 +126,7 @@ public class RigidTransform extends AbstractTransform
 
         Vector nt = translation();
         nt.rotateAndAdd(other.rotation(), other.translation(), nt);
-        float nrotation = FloatMath.normalizeAngle(other.rotation() + rotation);
+        float nrotation = MathUtil.normalizeAngle(other.rotation() + rotation);
         return new RigidTransform(nrotation, nt.x, nt.y);
     }
 
@@ -136,7 +136,7 @@ public class RigidTransform extends AbstractTransform
             return other.lerp(this, -t); // TODO: is this correct?
         }
         Vector nt = translation().lerpLocal(other.translation(), t);
-        return new RigidTransform(FloatMath.lerpa(rotation, other.rotation(), t), nt.x, nt.y);
+        return new RigidTransform(MathUtil.lerpa(rotation, other.rotation(), t), nt.x, nt.y);
     }
 
     @Override // from Transform

@@ -136,7 +136,7 @@ public class UniformTransform extends AbstractTransform
 
         Vector nt = other.translation();
         nt.rotateScaleAndAdd(rotation, scale, translation(), nt);
-        float nrotation = FloatMath.normalizeAngle(rotation + other.rotation());
+        float nrotation = MathUtil.normalizeAngle(rotation + other.rotation());
         float nscale = scale * other.uniformScale();
         return new UniformTransform(nscale, nrotation, nt.x, nt.y);
     }
@@ -150,7 +150,7 @@ public class UniformTransform extends AbstractTransform
         Vector nt = translation();
         nt.rotateScaleAndAdd(other.rotation(), other.uniformScale(),
                              other.translation(), nt);
-        float nrotation = FloatMath.normalizeAngle(other.rotation() + rotation);
+        float nrotation = MathUtil.normalizeAngle(other.rotation() + rotation);
         float nscale = other.uniformScale() * scale;
         return new UniformTransform(nscale, nrotation, nt.x, nt.y);
     }
@@ -162,8 +162,8 @@ public class UniformTransform extends AbstractTransform
         }
 
         Vector nt = translation().lerpLocal(other.translation(), t);
-        float nrotation = FloatMath.lerpa(rotation, other.rotation(), t);
-        float nscale = FloatMath.lerp(scale, other.uniformScale(), t);
+        float nrotation = MathUtil.lerpa(rotation, other.rotation(), t);
+        float nscale = MathUtil.lerp(scale, other.uniformScale(), t);
         return new UniformTransform(nscale, nrotation, nt.x, nt.y);
     }
 

@@ -74,6 +74,6 @@ public class Vectors
      * <code>+x-y</code>, <code>-x-y</code>, etc.
      */
     public static String vectorToString (float x, float y) {
-        return FloatMath.toString(x) + FloatMath.toString(y);
+        return MathUtil.toString(x) + MathUtil.toString(y);
     }
 }

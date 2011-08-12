@@ -25,7 +25,7 @@ public class Points
      * Returns the Euclidean distance between the specified two points.
      */
     public static float distance (float x1, float y1, float x2, float y2) {
-        return (float)Math.sqrt(distanceSq(x1, y1, x2, y2));
+        return FloatMath.sqrt(distanceSq(x1, y1, x2, y2));
     }
 
     /** Transforms a point as specified, storing the result in the point provided.
@@ -59,6 +59,6 @@ public class Points
      * <code>+x-y</code>, <code>-x-y</code>, etc.
      */
     public static String pointToString (float x, float y) {
-        return FloatMath.toString(x) + FloatMath.toString(y);
+        return MathUtil.toString(x) + MathUtil.toString(y);
     }
 }
