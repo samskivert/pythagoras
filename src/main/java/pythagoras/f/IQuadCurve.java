@@ -10,39 +10,39 @@ package pythagoras.f;
 public interface IQuadCurve extends IShape, Cloneable
 {
     /** Returns the x-coordinate of the start of this curve. */
-    float getX1 ();
+    float x1 ();
 
     /** Returns the y-coordinate of the start of this curve. */
-    float getY1 ();
+    float y1 ();
 
     /** Returns the x-coordinate of the control point. */
-    float getCtrlX ();
+    float ctrlX ();
 
     /** Returns the y-coordinate of the control point. */
-    float getCtrlY ();
+    float ctrlY ();
 
     /** Returns the x-coordinate of the end of this curve. */
-    float getX2 ();
+    float x2 ();
 
     /** Returns the y-coordinate of the end of this curve. */
-    float getY2 ();
+    float y2 ();
 
     /** Returns a copy of the starting point of this curve. */
-    Point getP1 ();
+    Point p1 ();
 
     /** Returns a copy of the control point of this curve. */
-    Point getCtrlP ();
+    Point ctrlP ();
 
     /** Returns a copy of the ending point of this curve. */
-    Point getP2 ();
+    Point p2 ();
 
     /** Returns the square of the flatness (maximum distance of a control point from the line
      * connecting the end points) of this curve. */
-    float getFlatnessSq ();
+    float flatnessSq ();
 
     /** Returns the flatness (maximum distance of a control point from the line connecting the end
      * points) of this curve. */
-    float getFlatness ();
+    float flatness ();
 
     /** Subdivides this curve and stores the results into {@code left} and {@code right}. */
     void subdivide (QuadCurve left, QuadCurve right);

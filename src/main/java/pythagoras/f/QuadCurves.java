@@ -9,35 +9,35 @@ package pythagoras.f;
  */
 public class QuadCurves
 {
-    public static float getFlatnessSq (float x1, float y1, float ctrlx, float ctrly,
+    public static float flatnessSq (float x1, float y1, float ctrlx, float ctrly,
                                        float x2, float y2) {
         return Lines.pointSegDistSq(ctrlx, ctrly, x1, y1, x2, y2);
     }
 
-    public static float getFlatnessSq (float[] coords, int offset) {
+    public static float flatnessSq (float[] coords, int offset) {
         return Lines.pointSegDistSq(coords[offset + 2], coords[offset + 3],
                                     coords[offset + 0], coords[offset + 1],
                                     coords[offset + 4], coords[offset + 5]);
     }
 
-    public static float getFlatness (float x1, float y1, float ctrlx, float ctrly,
+    public static float flatness (float x1, float y1, float ctrlx, float ctrly,
                                      float x2, float y2) {
         return Lines.pointSegDist(ctrlx, ctrly, x1, y1, x2, y2);
     }
 
-    public static float getFlatness (float[] coords, int offset) {
+    public static float flatness (float[] coords, int offset) {
         return Lines.pointSegDist(coords[offset + 2], coords[offset + 3],
                                   coords[offset + 0], coords[offset + 1],
                                   coords[offset + 4], coords[offset + 5]);
     }
 
     public static void subdivide (IQuadCurve src, QuadCurve left, QuadCurve right) {
-        float x1 = src.getX1();
-        float y1 = src.getY1();
-        float cx = src.getCtrlX();
-        float cy = src.getCtrlY();
-        float x2 = src.getX2();
-        float y2 = src.getY2();
+        float x1 = src.x1();
+        float y1 = src.y1();
+        float cx = src.ctrlX();
+        float cy = src.ctrlY();
+        float x2 = src.x2();
+        float y2 = src.y2();
         float cx1 = (x1 + cx) / 2f;
         float cy1 = (y1 + cy) / 2f;
         float cx2 = (x2 + cx) / 2f;

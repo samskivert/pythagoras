@@ -34,32 +34,32 @@ public class NonUniformTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public float getUniformScale () {
+    public float uniformScale () {
         return (scaleX + scaleY) / 2; // TODO: is this sane
     }
 
     @Override // from Transform
-    public float getScaleX () {
+    public float scaleX () {
         return scaleX;
     }
 
     @Override // from Transform
-    public float getScaleY () {
+    public float scaleY () {
         return scaleY;
     }
 
     @Override // from Transform
-    public float getRotation () {
+    public float rotation () {
         return rotation;
     }
 
     @Override // from Transform
-    public float getTx () {
+    public float tx () {
         return tx;
     }
 
     @Override // from Transform
-    public float getTy () {
+    public float ty () {
         return ty;
     }
 
@@ -160,14 +160,14 @@ public class NonUniformTransform extends AbstractTransform
             return other.preConcatenate(this);
         }
 
-        float otx = other.getTx(), oty = other.getTy();
+        float otx = other.tx(), oty = other.ty();
         float sina = FloatMath.sin(rotation), cosa = FloatMath.cos(rotation);
-        float ntx = (otx*cosa - oty*sina) * scaleX + getTx();
-        float nty = (otx*sina + oty*cosa) * scaleY + getTy();
+        float ntx = (otx*cosa - oty*sina) * scaleX + tx();
+        float nty = (otx*sina + oty*cosa) * scaleY + ty();
 
-        float nrotation = FloatMath.normalizeAngle(rotation + other.getRotation());
-        float nscaleX = scaleX * other.getScaleX();
-        float nscaleY = scaleY * other.getScaleY();
+        float nrotation = FloatMath.normalizeAngle(rotation + other.rotation());
+        float nscaleX = scaleX * other.scaleX();
+        float nscaleY = scaleY * other.scaleY();
         return new NonUniformTransform(nscaleX, nscaleY, nrotation, ntx, nty);
     }
 
@@ -177,13 +177,13 @@ public class NonUniformTransform extends AbstractTransform
             return other.concatenate(this);
         }
 
-        float tx = getTx(), ty = getTy();
-        float sina = FloatMath.sin(other.getRotation()), cosa = FloatMath.cos(other.getRotation());
-        float ntx = (tx*cosa - ty*sina) * other.getScaleX() + other.getTx();
-        float nty = (tx*sina + ty*cosa) * other.getScaleY() + other.getTy();
-        float nrotation = FloatMath.normalizeAngle(other.getRotation() + rotation);
-        float nscaleX = other.getScaleX() * scaleX;
-        float nscaleY = other.getScaleY() * scaleY;
+        float tx = tx(), ty = ty();
+        float sina = FloatMath.sin(other.rotation()), cosa = FloatMath.cos(other.rotation());
+        float ntx = (tx*cosa - ty*sina) * other.scaleX() + other.tx();
+        float nty = (tx*sina + ty*cosa) * other.scaleY() + other.ty();
+        float nrotation = FloatMath.normalizeAngle(other.rotation() + rotation);
+        float nscaleX = other.scaleX() * scaleX;
+        float nscaleY = other.scaleY() * scaleY;
         return new NonUniformTransform(nscaleX, nscaleY, nrotation, ntx, nty);
     }
 
@@ -193,17 +193,17 @@ public class NonUniformTransform extends AbstractTransform
             return other.lerp(this, -t); // TODO: is this correct?
         }
 
-        float ntx = FloatMath.lerpa(tx, other.getTx(), t);
-        float nty = FloatMath.lerpa(ty, other.getTy(), t);
-        float nrotation = FloatMath.lerpa(rotation, other.getRotation(), t);
-        float nscaleX = FloatMath.lerp(scaleX, other.getScaleX(), t);
-        float nscaleY = FloatMath.lerp(scaleY, other.getScaleY(), t);
+        float ntx = FloatMath.lerpa(tx, other.tx(), t);
+        float nty = FloatMath.lerpa(ty, other.ty(), t);
+        float nrotation = FloatMath.lerpa(rotation, other.rotation(), t);
+        float nscaleX = FloatMath.lerp(scaleX, other.scaleX(), t);
+        float nscaleY = FloatMath.lerp(scaleY, other.scaleY(), t);
         return new NonUniformTransform(nscaleX, nscaleY, nrotation, ntx, nty);
     }
 
     @Override // from Transform
     public Point transform (IPoint p, Point into) {
-        return Points.transform(p.getX(), p.getY(), scaleX, scaleY, rotation, tx, ty, into);
+        return Points.transform(p.x(), p.y(), scaleX, scaleY, rotation, tx, ty, into);
     }
 
     @Override // from Transform
@@ -211,7 +211,7 @@ public class NonUniformTransform extends AbstractTransform
         float sina = FloatMath.sin(rotation), cosa = FloatMath.cos(rotation);
         for (int ii = 0; ii < count; ii++) {
             IPoint s = src[srcOff++];
-            Points.transform(s.getX(), s.getY(), scaleX, scaleY, sina, cosa, tx, ty, dst[dstOff++]);
+            Points.transform(s.x(), s.y(), scaleX, scaleY, sina, cosa, tx, ty, dst[dstOff++]);
         }
     }
 
@@ -228,17 +228,17 @@ public class NonUniformTransform extends AbstractTransform
 
     @Override // from Transform
     public Point inverseTransform (IPoint p, Point into) {
-        return Points.inverseTransform(p.getX(), p.getY(), scaleX, scaleY, rotation, tx, ty, into);
+        return Points.inverseTransform(p.x(), p.y(), scaleX, scaleY, rotation, tx, ty, into);
     }
 
     @Override // from Transform
     public Vector transform (IVector v, Vector into) {
-        return Vectors.transform(v.getX(), v.getY(), scaleX, scaleY, rotation, into);
+        return Vectors.transform(v.x(), v.y(), scaleX, scaleY, rotation, into);
     }
 
     @Override // from Transform
     public Vector inverseTransform (IVector v, Vector into) {
-        return Vectors.inverseTransform(v.getX(), v.getY(), scaleX, scaleY, rotation, into);
+        return Vectors.inverseTransform(v.x(), v.y(), scaleX, scaleY, rotation, into);
     }
 
     @Override // from Transform
@@ -253,7 +253,7 @@ public class NonUniformTransform extends AbstractTransform
 
     @Override
     public String toString () {
-        return "nonunif [scale=" + getScale() + ", rot=" + rotation +
-            ", trans=" + getTranslation() + "]";
+        return "nonunif [scale=" + scale() + ", rot=" + rotation +
+            ", trans=" + translation() + "]";
     }
 }

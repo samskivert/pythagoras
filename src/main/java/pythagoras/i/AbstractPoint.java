@@ -12,22 +12,22 @@ public abstract class AbstractPoint implements IPoint
 {
     @Override // from interface IPoint
     public int distanceSq (int px, int py) {
-        return Points.distanceSq(getX(), getY(), px, py);
+        return Points.distanceSq(x(), y(), px, py);
     }
 
     @Override // from interface IPoint
     public int distanceSq (IPoint p) {
-        return Points.distanceSq(getX(), getY(), p.getX(), p.getY());
+        return Points.distanceSq(x(), y(), p.x(), p.y());
     }
 
     @Override // from interface IPoint
     public int distance (int px, int py) {
-        return Points.distance(getX(), getY(), px, py);
+        return Points.distance(x(), y(), px, py);
     }
 
     @Override // from interface IPoint
     public int distance (IPoint p) {
-        return Points.distance(getX(), getY(), p.getX(), p.getY());
+        return Points.distance(x(), y(), p.x(), p.y());
     }
 
     @Override // from interface IPoint
@@ -42,18 +42,18 @@ public abstract class AbstractPoint implements IPoint
         }
         if (obj instanceof AbstractPoint) {
             AbstractPoint p = (AbstractPoint)obj;
-            return getX() == p.getX() && getY() == p.getY();
+            return x() == p.x() && y() == p.y();
         }
         return false;
     }
 
     @Override
     public int hashCode () {
-        return getX() ^ getY();
+        return x() ^ y();
     }
 
     @Override
     public String toString () {
-        return Points.pointToString(getX(), getY());
+        return Points.pointToString(x(), y());
     }
 }

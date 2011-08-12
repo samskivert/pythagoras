@@ -14,14 +14,14 @@ public abstract class AbstractEllipse extends RectangularShape implements IEllip
 {
     @Override // from IEllipse
     public Ellipse clone () {
-        return new Ellipse(getX(), getY(), getWidth(), getHeight());
+        return new Ellipse(x(), y(), width(), height());
     }
 
     @Override // from interface IShape
     public boolean contains (float px, float py) {
         if (isEmpty()) return false;
-        float a = (px - getX()) / getWidth() - 0.5f;
-        float b = (py - getY()) / getHeight() - 0.5f;
+        float a = (px - x()) / width() - 0.5f;
+        float b = (py - y()) / height() - 0.5f;
         return a * a + b * b < 0.25f;
     }
 
@@ -35,8 +35,8 @@ public abstract class AbstractEllipse extends RectangularShape implements IEllip
     @Override // from interface IShape
     public boolean intersects (float rx, float ry, float rw, float rh) {
         if (isEmpty() || rw <= 0f || rh <= 0f) return false;
-        float cx = getX() + getWidth() / 2f;
-        float cy = getY() + getHeight() / 2f;
+        float cx = x() + width() / 2f;
+        float cy = y() + height() / 2f;
         float rx1 = rx, ry1 = ry, rx2 = rx + rw, ry2 = ry + rh;
         float nx = cx < rx1 ? rx1 : (cx > rx2 ? rx2 : cx);
         float ny = cy < ry1 ? ry1 : (cy > ry2 ? ry2 : cy);
@@ -44,7 +44,7 @@ public abstract class AbstractEllipse extends RectangularShape implements IEllip
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (Transform at) {
+    public PathIterator pathIterator (Transform at) {
         return new Iterator(this, at);
     }
 
@@ -56,17 +56,17 @@ public abstract class AbstractEllipse extends RectangularShape implements IEllip
         private int index;
 
         Iterator (IEllipse e, Transform t) {
-            this.x = e.getX();
-            this.y = e.getY();
-            this.width = e.getWidth();
-            this.height = e.getHeight();
+            this.x = e.x();
+            this.y = e.y();
+            this.width = e.width();
+            this.height = e.height();
             this.t = t;
             if (width < 0f || height < 0f) {
                 index = 6;
             }
         }
 
-        @Override public int getWindingRule () {
+        @Override public int windingRule () {
             return WIND_NON_ZERO;
         }
 

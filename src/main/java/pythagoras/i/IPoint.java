@@ -10,10 +10,10 @@ package pythagoras.i;
 public interface IPoint extends Cloneable
 {
     /** Returns this point's x-coordinate. */
-    int getX ();
+    int x ();
 
     /** Returns this point's y-coordinate. */
-    int getY ();
+    int y ();
 
     /** Returns the squared Euclidian distance between this point and the specified point. */
     int distanceSq (int px, int py);

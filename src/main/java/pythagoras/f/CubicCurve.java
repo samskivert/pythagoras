@@ -68,8 +68,8 @@ public class CubicCurve extends AbstractCubicCurve implements Serializable
      * Configures the start, control and end points for this curve.
      */
     public void setCurve (IPoint p1, IPoint cp1, IPoint cp2, IPoint p2) {
-        setCurve(p1.getX(), p1.getY(), cp1.getX(), cp1.getY(),
-                 cp2.getX(), cp2.getY(), p2.getX(), p2.getY());
+        setCurve(p1.x(), p1.y(), cp1.x(), cp1.y(),
+                 cp2.x(), cp2.y(), p2.x(), p2.y());
     }
 
     /**
@@ -86,10 +86,10 @@ public class CubicCurve extends AbstractCubicCurve implements Serializable
      * specified offset in the {@code points} array.
      */
     public void setCurve (IPoint[] points, int offset) {
-        setCurve(points[offset + 0].getX(), points[offset + 0].getY(),
-                 points[offset + 1].getX(), points[offset + 1].getY(),
-                 points[offset + 2].getX(), points[offset + 2].getY(),
-                 points[offset + 3].getX(), points[offset + 3].getY());
+        setCurve(points[offset + 0].x(), points[offset + 0].y(),
+                 points[offset + 1].x(), points[offset + 1].y(),
+                 points[offset + 2].x(), points[offset + 2].y(),
+                 points[offset + 3].x(), points[offset + 3].y());
     }
 
     /**
@@ -97,47 +97,47 @@ public class CubicCurve extends AbstractCubicCurve implements Serializable
      * curve.
      */
     public void setCurve (ICubicCurve curve) {
-        setCurve(curve.getX1(), curve.getY1(), curve.getCtrlX1(), curve.getCtrlY1(),
-                 curve.getCtrlX2(), curve.getCtrlY2(), curve.getX2(), curve.getY2());
+        setCurve(curve.x1(), curve.y1(), curve.ctrlX1(), curve.ctrlY1(),
+                 curve.ctrlX2(), curve.ctrlY2(), curve.x2(), curve.y2());
     }
 
     @Override // from interface ICubicCurve
-    public float getX1 () {
+    public float x1 () {
         return x1;
     }
 
     @Override // from interface ICubicCurve
-    public float getY1 () {
+    public float y1 () {
         return y1;
     }
 
     @Override // from interface ICubicCurve
-    public float getCtrlX1 () {
+    public float ctrlX1 () {
         return ctrlx1;
     }
 
     @Override // from interface ICubicCurve
-    public float getCtrlY1 () {
+    public float ctrlY1 () {
         return ctrly1;
     }
 
     @Override // from interface ICubicCurve
-    public float getCtrlX2 () {
+    public float ctrlX2 () {
         return ctrlx2;
     }
 
     @Override // from interface ICubicCurve
-    public float getCtrlY2 () {
+    public float ctrlY2 () {
         return ctrly2;
     }
 
     @Override // from interface ICubicCurve
-    public float getX2 () {
+    public float x2 () {
         return x2;
     }
 
     @Override // from interface ICubicCurve
-    public float getY2 () {
+    public float y2 () {
         return y2;
     }
 }

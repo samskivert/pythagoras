@@ -13,78 +13,78 @@ import java.util.NoSuchElementException;
 public abstract class AbstractLine implements ILine
 {
     @Override // from interface ILine
-    public Point getP1 () {
-        return getP1(new Point());
+    public Point p1 () {
+        return p1(new Point());
     }
 
     @Override // from interface ILine
-    public Point getP1 (Point target) {
-        return target.set(getX1(), getY1());
+    public Point p1 (Point target) {
+        return target.set(x1(), y1());
     }
 
     @Override // from interface ILine
-    public Point getP2 () {
-        return getP2(new Point());
+    public Point p2 () {
+        return p2(new Point());
     }
 
     @Override // from interface ILine
-    public Point getP2 (Point target) {
-        return target.set(getX2(), getY2());
+    public Point p2 (Point target) {
+        return target.set(x2(), y2());
     }
 
     @Override // from interface ILine
     public float pointLineDistSq (float px, float py) {
-        return Lines.pointLineDistSq(px, py, getX1(), getY1(), getX2(), getY2());
+        return Lines.pointLineDistSq(px, py, x1(), y1(), x2(), y2());
     }
 
     @Override // from interface ILine
     public float pointLineDistSq (IPoint p) {
-        return Lines.pointLineDistSq(p.getX(), p.getY(), getX1(), getY1(), getX2(), getY2());
+        return Lines.pointLineDistSq(p.x(), p.y(), x1(), y1(), x2(), y2());
     }
 
     @Override // from interface ILine
     public float pointLineDist (float px, float py) {
-        return Lines.pointLineDist(px, py, getX1(), getY1(), getX2(), getY2());
+        return Lines.pointLineDist(px, py, x1(), y1(), x2(), y2());
     }
 
     @Override // from interface ILine
     public float pointLineDist (IPoint p) {
-        return Lines.pointLineDist(p.getX(), p.getY(), getX1(), getY1(), getX2(), getY2());
+        return Lines.pointLineDist(p.x(), p.y(), x1(), y1(), x2(), y2());
     }
 
     @Override // from interface ILine
     public float pointSegDistSq (float px, float py) {
-        return Lines.pointSegDistSq(px, py, getX1(), getY1(), getX2(), getY2());
+        return Lines.pointSegDistSq(px, py, x1(), y1(), x2(), y2());
     }
 
     @Override // from interface ILine
     public float pointSegDistSq (IPoint p) {
-        return Lines.pointSegDistSq(p.getX(), p.getY(), getX1(), getY1(), getX2(), getY2());
+        return Lines.pointSegDistSq(p.x(), p.y(), x1(), y1(), x2(), y2());
     }
 
     @Override // from interface ILine
     public float pointSegDist (float px, float py) {
-        return Lines.pointSegDist(px, py, getX1(), getY1(), getX2(), getY2());
+        return Lines.pointSegDist(px, py, x1(), y1(), x2(), y2());
     }
 
     @Override // from interface ILine
     public float pointSegDist (IPoint p) {
-        return Lines.pointSegDist(p.getX(), p.getY(), getX1(), getY1(), getX2(), getY2());
+        return Lines.pointSegDist(p.x(), p.y(), x1(), y1(), x2(), y2());
     }
 
     @Override // from interface ILine
     public int relativeCCW (float px, float py) {
-        return Lines.relativeCCW(px, py, getX1(), getY1(), getX2(), getY2());
+        return Lines.relativeCCW(px, py, x1(), y1(), x2(), y2());
     }
 
     @Override // from interface ILine
     public int relativeCCW (IPoint p) {
-        return Lines.relativeCCW(p.getX(), p.getY(), getX1(), getY1(), getX2(), getY2());
+        return Lines.relativeCCW(p.x(), p.y(), x1(), y1(), x2(), y2());
     }
 
     @Override // from interface ILine
     public Line clone () {
-        return new Line(getX1(), getY1(), getX2(), getY2());
+        return new Line(x1(), y1(), x2(), y2());
     }
 
     @Override // from interface IShape
@@ -114,7 +114,7 @@ public abstract class AbstractLine implements ILine
 
     @Override // from interface IShape
     public boolean intersects (float rx, float ry, float rw, float rh) {
-        return Lines.lineIntersectsRect(getX1(), getY1(), getX2(), getY2(), rx, ry, rw, rh);
+        return Lines.lineIntersectsRect(x1(), y1(), x2(), y2(), rx, ry, rw, rh);
     }
 
     @Override // from interface IShape
@@ -123,13 +123,13 @@ public abstract class AbstractLine implements ILine
     }
 
     @Override // from interface IShape
-    public Rectangle getBounds () {
-        return getBounds(new Rectangle());
+    public Rectangle bounds () {
+        return bounds(new Rectangle());
     }
 
     @Override // from interface IShape
-    public Rectangle getBounds (Rectangle target) {
-        float x1 = getX1(), x2 = getX2(), y1 = getY1(), y2 = getY2();
+    public Rectangle bounds (Rectangle target) {
+        float x1 = x1(), x2 = x2(), y1 = y1(), y2 = y2();
         float rx, ry, rw, rh;
         if (x1 < x2) {
             rx = x1;
@@ -150,12 +150,12 @@ public abstract class AbstractLine implements ILine
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (Transform at) {
+    public PathIterator pathIterator (Transform at) {
         return new Iterator(this, at);
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (Transform at, float flatness) {
+    public PathIterator pathIterator (Transform at, float flatness) {
         return new Iterator(this, at);
     }
 
@@ -167,14 +167,14 @@ public abstract class AbstractLine implements ILine
         private int index;
 
         Iterator (ILine l, Transform at) {
-            this.x1 = l.getX1();
-            this.y1 = l.getY1();
-            this.x2 = l.getX2();
-            this.y2 = l.getY2();
+            this.x1 = l.x1();
+            this.y1 = l.y1();
+            this.x2 = l.x2();
+            this.y2 = l.y2();
             this.t = at;
         }
 
-        @Override public int getWindingRule () {
+        @Override public int windingRule () {
             return WIND_NON_ZERO;
         }
 

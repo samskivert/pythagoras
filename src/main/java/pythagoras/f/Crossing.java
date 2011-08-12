@@ -472,10 +472,10 @@ class Crossing
      * Returns how many times a ray from point (x,y) crosses a shape.
      */
     public static int crossShape (IShape s, float x, float y) {
-        if (!s.getBounds().contains(x, y)) {
+        if (!s.bounds().contains(x, y)) {
             return 0;
         }
-        return crossPath(s.getPathIterator(null), x, y);
+        return crossPath(s.pathIterator(null), x, y);
     }
 
     /**
@@ -759,10 +759,10 @@ class Crossing
      * Returns how many times rectangle stripe cross shape or the are intersect
      */
     public static int intersectShape (IShape s, float x, float y, float w, float h) {
-        if (!s.getBounds().intersects(x, y, w, h)) {
+        if (!s.bounds().intersects(x, y, w, h)) {
             return 0;
         }
-        return intersectPath(s.getPathIterator(null), x, y, w, h);
+        return intersectPath(s.pathIterator(null), x, y, w, h);
     }
 
     /**

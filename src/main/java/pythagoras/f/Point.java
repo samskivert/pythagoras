@@ -34,13 +34,13 @@ public class Point extends AbstractPoint implements Serializable
      * Constructs a point with coordinates equal to the supplied point.
      */
     public Point (IPoint p) {
-        set(p.getX(), p.getY());
+        set(p.x(), p.y());
     }
 
     /** Sets the coordinates of this point to be equal to those of the supplied point.
      * @return a reference to this this, for chaining. */
     public Point set (IPoint p) {
-        return set(p.getX(), p.getY());
+        return set(p.x(), p.y());
     }
 
     /** Sets the coordinates of this point to the supplied values.
@@ -70,12 +70,12 @@ public class Point extends AbstractPoint implements Serializable
     }
 
     @Override // from interface IPoint
-    public float getX () {
+    public float x () {
         return x;
     }
 
     @Override // from interface IPoint
-    public float getY () {
+    public float y () {
         return y;
     }
 }

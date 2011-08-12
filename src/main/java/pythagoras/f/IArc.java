@@ -22,31 +22,31 @@ public interface IArc extends IRectangularShape, Cloneable
     int PIE = 2;
 
     /** Returns the type of this arc: {@link #OPEN}, etc. */
-    int getArcType ();
+    int arcType ();
 
     /** Returns the starting angle of this arc. */
-    float getAngleStart ();
+    float angleStart ();
 
     /** Returns the angular extent of this arc. */
-    float getAngleExtent ();
+    float angleExtent ();
 
     /** Returns the intersection of the ray from the center (defined by the starting angle) and the
      * elliptical boundary of the arc. */
-    Point getStartPoint ();
+    Point startPoint ();
 
     /** Writes the intersection of the ray from the center (defined by the starting angle) and the
      * elliptical boundary of the arc into {@code target}.
      * @return the supplied point. */
-    Point getStartPoint (Point target);
+    Point startPoint (Point target);
 
     /** Returns the intersection of the ray from the center (defined by the starting angle plus the
      * angular extent of the arc) and the elliptical boundary of the arc. */
-    Point getEndPoint ();
+    Point endPoint ();
 
     /** Writes the intersection of the ray from the center (defined by the starting angle plus the
      * angular extent of the arc) and the elliptical boundary of the arc into {@code target}.
      * @return the supplied point. */
-    Point getEndPoint (Point target);
+    Point endPoint (Point target);
 
     /** Returns whether the specified angle is within the angular extents of this arc. */
     boolean containsAngle (float angle);

@@ -17,7 +17,7 @@ public abstract class AbstractDimension implements IDimension
 
     @Override
     public int hashCode () {
-        return getWidth() ^ getHeight();
+        return width() ^ height();
     }
 
     @Override
@@ -27,13 +27,13 @@ public abstract class AbstractDimension implements IDimension
         }
         if (obj instanceof AbstractDimension) {
             AbstractDimension d = (AbstractDimension)obj;
-            return (d.getWidth() == getWidth() && d.getHeight() == getHeight());
+            return (d.width() == width() && d.height() == height());
         }
         return false;
     }
 
     @Override
     public String toString () {
-        return Dimensions.dimenToString(getWidth(), getHeight());
+        return Dimensions.dimenToString(width(), height());
     }
 }

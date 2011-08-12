@@ -33,14 +33,14 @@ public class Rectangle extends AbstractRectangle implements Serializable
      * Constructs a rectangle with the supplied upper-left corner and dimensions (0,0).
      */
     public Rectangle (IPoint p) {
-        setBounds(p.getX(), p.getY(), 0, 0);
+        setBounds(p.x(), p.y(), 0, 0);
     }
 
     /**
      * Constructs a rectangle with upper-left corner at (0,) and the supplied dimensions.
      */
     public Rectangle (IDimension d) {
-        setBounds(0, 0, d.getWidth(), d.getHeight());
+        setBounds(0, 0, d.width(), d.height());
     }
 
     /**
@@ -48,7 +48,7 @@ public class Rectangle extends AbstractRectangle implements Serializable
      * dimensions.
      */
     public Rectangle (IPoint p, IDimension d) {
-        setBounds(p.getX(), p.getY(), d.getWidth(), d.getHeight());
+        setBounds(p.x(), p.y(), d.width(), d.height());
     }
 
     /**
@@ -62,7 +62,7 @@ public class Rectangle extends AbstractRectangle implements Serializable
      * Constructs a rectangle with bounds equal to the supplied rectangle.
      */
     public Rectangle (IRectangle r) {
-        setBounds(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+        setBounds(r.x(), r.y(), r.width(), r.height());
     }
 
     /**
@@ -77,7 +77,7 @@ public class Rectangle extends AbstractRectangle implements Serializable
      * Sets the upper-left corner of this rectangle to the supplied point.
      */
     public void setLocation (IPoint p) {
-        setLocation(p.getX(), p.getY());
+        setLocation(p.x(), p.y());
     }
 
     /**
@@ -92,7 +92,7 @@ public class Rectangle extends AbstractRectangle implements Serializable
      * Sets the size of this rectangle to the supplied dimensions.
      */
     public void setSize (IDimension d) {
-        setSize(d.getWidth(), d.getHeight());
+        setSize(d.width(), d.height());
     }
 
     /**
@@ -109,7 +109,7 @@ public class Rectangle extends AbstractRectangle implements Serializable
      * Sets the bounds of this rectangle to those of the supplied rectangle.
      */
     public void setBounds (IRectangle r) {
-        setBounds(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+        setBounds(r.x(), r.y(), r.width(), r.height());
     }
 
     /**
@@ -147,37 +147,37 @@ public class Rectangle extends AbstractRectangle implements Serializable
      * Expands the bounds of this rectangle to contain the supplied point.
      */
     public void add (IPoint p) {
-        add(p.getX(), p.getY());
+        add(p.x(), p.y());
     }
 
     /**
      * Expands the bounds of this rectangle to contain the supplied rectangle.
      */
     public void add (IRectangle r) {
-        float x1 = Math.min(x, r.getX());
-        float x2 = Math.max(x + width, r.getX() + r.getWidth());
-        float y1 = Math.min(y, r.getY());
-        float y2 = Math.max(y + height, r.getY() + r.getHeight());
+        float x1 = Math.min(x, r.x());
+        float x2 = Math.max(x + width, r.x() + r.width());
+        float y1 = Math.min(y, r.y());
+        float y2 = Math.max(y + height, r.y() + r.height());
         setBounds(x1, y1, x2 - x1, y2 - y1);
     }
 
     @Override // from interface IRectangularShape
-    public float getX () {
+    public float x () {
         return x;
     }
 
     @Override // from interface IRectangularShape
-    public float getY () {
+    public float y () {
         return y;
     }
 
     @Override // from interface IRectangularShape
-    public float getWidth () {
+    public float width () {
         return width;
     }
 
     @Override // from interface IRectangularShape
-    public float getHeight () {
+    public float height () {
         return height;
     }
 

@@ -10,13 +10,13 @@ package pythagoras.f;
 public abstract class AbstractTransform implements Transform
 {
     @Override // from Transform
-    public Vector getScale () {
-        return new Vector(getScaleX(), getScaleY());
+    public Vector scale () {
+        return new Vector(scaleX(), scaleY());
     }
 
     @Override // from Transform
-    public Vector getTranslation () {
-        return new Vector(getTx(), getTy());
+    public Vector translation () {
+        return new Vector(tx(), ty());
     }
 
     @Override // from Transform

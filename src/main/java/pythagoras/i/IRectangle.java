@@ -24,46 +24,46 @@ public interface IRectangle extends IShape, Cloneable
     int OUT_BOTTOM = 8;
 
     /** Returns the x-coordinate of the upper-left corner of the framing rectangle. */
-    int getX ();
+    int x ();
 
     /** Returns the y-coordinate of the upper-left corner of the framing rectangle. */
-    int getY ();
+    int y ();
 
     /** Returns the width of the framing rectangle. */
-    int getWidth ();
+    int width ();
 
     /** Returns the height of the framing rectangle. */
-    int getHeight ();
+    int height ();
 
     /** Returns the minimum x-coordinate of the framing rectangle. */
-    int getMinX ();
+    int minX ();
 
     /** Returns the minimum y-coordinate of the framing rectangle. */
-    int getMinY ();
+    int minY ();
 
     /** Returns the maximum x-coordinate of the framing rectangle. <em>Note:</em> this method
      * differs from its floating-point counterparts in that it considers {@code (x + width - 1)} to
      * be a rectangle's maximum x-coordinate. */
-    int getMaxX ();
+    int maxX ();
 
     /** Returns the maximum y-coordinate of the framing rectangle. <em>Note:</em> this method
      * differs from its floating-point counterparts in that it considers {@code (y + height - 1)}
      * to be a rectangle's maximum x-coordinate. */
-    int getMaxY ();
+    int maxY ();
 
     /** Returns a copy of this rectangle's upper-left corner. */
-    Point getLocation ();
+    Point location ();
 
     /** Initializes the supplied point with this rectangle's upper-left corner.
      * @return the supplied point. */
-    Point getLocation (Point target);
+    Point location (Point target);
 
     /** Returns a copy of this rectangle's size. */
-    Dimension getSize ();
+    Dimension size ();
 
     /** Initializes the supplied dimension with this rectangle's size.
      * @return the supplied dimension. */
-    Dimension getSize (Dimension target);
+    Dimension size (Dimension target);
 
     /** Returns the intersection of the specified rectangle and this rectangle (i.e. the largest
      * rectangle contained in both this and the specified rectangle). */

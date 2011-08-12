@@ -31,9 +31,9 @@ public interface IShape
     boolean intersects (IRectangle r);
 
     /** Returns a copy of the bounding rectangle for this shape. */
-    Rectangle getBounds ();
+    Rectangle bounds ();
 
     /** Initializes the supplied rectangle with this shape's bounding rectangle.
      * @return the supplied rectangle. */
-    Rectangle getBounds (Rectangle target);
+    Rectangle bounds (Rectangle target);
 }

@@ -34,32 +34,32 @@ public class UniformTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public float getUniformScale () {
+    public float uniformScale () {
         return scale;
     }
 
     @Override // from Transform
-    public float getScaleX () {
+    public float scaleX () {
         return scale;
     }
 
     @Override // from Transform
-    public float getScaleY () {
+    public float scaleY () {
         return scale;
     }
 
     @Override // from Transform
-    public float getRotation () {
+    public float rotation () {
         return rotation;
     }
 
     @Override // from Transform
-    public float getTx () {
+    public float tx () {
         return tx;
     }
 
     @Override // from Transform
-    public float getTy () {
+    public float ty () {
         return ty;
     }
 
@@ -124,7 +124,7 @@ public class UniformTransform extends AbstractTransform
     @Override // from Transform
     public Transform invert () {
         float nscale = 1f / scale, nrotation = -rotation;
-        Vector t = getTranslation().negateLocal().rotateLocal(nrotation).multLocal(nscale);
+        Vector t = translation().negateLocal().rotateLocal(nrotation).multLocal(nscale);
         return new UniformTransform(nscale, nrotation, t.x, t.y);
     }
 
@@ -134,10 +134,10 @@ public class UniformTransform extends AbstractTransform
             return other.preConcatenate(this);
         }
 
-        Vector nt = other.getTranslation();
-        nt.rotateScaleAndAdd(rotation, scale, getTranslation(), nt);
-        float nrotation = FloatMath.normalizeAngle(rotation + other.getRotation());
-        float nscale = scale * other.getUniformScale();
+        Vector nt = other.translation();
+        nt.rotateScaleAndAdd(rotation, scale, translation(), nt);
+        float nrotation = FloatMath.normalizeAngle(rotation + other.rotation());
+        float nscale = scale * other.uniformScale();
         return new UniformTransform(nscale, nrotation, nt.x, nt.y);
     }
 
@@ -147,11 +147,11 @@ public class UniformTransform extends AbstractTransform
             return other.concatenate(this);
         }
 
-        Vector nt = getTranslation();
-        nt.rotateScaleAndAdd(other.getRotation(), other.getUniformScale(),
-                             other.getTranslation(), nt);
-        float nrotation = FloatMath.normalizeAngle(other.getRotation() + rotation);
-        float nscale = other.getUniformScale() * scale;
+        Vector nt = translation();
+        nt.rotateScaleAndAdd(other.rotation(), other.uniformScale(),
+                             other.translation(), nt);
+        float nrotation = FloatMath.normalizeAngle(other.rotation() + rotation);
+        float nscale = other.uniformScale() * scale;
         return new UniformTransform(nscale, nrotation, nt.x, nt.y);
     }
 
@@ -161,15 +161,15 @@ public class UniformTransform extends AbstractTransform
             return other.lerp(this, -t); // TODO: is this correct?
         }
 
-        Vector nt = getTranslation().lerpLocal(other.getTranslation(), t);
-        float nrotation = FloatMath.lerpa(rotation, other.getRotation(), t);
-        float nscale = FloatMath.lerp(scale, other.getUniformScale(), t);
+        Vector nt = translation().lerpLocal(other.translation(), t);
+        float nrotation = FloatMath.lerpa(rotation, other.rotation(), t);
+        float nscale = FloatMath.lerp(scale, other.uniformScale(), t);
         return new UniformTransform(nscale, nrotation, nt.x, nt.y);
     }
 
     @Override // from Transform
     public Point transform (IPoint p, Point into) {
-        return Points.transform(p.getX(), p.getY(), scale, scale, rotation, tx, ty, into);
+        return Points.transform(p.x(), p.y(), scale, scale, rotation, tx, ty, into);
     }
 
     @Override // from Transform
@@ -177,7 +177,7 @@ public class UniformTransform extends AbstractTransform
         float sina = FloatMath.sin(rotation), cosa = FloatMath.cos(rotation);
         for (int ii = 0; ii < count; ii++) {
             IPoint p = src[srcOff++];
-            Points.transform(p.getX(), p.getY(), scale, scale, sina, cosa, tx, ty, dst[dstOff++]);
+            Points.transform(p.x(), p.y(), scale, scale, sina, cosa, tx, ty, dst[dstOff++]);
         }
     }
 
@@ -194,17 +194,17 @@ public class UniformTransform extends AbstractTransform
 
     @Override // from Transform
     public Point inverseTransform (IPoint p, Point into) {
-        return Points.inverseTransform(p.getX(), p.getY(), scale, scale, rotation, tx, ty, into);
+        return Points.inverseTransform(p.x(), p.y(), scale, scale, rotation, tx, ty, into);
     }
 
     @Override // from Transform
     public Vector transform (IVector v, Vector into) {
-        return Vectors.transform(v.getX(), v.getY(), scale, scale, rotation, into);
+        return Vectors.transform(v.x(), v.y(), scale, scale, rotation, into);
     }
 
     @Override // from Transform
     public Vector inverseTransform (IVector v, Vector into) {
-        return Vectors.inverseTransform(v.getX(), v.getY(), scale, scale, rotation, into);
+        return Vectors.inverseTransform(v.x(), v.y(), scale, scale, rotation, into);
     }
 
     @Override // from Transform
@@ -220,6 +220,6 @@ public class UniformTransform extends AbstractTransform
     @Override
     public String toString () {
         return "uniform [scale=" + scale + ", rot=" + rotation +
-            ", trans=" + getTranslation() + "]";
+            ", trans=" + translation() + "]";
     }
 }

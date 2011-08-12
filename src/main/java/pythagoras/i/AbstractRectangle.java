@@ -11,59 +11,59 @@ package pythagoras.i;
 public abstract class AbstractRectangle implements IRectangle
 {
     @Override // from IRectangle
-    public int getMinX () {
-        return getX();
+    public int minX () {
+        return x();
     }
 
     @Override // from IRectangle
-    public int getMinY () {
-        return getY();
+    public int minY () {
+        return y();
     }
 
     @Override // from IRectangle
-    public int getMaxX () {
-        return getX() + getWidth() - 1;
+    public int maxX () {
+        return x() + width() - 1;
     }
 
     @Override // from IRectangle
-    public int getMaxY () {
-        return getY() + getHeight() - 1;
+    public int maxY () {
+        return y() + height() - 1;
     }
 
     @Override // from interface IRectangle
-    public Point getLocation () {
-        return getLocation(new Point());
+    public Point location () {
+        return location(new Point());
     }
 
     @Override // from interface IRectangle
-    public Point getLocation (Point target) {
-        target.setLocation(getX(), getY());
+    public Point location (Point target) {
+        target.setLocation(x(), y());
         return target;
     }
 
     @Override // from interface IRectangle
-    public Dimension getSize () {
-        return getSize(new Dimension());
+    public Dimension size () {
+        return size(new Dimension());
     }
 
     @Override // from interface IRectangle
-    public Dimension getSize (Dimension target) {
-        target.setSize(getWidth(), getHeight());
+    public Dimension size (Dimension target) {
+        target.setSize(width(), height());
         return target;
     }
 
     @Override // from interface IRectangle
     public Rectangle intersection (int rx, int ry, int rw, int rh) {
-        int x1 = Math.max(getX(), rx);
-        int y1 = Math.max(getY(), ry);
-        int x2 = Math.min(getMaxX(), rx + rw - 1);
-        int y2 = Math.min(getMaxY(), ry + rh - 1);
+        int x1 = Math.max(x(), rx);
+        int y1 = Math.max(y(), ry);
+        int x2 = Math.min(maxX(), rx + rw - 1);
+        int y2 = Math.min(maxY(), ry + rh - 1);
         return new Rectangle(x1, y1, x2 - x1, y2 - y1);
     }
 
     @Override // from interface IRectangle
     public Rectangle intersection (IRectangle r) {
-        return intersection(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+        return intersection(r.x(), r.y(), r.width(), r.height());
     }
 
     @Override // from interface IRectangle
@@ -77,19 +77,19 @@ public abstract class AbstractRectangle implements IRectangle
     public int outcode (int px, int py) {
         int code = 0;
 
-        if (getWidth() <= 0) {
+        if (width() <= 0) {
             code |= OUT_LEFT | OUT_RIGHT;
-        } else if (px < getX()) {
+        } else if (px < x()) {
             code |= OUT_LEFT;
-        } else if (px > getMaxX()) {
+        } else if (px > maxX()) {
             code |= OUT_RIGHT;
         }
 
-        if (getHeight() <= 0) {
+        if (height() <= 0) {
             code |= OUT_TOP | OUT_BOTTOM;
-        } else if (py < getY()) {
+        } else if (py < y()) {
             code |= OUT_TOP;
-        } else if (py > getMaxY()) {
+        } else if (py > maxY()) {
             code |= OUT_BOTTOM;
         }
 
@@ -98,7 +98,7 @@ public abstract class AbstractRectangle implements IRectangle
 
     @Override // from interface IRectangle
     public int outcode (IPoint p) {
-        return outcode(p.getX(), p.getY());
+        return outcode(p.x(), p.y());
     }
 
     @Override // from interface IRectangle
@@ -108,60 +108,60 @@ public abstract class AbstractRectangle implements IRectangle
 
     @Override // from interface IShape
     public boolean isEmpty () {
-        return getWidth() <= 0 || getHeight() <= 0;
+        return width() <= 0 || height() <= 0;
     }
 
     @Override // from interface IShape
     public boolean contains (int px, int py) {
         if (isEmpty()) return false;
 
-        int x = getX(), y = getY();
+        int x = x(), y = y();
         if (px < x || py < y) return false;
 
         px -= x;
         py -= y;
-        return px < getWidth() && py < getHeight();
+        return px < width() && py < height();
     }
 
     @Override // from interface IShape
     public boolean contains (IPoint point) {
-        return contains(point.getX(), point.getY());
+        return contains(point.x(), point.y());
     }
 
     @Override // from interface IShape
     public boolean contains (int rx, int ry, int rw, int rh) {
         if (isEmpty()) return false;
 
-        int x1 = getX(), y1 = getY(), x2 = x1 + getWidth(), y2 = y1 + getHeight();
+        int x1 = x(), y1 = y(), x2 = x1 + width(), y2 = y1 + height();
         return (x1 <= rx) && (rx + rw <= x2) && (y1 <= ry) && (ry + rh <= y2);
     }
 
     @Override // from interface IShape
     public boolean contains (IRectangle rect) {
-        return contains(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+        return contains(rect.x(), rect.y(), rect.width(), rect.height());
     }
 
     @Override // from interface IShape
     public boolean intersects (int rx, int ry, int rw, int rh) {
         if (isEmpty()) return false;
 
-        int x1 = getX(), y1 = getY(), x2 = x1 + getWidth(), y2 = y1 + getHeight();
+        int x1 = x(), y1 = y(), x2 = x1 + width(), y2 = y1 + height();
         return (rx + rw > x1) && (rx < x2) && (ry + rh > y1) && (ry < y2);
     }
 
     @Override // from interface IShape
     public boolean intersects (IRectangle rect) {
-        return intersects(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+        return intersects(rect.x(), rect.y(), rect.width(), rect.height());
     }
 
     @Override // from interface IShape
-    public Rectangle getBounds () {
-        return getBounds(new Rectangle());
+    public Rectangle bounds () {
+        return bounds(new Rectangle());
     }
 
     @Override // from interface IShape
-    public Rectangle getBounds (Rectangle target) {
-        target.setBounds(getX(), getY(), getWidth(), getHeight());
+    public Rectangle bounds (Rectangle target) {
+        target.setBounds(x(), y(), width(), height());
         return target;
     }
 
@@ -172,20 +172,20 @@ public abstract class AbstractRectangle implements IRectangle
         }
         if (obj instanceof AbstractRectangle) {
             AbstractRectangle r = (AbstractRectangle)obj;
-            return r.getX() == getX() && r.getY() == getY() &&
-                r.getWidth() == getWidth() && r.getHeight() == getHeight();
+            return r.x() == x() && r.y() == y() &&
+                r.width() == width() && r.height() == height();
         }
         return false;
     }
 
     @Override // from Object
     public int hashCode () {
-        return getX() ^ getY() ^ getWidth() ^ getHeight();
+        return x() ^ y() ^ width() ^ height();
     }
 
     @Override // from Object
     public String toString () {
-        return Dimensions.dimenToString(getWidth(), getHeight()) +
-            Points.pointToString(getX(), getY());
+        return Dimensions.dimenToString(width(), height()) +
+            Points.pointToString(x(), y());
     }
 }

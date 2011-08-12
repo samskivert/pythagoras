@@ -10,48 +10,48 @@ package pythagoras.f;
 public interface ICubicCurve extends IShape, Cloneable
 {
     /** Returns the x-coordinate of the start of this curve. */
-    float getX1 ();
+    float x1 ();
 
     /** Returns the y-coordinate of the start of this curve. */
-    float getY1 ();
+    float y1 ();
 
     /** Returns the x-coordinate of the first control point. */
-    float getCtrlX1 ();
+    float ctrlX1 ();
 
     /** Returns the y-coordinate of the first control point. */
-    float getCtrlY1 ();
+    float ctrlY1 ();
 
     /** Returns the x-coordinate of the second control point. */
-    float getCtrlX2 ();
+    float ctrlX2 ();
 
     /** Returns the y-coordinate of the second control point. */
-    float getCtrlY2 ();
+    float ctrlY2 ();
 
     /** Returns the x-coordinate of the end of this curve. */
-    float getX2 ();
+    float x2 ();
 
     /** Returns the y-coordinate of the end of this curve. */
-    float getY2 ();
+    float y2 ();
 
     /** Returns a copy of the starting point of this curve. */
-    Point getP1 ();
+    Point p1 ();
 
     /** Returns a copy of the first control point of this curve. */
-    Point getCtrlP1 ();
+    Point ctrlP1 ();
 
     /** Returns a copy of the second control point of this curve. */
-    Point getCtrlP2 ();
+    Point ctrlP2 ();
 
     /** Returns a copy of the ending point of this curve. */
-    Point getP2 ();
+    Point p2 ();
 
     /** Returns the square of the flatness (maximum distance of a control point from the line
      * connecting the end points) of this curve. */
-    float getFlatnessSq ();
+    float flatnessSq ();
 
     /** Returns the flatness (maximum distance of a control point from the line connecting the end
      * points) of this curve. */
-    float getFlatness ();
+    float flatness ();
 
     /** Subdivides this curve and stores the results into {@code left} and {@code right}. */
     void subdivide (CubicCurve left, CubicCurve right);

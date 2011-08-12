@@ -35,7 +35,7 @@ public class Dimension extends AbstractDimension implements Serializable
      * Creates a dimension with width and height equal to the supplied dimension.
      */
     public Dimension (IDimension d) {
-        this(d.getWidth(), d.getHeight());
+        this(d.width(), d.height());
     }
 
     /**
@@ -50,16 +50,16 @@ public class Dimension extends AbstractDimension implements Serializable
      * Sets the magnitudes of this dimension to be equal to the supplied dimension.
      */
     public void setSize (IDimension d) {
-        setSize(d.getWidth(), d.getHeight());
+        setSize(d.width(), d.height());
     }
 
     @Override // from interface IDimension
-    public int getWidth () {
+    public int width () {
         return width;
     }
 
     @Override // from interface IDimension
-    public int getHeight () {
+    public int height () {
         return height;
     }
 }

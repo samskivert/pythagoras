@@ -92,7 +92,7 @@ public class Vector extends AbstractVector
     /** Copies the elements of another vector.
      * @return a reference to this vector, for chaining. */
     public Vector set (IVector other) {
-        return set(other.getX(), other.getY());
+        return set(other.x(), other.y());
     }
 
     /** Copies the elements of an array.
@@ -110,12 +110,12 @@ public class Vector extends AbstractVector
     }
 
     @Override // from AbstractVector
-    public float getX () {
+    public float x () {
         return x;
     }
 
     @Override // from AbstractVector
-    public float getY () {
+    public float y () {
         return y;
     }
 }

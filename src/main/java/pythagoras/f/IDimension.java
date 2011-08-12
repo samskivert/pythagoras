@@ -12,12 +12,12 @@ public interface IDimension extends Cloneable
     /**
      * Returns the magnitude in the x-dimension.
      */
-    float getWidth ();
+    float width ();
 
     /**
      * Returns the magnitude in the y-dimension.
      */
-    float getHeight ();
+    float height ();
 
     /**
      * Returns a mutable copy of this dimension.

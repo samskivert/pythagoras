@@ -12,32 +12,32 @@ public interface Transform
 {
     /** Returns the uniform scale applied by this transform. The uniform scale will be approximated
      * for non-uniform transforms. */
-    float getUniformScale ();
+    float uniformScale ();
 
     /** Returns the scale vector for this transform. */
-    Vector getScale ();
+    Vector scale ();
 
     /** Returns the x-component of the scale applied by this transform. Note that this will be
      * extracted and therefore approximate for affine transforms. */
-    float getScaleX ();
+    float scaleX ();
 
     /** Returns the y-component of the scale applied by this transform. Note that this will be
      * extracted and therefore approximate for affine transforms. */
-    float getScaleY ();
+    float scaleY ();
 
     /** Returns the rotation applied by this transform. Note that the rotation is extracted and
      * therefore approximate for affine transforms.
      * @throws NoninvertibleTransformException if the transform is not invertible. */
-    float getRotation ();
+    float rotation ();
 
     /** Returns the translation vector for this transform. */
-    Vector getTranslation ();
+    Vector translation ();
 
     /** Returns the x-coordinate of the translation component. */
-    float getTx ();
+    float tx ();
 
     /** Returns the y-coordinate of the translation component. */
-    float getTy ();
+    float ty ();
 
     /** Sets the uniform scale of this transform.
      * @return this instance, for chaining.

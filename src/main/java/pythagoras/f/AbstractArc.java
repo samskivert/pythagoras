@@ -13,37 +13,37 @@ import java.util.NoSuchElementException;
 public abstract class AbstractArc extends RectangularShape implements IArc
 {
     @Override // from interface IArc
-    public Point getStartPoint () {
-        return getStartPoint(new Point());
+    public Point startPoint () {
+        return startPoint(new Point());
     }
 
     @Override // from interface IArc
-    public Point getStartPoint (Point target) {
-        float a = FloatMath.toRadians(getAngleStart());
-        return target.set(getX() + (1f + FloatMath.cos(a)) * getWidth() / 2f,
-                          getY() + (1f - FloatMath.sin(a)) * getHeight() / 2f);
+    public Point startPoint (Point target) {
+        float a = FloatMath.toRadians(angleStart());
+        return target.set(x() + (1f + FloatMath.cos(a)) * width() / 2f,
+                          y() + (1f - FloatMath.sin(a)) * height() / 2f);
     }
 
     @Override // from interface IArc
-    public Point getEndPoint () {
-        return getEndPoint(new Point());
+    public Point endPoint () {
+        return endPoint(new Point());
     }
 
     @Override // from interface IArc
-    public Point getEndPoint (Point target) {
-        float a = FloatMath.toRadians(getAngleStart() + getAngleExtent());
-        return target.set(getX() + (1f + FloatMath.cos(a)) * getWidth() / 2f,
-                          getY() + (1f - FloatMath.sin(a)) * getHeight() / 2f);
+    public Point endPoint (Point target) {
+        float a = FloatMath.toRadians(angleStart() + angleExtent());
+        return target.set(x() + (1f + FloatMath.cos(a)) * width() / 2f,
+                          y() + (1f - FloatMath.sin(a)) * height() / 2f);
     }
 
     @Override // from interface IArc
     public boolean containsAngle (float angle) {
-        float extent = getAngleExtent();
+        float extent = angleExtent();
         if (extent >= 360f) {
             return true;
         }
-        angle = getNormAngle(angle);
-        float a1 = getNormAngle(getAngleStart());
+        angle = normAngle(angle);
+        float a1 = normAngle(angleStart());
         float a2 = a1 + extent;
         if (a2 > 360f) {
             return angle >= a1 || angle <= a2 - 360f;
@@ -56,41 +56,41 @@ public abstract class AbstractArc extends RectangularShape implements IArc
 
     @Override // from interface IArc
     public Arc clone () {
-        return new Arc(getX(), getY(), getWidth(), getHeight(), getAngleStart(), getAngleExtent(),
-                       getArcType());
+        return new Arc(x(), y(), width(), height(), angleStart(), angleExtent(),
+                       arcType());
     }
 
     @Override // from RectangularShape
     public boolean isEmpty () {
-        return getArcType() == OPEN || super.isEmpty();
+        return arcType() == OPEN || super.isEmpty();
     }
 
     @Override // from RectangularShape
     public boolean contains (float px, float py) {
         // normalize point
-        float nx = (px - getX()) / getWidth() - 0.5f;
-        float ny = (py - getY()) / getHeight() - 0.5f;
+        float nx = (px - x()) / width() - 0.5f;
+        float ny = (py - y()) / height() - 0.5f;
         if ((nx * nx + ny * ny) > 0.25) {
             return false;
         }
 
-        float extent = getAngleExtent();
+        float extent = angleExtent();
         float absExtent = Math.abs(extent);
         if (absExtent >= 360f) {
             return true;
         }
 
         boolean containsAngle = containsAngle(FloatMath.toDegrees(-FloatMath.atan2(ny, nx)));
-        if (getArcType() == PIE) {
+        if (arcType() == PIE) {
             return containsAngle;
         }
         if (absExtent <= 180f && !containsAngle) {
             return false;
         }
 
-        Line l = new Line(getStartPoint(), getEndPoint());
+        Line l = new Line(startPoint(), endPoint());
         int ccw1 = l.relativeCCW(px, py);
-        int ccw2 = l.relativeCCW(getCenterX(), getCenterY());
+        int ccw2 = l.relativeCCW(centerX(), centerY());
         return ccw1 == 0 || ccw2 == 0 || ((ccw1 + ccw2) == 0 ^ absExtent > 180f);
     }
 
@@ -101,20 +101,20 @@ public abstract class AbstractArc extends RectangularShape implements IArc
             return false;
         }
 
-        float absExtent = Math.abs(getAngleExtent());
-        if (getArcType() != PIE || absExtent <= 180f || absExtent >= 360f) {
+        float absExtent = Math.abs(angleExtent());
+        if (arcType() != PIE || absExtent <= 180f || absExtent >= 360f) {
             return true;
         }
 
         Rectangle r = new Rectangle(rx, ry, rw, rh);
-        float cx = getCenterX(), cy = getCenterY();
+        float cx = centerX(), cy = centerY();
         if (r.contains(cx, cy)) {
             return false;
         }
 
-        Point p1 = getStartPoint(), p2 = getEndPoint();
-        return !r.intersectsLine(cx, cy, p1.getX(), p1.getY()) &&
-            !r.intersectsLine(cx, cy, p2.getX(), p2.getY());
+        Point p1 = startPoint(), p2 = endPoint();
+        return !r.intersectsLine(cx, cy, p1.x(), p1.y()) &&
+            !r.intersectsLine(cx, cy, p2.x(), p2.y());
     }
 
     @Override // from RectangularShape
@@ -129,22 +129,22 @@ public abstract class AbstractArc extends RectangularShape implements IArc
             return true;
         }
 
-        float cx = getCenterX(), cy = getCenterY();
-        Point p1 = getStartPoint(), p2 = getEndPoint();
+        float cx = centerX(), cy = centerY();
+        Point p1 = startPoint(), p2 = endPoint();
 
         // check: does rectangle contain arc's points
         Rectangle r = new Rectangle(rx, ry, rw, rh);
-        if (r.contains(p1) || r.contains(p2) || (getArcType() == PIE && r.contains(cx, cy))) {
+        if (r.contains(p1) || r.contains(p2) || (arcType() == PIE && r.contains(cx, cy))) {
             return true;
         }
 
-        if (getArcType() == PIE) {
-            if (r.intersectsLine(p1.getX(), p1.getY(), cx, cy) ||
-                r.intersectsLine(p2.getX(), p2.getY(), cx, cy)) {
+        if (arcType() == PIE) {
+            if (r.intersectsLine(p1.x(), p1.y(), cx, cy) ||
+                r.intersectsLine(p2.x(), p2.y(), cx, cy)) {
                 return true;
             }
         } else {
-            if (r.intersectsLine(p1.getX(), p1.getY(), p2.getX(), p2.getY())) {
+            if (r.intersectsLine(p1.x(), p1.y(), p2.x(), p2.y())) {
                 return true;
             }
         }
@@ -156,27 +156,27 @@ public abstract class AbstractArc extends RectangularShape implements IArc
     }
 
     @Override // from RectangularShape
-    public Rectangle getBounds (Rectangle target) {
+    public Rectangle bounds (Rectangle target) {
         if (isEmpty()) {
-            target.setBounds(getX(), getY(), getWidth(), getHeight());
+            target.setBounds(x(), y(), width(), height());
             return target;
         }
 
-        float rx1 = getX();
-        float ry1 = getY();
-        float rx2 = rx1 + getWidth();
-        float ry2 = ry1 + getHeight();
+        float rx1 = x();
+        float ry1 = y();
+        float rx2 = rx1 + width();
+        float ry2 = ry1 + height();
 
-        Point p1 = getStartPoint(), p2 = getEndPoint();
+        Point p1 = startPoint(), p2 = endPoint();
 
-        float bx1 = containsAngle(180f) ? rx1 : Math.min(p1.getX(), p2.getX());
-        float by1 = containsAngle(90f) ? ry1 : Math.min(p1.getY(), p2.getY());
-        float bx2 = containsAngle(0f) ? rx2 : Math.max(p1.getX(), p2.getX());
-        float by2 = containsAngle(270f) ? ry2 : Math.max(p1.getY(), p2.getY());
+        float bx1 = containsAngle(180f) ? rx1 : Math.min(p1.x(), p2.x());
+        float by1 = containsAngle(90f) ? ry1 : Math.min(p1.y(), p2.y());
+        float bx2 = containsAngle(0f) ? rx2 : Math.max(p1.x(), p2.x());
+        float by2 = containsAngle(270f) ? ry2 : Math.max(p1.y(), p2.y());
 
-        if (getArcType() == PIE) {
-            float cx = getCenterX();
-            float cy = getCenterY();
+        if (arcType() == PIE) {
+            float cx = centerX();
+            float cy = centerY();
             bx1 = Math.min(bx1, cx);
             by1 = Math.min(by1, cy);
             bx2 = Math.max(bx2, cx);
@@ -187,12 +187,12 @@ public abstract class AbstractArc extends RectangularShape implements IArc
     }
 
     @Override // from interface IShape
-    public PathIterator getPathIterator (Transform at) {
+    public PathIterator pathIterator (Transform at) {
         return new Iterator(this, at);
     }
 
     /** Returns a normalized angle (bound between 0 and 360 degrees). */
-    protected float getNormAngle (float angle) {
+    protected float normAngle (float angle) {
         return angle - FloatMath.floor(angle / 360f) * 360f;
     }
 
@@ -258,13 +258,13 @@ public abstract class AbstractArc extends RectangularShape implements IArc
         private float my;
 
         Iterator (IArc a, Transform t) {
-            this.width = a.getWidth() / 2f;
-            this.height = a.getHeight() / 2f;
-            this.x = a.getX() + width;
-            this.y = a.getY() + height;
-            this.angle = -FloatMath.toRadians(a.getAngleStart());
-            this.extent = -a.getAngleExtent();
-            this.type = a.getArcType();
+            this.width = a.width() / 2f;
+            this.height = a.height() / 2f;
+            this.x = a.x() + width;
+            this.y = a.y() + height;
+            this.angle = -FloatMath.toRadians(a.angleStart());
+            this.extent = -a.angleExtent();
+            this.type = a.arcType();
             this.t = t;
 
             if (width < 0 || height < 0) {
@@ -296,7 +296,7 @@ public abstract class AbstractArc extends RectangularShape implements IArc
             }
         }
 
-        @Override public int getWindingRule () {
+        @Override public int windingRule () {
             return WIND_NON_ZERO;
         }
 

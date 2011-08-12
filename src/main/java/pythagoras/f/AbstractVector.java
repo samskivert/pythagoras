@@ -14,7 +14,7 @@ public abstract class AbstractVector implements IVector
 {
     @Override // from interface IVector
     public float dot (IVector other) {
-        return getX()*other.getX() + getY()*other.getY();
+        return x()*other.x() + y()*other.y();
     }
 
     @Override // from interface IVector
@@ -24,7 +24,7 @@ public abstract class AbstractVector implements IVector
 
     @Override // from interface IVector
     public Vector negate (Vector result) {
-        return result.set(-getX(), -getY());
+        return result.set(-x(), -y());
     }
 
     @Override // from interface IVector
@@ -45,7 +45,7 @@ public abstract class AbstractVector implements IVector
 
     @Override // from interface IVector
     public float direction (IVector other) {
-        return FloatMath.atan2(other.getY() - getY(), other.getX() - getX());
+        return FloatMath.atan2(other.y() - y(), other.x() - x());
     }
 
     @Override // from interface IVector
@@ -55,7 +55,7 @@ public abstract class AbstractVector implements IVector
 
     @Override // from interface IVector
     public float lengthSq () {
-        float x = getX(), y = getY();
+        float x = x(), y = y();
         return (x*x + y*y);
     }
 
@@ -66,7 +66,7 @@ public abstract class AbstractVector implements IVector
 
     @Override // from interface IVector
     public float distanceSq (IVector other) {
-        float dx = getX() - other.getX(), dy = getY() - other.getY();
+        float dx = x() - other.x(), dy = y() - other.y();
         return dx*dx + dy*dy;
     }
 
@@ -77,7 +77,7 @@ public abstract class AbstractVector implements IVector
 
     @Override // from interface IVector
     public Vector mult (float v, Vector result) {
-        return result.set(getX()*v, getY()*v);
+        return result.set(x()*v, y()*v);
     }
 
     @Override // from interface IVector
@@ -87,7 +87,7 @@ public abstract class AbstractVector implements IVector
 
     @Override // from interface IVector
     public Vector mult (IVector other, Vector result) {
-        return result.set(getX()*other.getX(), getY()*other.getY());
+        return result.set(x()*other.x(), y()*other.y());
     }
 
     @Override // from interface IVector
@@ -97,7 +97,7 @@ public abstract class AbstractVector implements IVector
 
     @Override // from interface IVector
     public Vector add (IVector other, Vector result) {
-        return add(other.getX(), other.getY(), result);
+        return add(other.x(), other.y(), result);
     }
 
     @Override // from interface IVector
@@ -107,7 +107,7 @@ public abstract class AbstractVector implements IVector
 
     @Override // from interface IVector
     public Vector subtract (IVector other, Vector result) {
-        return add(-other.getX(), -other.getY(), result);
+        return add(-other.x(), -other.y(), result);
     }
 
     @Override // from interface IVector
@@ -117,7 +117,7 @@ public abstract class AbstractVector implements IVector
 
     @Override // from interface IVector
     public Vector add (float x, float y, Vector result) {
-        return result.set(getX() + x, getY() + y);
+        return result.set(x() + x, y() + y);
     }
 
     @Override // from interface IVector
@@ -127,7 +127,7 @@ public abstract class AbstractVector implements IVector
 
     @Override // from interface IVector
     public Vector addScaled (IVector other, float v, Vector result) {
-        return result.set(getX() + other.getX()*v, getY() + other.getY()*v);
+        return result.set(x() + other.x()*v, y() + other.y()*v);
     }
 
     @Override // from interface IVector
@@ -137,24 +137,24 @@ public abstract class AbstractVector implements IVector
 
     @Override // from interface IVector
     public Vector rotate (float angle, Vector result) {
-        float x = getX(), y = getY();
+        float x = x(), y = y();
         float sina = FloatMath.sin(angle), cosa = FloatMath.cos(angle);
         return result.set(x*cosa - y*sina, x*sina + y*cosa);
     }
 
     @Override // from interface IVector
     public Vector rotateAndAdd (float angle, IVector add, Vector result) {
-        float x = getX(), y = getY();
+        float x = x(), y = y();
         float sina = FloatMath.sin(angle), cosa = FloatMath.cos(angle);
-        return result.set(x*cosa - y*sina + add.getX(), x*sina + y*cosa + add.getY());
+        return result.set(x*cosa - y*sina + add.x(), x*sina + y*cosa + add.y());
     }
 
     @Override // from interface IVector
     public Vector rotateScaleAndAdd (float angle, float scale, IVector add, Vector result) {
-        float x = getX(), y = getY();
+        float x = x(), y = y();
         float sina = FloatMath.sin(angle), cosa = FloatMath.cos(angle);
-        return result.set((x*cosa - y*sina)*scale + add.getX(),
-                          (x*sina + y*cosa)*scale + add.getY());
+        return result.set((x*cosa - y*sina)*scale + add.x(),
+                          (x*sina + y*cosa)*scale + add.y());
     }
 
     @Override // from interface IVector
@@ -164,8 +164,8 @@ public abstract class AbstractVector implements IVector
 
     @Override // from interface IVector
     public Vector lerp (IVector other, float t, Vector result) {
-        float x = getX(), y = getY();
-        float dx = other.getX() - x, dy = other.getY() - y;
+        float x = x(), y = y();
+        float dx = other.x() - x, dy = other.y() - y;
         return result.set(x + t*dx, y + t*dy);
     }
 
@@ -181,18 +181,18 @@ public abstract class AbstractVector implements IVector
         }
         if (obj instanceof AbstractVector) {
             AbstractVector p = (AbstractVector)obj;
-            return getX() == p.getX() && getY() == p.getY();
+            return x() == p.x() && y() == p.y();
         }
         return false;
     }
 
     @Override
     public int hashCode () {
-        return Platform.hashCode(getX()) ^ Platform.hashCode(getY());
+        return Platform.hashCode(x()) ^ Platform.hashCode(y());
     }
 
     @Override
     public String toString () {
-        return Vectors.vectorToString(getX(), getY());
+        return Vectors.vectorToString(x(), y());
     }
 }

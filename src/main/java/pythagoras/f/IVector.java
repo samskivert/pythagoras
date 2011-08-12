@@ -10,10 +10,10 @@ package pythagoras.f;
 public interface IVector
 {
     /** Returns the x-component of this vector. */
-    float getX ();
+    float x ();
 
     /** Returns the y-component of this vector. */
-    float getY ();
+    float y ();
 
     /** Computes and returns the dot product of this and the specified other vector. */
     float dot (IVector other);

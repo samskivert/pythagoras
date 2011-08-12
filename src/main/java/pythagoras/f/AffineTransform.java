@@ -51,24 +51,24 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public float getUniformScale () {
+    public float uniformScale () {
         // the square root of the signed area of the parallelogram spanned by the axis vectors
         float cp = m00*m11 - m01*m10;
         return (cp < 0f) ? -FloatMath.sqrt(-cp) : FloatMath.sqrt(cp);
     }
 
     @Override // from Transform
-    public float getScaleX () {
+    public float scaleX () {
         return FloatMath.sqrt(m00*m00 + m01*m01);
     }
 
     @Override // from Transform
-    public float getScaleY () {
+    public float scaleY () {
         return FloatMath.sqrt(m10*m10 + m11*m11);
     }
 
     @Override // from Transform
-    public float getRotation () {
+    public float rotation () {
         // use the iterative polar decomposition algorithm described by Ken Shoemake:
         // http://www.cs.wisc.edu/graphics/Courses/838-s2002/Papers/polar-decomp.pdf
 
@@ -105,12 +105,12 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public float getTx () {
+    public float tx () {
         return this.tx;
     }
 
     @Override // from Transform
-    public float getTy () {
+    public float ty () {
         return this.ty;
     }
 
@@ -122,7 +122,7 @@ public class AffineTransform extends AbstractTransform
     @Override // from Transform
     public Transform setScaleX (float scaleX) {
         // normalize the scale to 1, then re-apply
-        float osx = getScaleX();
+        float osx = scaleX();
         m00 /= osx; m01 /= osx;
         m00 *= scaleX; m01 *= scaleX;
         return this;
@@ -131,7 +131,7 @@ public class AffineTransform extends AbstractTransform
     @Override // from Transform
     public Transform setScaleY (float scaleY) {
         // normalize the scale to 1, then re-apply
-        float osy = getScaleY();
+        float osy = scaleY();
         m10 /= osy; m11 /= osy;
         m10 *= scaleY; m11 *= scaleY;
         return this;
@@ -140,7 +140,7 @@ public class AffineTransform extends AbstractTransform
     @Override // from Transform
     public Transform setRotation (float angle) {
         // extract the scale, then reapply rotation and scale together
-        float sx = getScaleX(), sy = getScaleY();
+        float sx = scaleX(), sy = scaleY();
         float sina = FloatMath.sin(angle), cosa = FloatMath.cos(angle);
         m00 =  cosa * sx; m01 = sina * sx;
         m10 = -sina * sy; m11 = cosa * sy;
@@ -276,7 +276,7 @@ public class AffineTransform extends AbstractTransform
 
     @Override // from Transform
     public Point transform (IPoint p, Point into) {
-        float x = p.getX(), y = p.getY();
+        float x = p.x(), y = p.y();
         return into.set(m00*x + m10*y + tx, m01*x + m11*y + ty);
     }
 
@@ -298,7 +298,7 @@ public class AffineTransform extends AbstractTransform
 
     @Override // from Transform
     public Point inverseTransform (IPoint p, Point into) {
-        float x = p.getX() - tx, y = p.getY() - ty;
+        float x = p.x() - tx, y = p.y() - ty;
 	    float det = m00 * m11 - m01 * m10;
         if (Math.abs(det) == 0f) {
             // determinant is zero; matrix is not invertible
@@ -311,13 +311,13 @@ public class AffineTransform extends AbstractTransform
 
     @Override // from Transform
     public Vector transform (IVector v, Vector into) {
-        float x = v.getX(), y = v.getY();
+        float x = v.x(), y = v.y();
         return into.set(m00*x + m10*y, m01*x + m11*y);
     }
 
     @Override // from Transform
     public Vector inverseTransform (IVector v, Vector into) {
-        float x = v.getX(), y = v.getY();
+        float x = v.x(), y = v.y();
 	    float det = m00 * m11 - m01 * m10;
         if (Math.abs(det) == 0f) {
             // determinant is zero; matrix is not invertible
@@ -341,13 +341,13 @@ public class AffineTransform extends AbstractTransform
     @Override
     public String toString () {
         return "affine [" + FloatMath.toString(m00) + " " + FloatMath.toString(m01) + " " +
-            FloatMath.toString(m10) + " " + FloatMath.toString(m11) + " " + getTranslation() + "]";
+            FloatMath.toString(m10) + " " + FloatMath.toString(m11) + " " + translation() + "]";
     }
 
     // we don't publicize this because it might encourage someone to do something stupid like
     // create a new AffineTransform from another AffineTransform using this instead of clone()
     protected AffineTransform (Transform other) {
-        this(other.getScaleX(), other.getScaleY(), other.getRotation(),
-             other.getTx(), other.getTy());
+        this(other.scaleX(), other.scaleY(), other.rotation(),
+             other.tx(), other.ty());
     }
 }

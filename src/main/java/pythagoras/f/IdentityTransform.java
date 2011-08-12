@@ -13,32 +13,32 @@ public class IdentityTransform extends AbstractTransform
     public static final int GENERALITY = 0;
 
     @Override // from Transform
-    public float getUniformScale () {
+    public float uniformScale () {
         return 1;
     }
 
     @Override // from Transform
-    public float getScaleX () {
+    public float scaleX () {
         return 1;
     }
 
     @Override // from Transform
-    public float getScaleY () {
+    public float scaleY () {
         return 1;
     }
 
     @Override // from Transform
-    public float getRotation () {
+    public float rotation () {
         return 0;
     }
 
     @Override // from Transform
-    public float getTx () {
+    public float tx () {
         return 0;
     }
 
     @Override // from Transform
-    public float getTy () {
+    public float ty () {
         return 0;
     }
 

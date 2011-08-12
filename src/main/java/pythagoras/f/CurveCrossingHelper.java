@@ -43,11 +43,11 @@ class CurveCrossingHelper
 
         for (int i = 0; i < rulesSizes[0]; i++) {
             rule1 = rules[0][i];
-            endIndex1 = getCurrentEdge(0, i, edge1, mp1, cp1);
+            endIndex1 = currentEdge(0, i, edge1, mp1, cp1);
             for (int j = 0; j < rulesSizes[1]; j++) {
                 ipCount = 0;
                 rule2 = rules[1][j];
-                endIndex2 = getCurrentEdge(1, j, edge2, mp2, cp2);
+                endIndex2 = currentEdge(1, j, edge2, mp2, cp2);
                 if (((rule1 == PathIterator.SEG_LINETO) || (rule1 == PathIterator.SEG_CLOSE)) &&
                     ((rule2 == PathIterator.SEG_LINETO) || (rule2 == PathIterator.SEG_CLOSE))) {
                     ipCount = GeometryUtil.intersectLinesWithParams(
@@ -167,9 +167,9 @@ class CurveCrossingHelper
                         for (Iterator<IntersectPoint> iter = isectPoints.iterator();
                              iter.hasNext();) {
                             ip = iter.next();
-                            if ((begIndex1 == ip.getBegIndex(true)) &&
-                                (endIndex1 == ip.getEndIndex(true))) {
-                                if (ip.getParam(true) > params[2 * k]) {
+                            if ((begIndex1 == ip.begIndex(true)) &&
+                                (endIndex1 == ip.endIndex(true))) {
+                                if (ip.param(true) > params[2 * k]) {
                                     endIndex1 = -(isectPoints.indexOf(ip) + 1);
                                     ip.setBegIndex1(-(isectPoints.size() + 1));
                                 } else {
@@ -178,9 +178,9 @@ class CurveCrossingHelper
                                 }
                             }
 
-                            if ((begIndex2 == ip.getBegIndex(false)) &&
-                                (endIndex2 == ip.getEndIndex(false))) {
-                                if (ip.getParam(false) > params[2 * k + 1]) {
+                            if ((begIndex2 == ip.begIndex(false)) &&
+                                (endIndex2 == ip.endIndex(false))) {
+                                if (ip.param(false) > params[2 * k + 1]) {
                                     endIndex2 = -(isectPoints.indexOf(ip) + 1);
                                     ip.setBegIndex2(-(isectPoints.size() + 1));
                                 } else {
@@ -209,7 +209,7 @@ class CurveCrossingHelper
         return isectPoints.toArray(new IntersectPoint[isectPoints.size()]);
     }
 
-    private int getCurrentEdge (int areaIndex, int index, float[] c, float[] mp, float[] cp) {
+    private int currentEdge (int areaIndex, int index, float[] c, float[] mp, float[] cp) {
         int endIndex = 0;
 
         switch (rules[areaIndex][index]) {
@@ -263,8 +263,8 @@ class CurveCrossingHelper
         IntersectPoint ipoint;
         for (Iterator<IntersectPoint> i = isectPoints.iterator(); i.hasNext();) {
             ipoint = i.next();
-            if ((Math.abs(ipoint.getX() - x) < Math.pow(10, -6)) &&
-                (Math.abs(ipoint.getY() - y) < Math.pow(10, -6))) {
+            if ((Math.abs(ipoint.x() - x) < Math.pow(10, -6)) &&
+                (Math.abs(ipoint.y() - y) < Math.pow(10, -6))) {
                 return true;
             }
         }

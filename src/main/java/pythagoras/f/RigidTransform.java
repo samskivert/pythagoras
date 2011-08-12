@@ -29,32 +29,32 @@ public class RigidTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public float getUniformScale () {
+    public float uniformScale () {
         return 1;
     }
 
     @Override // from Transform
-    public float getScaleX () {
+    public float scaleX () {
         return 1;
     }
 
     @Override // from Transform
-    public float getScaleY () {
+    public float scaleY () {
         return 1;
     }
 
     @Override // from Transform
-    public float getRotation () {
+    public float rotation () {
         return rotation;
     }
 
     @Override // from Transform
-    public float getTx () {
+    public float tx () {
         return tx;
     }
 
     @Override // from Transform
-    public float getTy () {
+    public float ty () {
         return ty;
     }
 
@@ -102,7 +102,7 @@ public class RigidTransform extends AbstractTransform
 
     @Override // from Transform
     public Transform invert () {
-        Vector t = getTranslation().negateLocal().rotateLocal(-rotation);
+        Vector t = translation().negateLocal().rotateLocal(-rotation);
         return new RigidTransform(-rotation, t.x, t.y);
     }
 
@@ -112,9 +112,9 @@ public class RigidTransform extends AbstractTransform
             return other.preConcatenate(this);
         }
 
-        Vector nt = other.getTranslation();
-        nt.rotateAndAdd(rotation, getTranslation(), nt);
-        float nrotation = FloatMath.normalizeAngle(rotation + other.getRotation());
+        Vector nt = other.translation();
+        nt.rotateAndAdd(rotation, translation(), nt);
+        float nrotation = FloatMath.normalizeAngle(rotation + other.rotation());
         return new RigidTransform(nrotation, nt.x, nt.y);
     }
 
@@ -124,9 +124,9 @@ public class RigidTransform extends AbstractTransform
             return other.concatenate(this);
         }
 
-        Vector nt = getTranslation();
-        nt.rotateAndAdd(other.getRotation(), other.getTranslation(), nt);
-        float nrotation = FloatMath.normalizeAngle(other.getRotation() + rotation);
+        Vector nt = translation();
+        nt.rotateAndAdd(other.rotation(), other.translation(), nt);
+        float nrotation = FloatMath.normalizeAngle(other.rotation() + rotation);
         return new RigidTransform(nrotation, nt.x, nt.y);
     }
 
@@ -135,13 +135,13 @@ public class RigidTransform extends AbstractTransform
         if (generality() < other.generality()) {
             return other.lerp(this, -t); // TODO: is this correct?
         }
-        Vector nt = getTranslation().lerpLocal(other.getTranslation(), t);
-        return new RigidTransform(FloatMath.lerpa(rotation, other.getRotation(), t), nt.x, nt.y);
+        Vector nt = translation().lerpLocal(other.translation(), t);
+        return new RigidTransform(FloatMath.lerpa(rotation, other.rotation(), t), nt.x, nt.y);
     }
 
     @Override // from Transform
     public Point transform (IPoint p, Point into) {
-        return Points.transform(p.getX(), p.getY(), 1, 1, rotation, tx, ty, into);
+        return Points.transform(p.x(), p.y(), 1, 1, rotation, tx, ty, into);
     }
 
     @Override // from Transform
@@ -149,7 +149,7 @@ public class RigidTransform extends AbstractTransform
         float sina = FloatMath.sin(rotation), cosa = FloatMath.cos(rotation);
         for (int ii = 0; ii < count; ii++) {
             IPoint s = src[srcOff++];
-            Points.transform(s.getX(), s.getY(), 1, 1, sina, cosa, tx, ty, dst[dstOff++]);
+            Points.transform(s.x(), s.y(), 1, 1, sina, cosa, tx, ty, dst[dstOff++]);
         }
     }
 
@@ -166,7 +166,7 @@ public class RigidTransform extends AbstractTransform
 
     @Override // from Transform
     public Point inverseTransform (IPoint p, Point into) {
-        return Points.inverseTransform(p.getX(), p.getY(), 1, 1, rotation, tx, ty, into);
+        return Points.inverseTransform(p.x(), p.y(), 1, 1, rotation, tx, ty, into);
     }
 
     @Override // from Transform
@@ -191,6 +191,6 @@ public class RigidTransform extends AbstractTransform
 
     @Override
     public String toString () {
-        return "rigid [rot=" + rotation + ", trans=" + getTranslation() + "]";
+        return "rigid [rot=" + rotation + ", trans=" + translation() + "]";
     }
 }

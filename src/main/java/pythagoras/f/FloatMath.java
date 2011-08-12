@@ -319,7 +319,7 @@ public class FloatMath
      * Returns the (shortest) distance between two angles, assuming that both angles are in
      * [-pi, +pi].
      */
-    public static float getAngularDistance (float a1, float a2)
+    public static float angularDistance (float a1, float a2)
     {
         float ma1 = mirrorAngle(a1), ma2 = mirrorAngle(a2);
         return Math.min(Math.abs(a1 - a2), Math.abs(ma1 - ma2));
@@ -329,7 +329,7 @@ public class FloatMath
      * Returns the (shortest) difference between two angles, assuming that both angles are in
      * [-pi, +pi].
      */
-    public static float getAngularDifference (float a1, float a2)
+    public static float angularDifference (float a1, float a2)
     {
         float ma1 = mirrorAngle(a1), ma2 = mirrorAngle(a2);
         float diff = a1 - a2, mdiff = ma2 - ma1;
