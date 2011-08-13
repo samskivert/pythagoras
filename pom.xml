@@ -54,9 +54,9 @@
     <resources>
       <resource>
         <directory>${project.build.sourceDirectory}</directory>
-      </resource>
-      <resource>
-        <directory>${basedir}/src/main/resources</directory>
+        <excludes>
+          <exclude>pythagoras/util/Platform.java</exclude>
+        </excludes>
       </resource>
     </resources>
     <plugins>
@@ -72,6 +72,9 @@
           <showWarnings>true</showWarnings>
           <!-- yes, this is apparently the Right Way to do this -->
           <compilerArgument>-Xlint" "-Xlint:-serial" "-Xlint:-path</compilerArgument>
+          <excludes>
+            <exclude>pythagoras/gwt/**</exclude>
+          </excludes>
         </configuration>
       </plugin>
       <plugin>
