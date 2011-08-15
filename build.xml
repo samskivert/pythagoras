@@ -28,9 +28,9 @@
 
   <target name="compile" depends="-prepare" description="Compiles the code.">
     <mkdir dir="${classes.dir}"/>
-    <copy todir="${classes.dir}"><fileset dir="src/main/resources" includes="**"/></copy>
-    <ooojavac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="pom.xml.path"/>
-
+    <ooojavac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="pom.xml.path">
+      <exclude name="pythagoras/gwt/**"/>
+    </ooojavac>
     <mkdir dir="${tclasses.dir}"/>
     <ooojavac srcdir="${test.dir}" destdir="${tclasses.dir}" classpathref="test.classpath"/>
   </target>
