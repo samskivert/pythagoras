@@ -15,7 +15,10 @@ libraryDependencies ++= Seq(
   "com.novocode" % "junit-interface" % "0.7" % "test->default"
 )
 
-// add our sources to the main jar file
+// filter the super-source directory from the build
+unmanagedSources in Compile ~= (_.filterNot(_.getPath.indexOf("pythagoras/gwt") != -1))
+
+// add our sources to the main jar file (including super-sources)
 unmanagedResourceDirectories in Compile <+= baseDirectory / "src/main/java"
 
 // work around SBT bug
