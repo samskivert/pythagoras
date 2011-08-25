@@ -6,7 +6,9 @@ organization := "com.samskivert"
 
 crossPaths := false
 
-javacOptions ++= Seq("-Xlint", "-Xlint:-serial")
+javacOptions ++= Seq(
+  "-Xlint", "-Xlint:-serial", "-source", "1.6", "-target", "1.6"
+)
 
 autoScalaLibrary := false // no scala-library dependency
 
