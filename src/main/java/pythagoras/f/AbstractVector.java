@@ -38,7 +38,7 @@ public abstract class AbstractVector implements IVector
     }
 
     @Override // from interface IVector
-    public float angle (IVector other) {
+    public float angleBetween (IVector other) {
         float cos = dot(other) / (length() * other.length());
         return cos >= 1f ? 0f : FloatMath.acos(cos);
     }

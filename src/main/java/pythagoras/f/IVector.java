@@ -35,7 +35,7 @@ public interface IVector
     Vector normalize (Vector result);
 
     /** Returns the angle between this vector and the specified other vector. */
-    float angle (IVector other);
+    float angleBetween (IVector other);
 
     /** Returns the direction of a vector pointing from this point to the specified other point. */
     float direction (IVector other);
