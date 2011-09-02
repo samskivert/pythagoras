@@ -43,6 +43,18 @@ public interface IPoint extends Cloneable
      * @return a reference to the result, for chaining. */
     Point add (float x, float y, Point result);
 
+    /** Subtracts the supplied point from {@code this}.
+     * @return a new vector containing the result. */
+    Vector subtract (float x, float y);
+
+    /** Subtracts the supplied point from {@code this} and stores the result in {@code result}.
+     * @return a reference to the result, for chaining. */
+    Vector subtract (float x, float y, Vector result);
+
+    /** Subtracts the supplied point from {@code this} and stores the result in {@code result}.
+     * @return a reference to the result, for chaining. */
+    Vector subtract (IPoint other, Vector result);
+
     /** Rotates this point around the origin by the specified angle.
      * @return a new point containing the result. */
     Point rotate (float angle);

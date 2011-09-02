@@ -53,6 +53,21 @@ public abstract class AbstractPoint implements IPoint
     }
 
     @Override // from IPoint
+    public Vector subtract (float x, float y) {
+        return subtract(x, y, new Vector());
+    }
+
+    @Override
+    public Vector subtract (float x, float y, Vector result) {
+        return result.set(x() - x, y() - y);
+    }
+
+    @Override
+    public Vector subtract (IPoint other, Vector result) {
+        return subtract(other.x(), other.y(), result);
+    }
+
+    @Override // from IPoint
     public Point rotate (float angle) {
         return rotate(angle, new Point());
     }
