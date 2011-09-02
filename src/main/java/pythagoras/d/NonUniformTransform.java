@@ -150,7 +150,7 @@ public class NonUniformTransform extends AbstractTransform
     @Override // from Transform
     public Transform invert () {
         Vector iscale = new Vector(1f / scaleX, 1f / scaleY);
-        Vector t = new Vector(tx, ty).negateLocal().rotateLocal(-rotation).multLocal(iscale);
+        Vector t = new Vector(tx, ty).negateLocal().rotateLocal(-rotation).scaleLocal(iscale);
         return new NonUniformTransform(iscale.x, iscale.y, -rotation, t.x, t.y);
     }
 

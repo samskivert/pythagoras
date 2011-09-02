@@ -124,7 +124,7 @@ public class UniformTransform extends AbstractTransform
     @Override // from Transform
     public Transform invert () {
         float nscale = 1f / scale, nrotation = -rotation;
-        Vector t = translation().negateLocal().rotateLocal(nrotation).multLocal(nscale);
+        Vector t = translation().negateLocal().rotateLocal(nrotation).scaleLocal(nscale);
         return new UniformTransform(nscale, nrotation, t.x, t.y);
     }
 

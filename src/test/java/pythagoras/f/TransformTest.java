@@ -142,7 +142,7 @@ public class TransformTest
                         test(tpre, point, expect);
                     }
                     for (Vector vector : VECTORS) {
-                        Vector expect = vector.mult(scale);
+                        Vector expect = vector.scale(scale);
                         test(t, vector, expect);
                         test(tpost, vector, expect);
                         test(tpre, vector, expect);
@@ -177,7 +177,7 @@ public class TransformTest
                         test(tpre, point, expect);
                     }
                     for (Vector vector : VECTORS) {
-                        Vector expect = vector.mult(scale);
+                        Vector expect = vector.scale(scale);
                         test(t, vector, expect);
                         test(tpost, vector, expect);
                         test(tpre, vector, expect);
@@ -207,7 +207,7 @@ public class TransformTest
                         test(tpre, point, expect);
                     }
                     for (Vector vector : VECTORS) {
-                        Vector expect = vector.rotate(angle).multLocal(scale);
+                        Vector expect = vector.rotate(angle).scaleLocal(scale);
                         test(t, vector, expect);
                         test(tpost, vector, expect);
                         test(tpre, vector, expect);
@@ -236,7 +236,7 @@ public class TransformTest
                         test(tpre, point, expect);
                     }
                     for (Vector vector : VECTORS) {
-                        Vector expect = vector.mult(scale).rotateLocal(angle);
+                        Vector expect = vector.scale(scale).rotateLocal(angle);
                         test(tpost, vector, expect);
                         test(tpre, vector, expect);
                     }
@@ -255,7 +255,7 @@ public class TransformTest
                         test(t, point, expect);
                     }
                     for (Vector vector : VECTORS) {
-                        Vector expect = vector.mult(scale).rotateLocal(angle);
+                        Vector expect = vector.scale(scale).rotateLocal(angle);
                         test(t, vector, expect);
                     }
                 }
@@ -286,7 +286,7 @@ public class TransformTest
                             test(tpre, point, expect);
                         }
                         for (Vector vector : VECTORS) {
-                            Vector expect = vector.mult(scale).rotateLocal(angle);
+                            Vector expect = vector.scale(scale).rotateLocal(angle);
                             test(tpost, vector, expect);
                             test(tpre, vector, expect);
                         }
@@ -307,7 +307,7 @@ public class TransformTest
                             test(t, point, expect);
                         }
                         for (Vector vector : VECTORS) {
-                            Vector expect = vector.mult(scale).rotateLocal(angle);
+                            Vector expect = vector.scale(scale).rotateLocal(angle);
                             test(t, vector, expect);
                         }
                     }

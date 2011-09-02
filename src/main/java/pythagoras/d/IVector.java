@@ -52,21 +52,24 @@ public interface IVector
     /** Returns the squared distance from this vector to the specified other. */
     double distanceSq (IVector other);
 
-    /** Multiplies this vector by a scalar.
+    /** Scales this vector uniformly by the specified magnitude.
      * @return a new vector containing the result. */
-    Vector mult (double v);
+    Vector scale (double v);
 
-    /** Multiplies this vector by a scalar and places the result in the supplied object.
+    /** Scales this vector uniformly by the specified magnitude, and places the result in the
+     * supplied object.
      * @return a reference to the result, for chaining. */
-    Vector mult (double v, Vector result);
+    Vector scale (double v, Vector result);
 
-    /** Multiplies this vector by another.
+    /** Scales this vector's x and y components independently by the x and y components of the
+     * supplied vector.
      * @return a new vector containing the result. */
-    Vector mult (IVector other);
+    Vector scale (IVector other);
 
-    /** Multiplies this vector by another, storing the result in the object provided.
+    /** Scales this vector's x and y components independently by the x and y components of the
+     * supplied vector, and stores the result in the object provided.
      * @return a reference to the result vector, for chaining. */
-    Vector mult (IVector other, Vector result);
+    Vector scale (IVector other, Vector result);
 
     /** Adds a vector to this one.
      * @return a new vector containing the result. */

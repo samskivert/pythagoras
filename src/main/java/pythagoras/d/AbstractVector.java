@@ -34,7 +34,7 @@ public abstract class AbstractVector implements IVector
 
     @Override // from interface IVector
     public Vector normalize (Vector result) {
-        return mult(1f / length(), result);
+        return scale(1f / length(), result);
     }
 
     @Override // from interface IVector
@@ -71,22 +71,22 @@ public abstract class AbstractVector implements IVector
     }
 
     @Override // from interface IVector
-    public Vector mult (double v) {
-        return mult(v, new Vector());
+    public Vector scale (double v) {
+        return scale(v, new Vector());
     }
 
     @Override // from interface IVector
-    public Vector mult (double v, Vector result) {
+    public Vector scale (double v, Vector result) {
         return result.set(x()*v, y()*v);
     }
 
     @Override // from interface IVector
-    public Vector mult (IVector other) {
-        return mult(other, new Vector());
+    public Vector scale (IVector other) {
+        return scale(other, new Vector());
     }
 
     @Override // from interface IVector
-    public Vector mult (IVector other, Vector result) {
+    public Vector scale (IVector other, Vector result) {
         return result.set(x()*other.x(), y()*other.y());
     }
 

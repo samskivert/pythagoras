@@ -41,16 +41,17 @@ public class Vector extends AbstractVector
         return normalize(this);
     }
 
-    /** Multiplies this vector in-place by a scalar.
+    /** Scales this vector in place, uniformly by the specified magnitude.
      * @return a reference to this vector, for chaining. */
-    public Vector multLocal (float v) {
-        return mult(v, this);
+    public Vector scaleLocal (float v) {
+        return scale(v, this);
     }
 
-    /** Multiplies this vector in-place by another.
+    /** Scales this vector's x and y components, in place, independently by the x and y components
+     * of the supplied vector.
      * @return a reference to this vector, for chaining. */
-    public Vector multLocal (IVector other) {
-        return mult(other, this);
+    public Vector scaleLocal (IVector other) {
+        return scale(other, this);
     }
 
     /** Adds a vector in-place to this one.
