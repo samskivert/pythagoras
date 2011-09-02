@@ -32,6 +32,11 @@ public abstract class AbstractPoint implements IPoint
         return Points.distance(x(), y(), p.x(), p.y());
     }
 
+    @Override // from interface IPoint
+    public float direction (IPoint other) {
+        return FloatMath.atan2(other.y() - y(), other.x() - x());
+    }
+
     @Override // from IPoint
     public Point mult (float s) {
         return mult(s, new Point());

@@ -27,6 +27,10 @@ public interface IPoint extends Cloneable
     /** Returns the Euclidian distance between this point and the supplied point. */
     float distance (IPoint p);
 
+    /** Returns the angle (in radians) of the vector starting at this point and ending at the
+     * supplied other point. */
+    float direction (IPoint other);
+
     /** Multiplies this point by a scale factor.
      * @return a new point containing the result. */
     Point mult (float s);

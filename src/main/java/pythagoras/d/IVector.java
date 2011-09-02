@@ -34,13 +34,7 @@ public interface IVector
      * @return a reference to the result, for chaining. */
     Vector normalize (Vector result);
 
-    /** Returns the angle between this vector and the specified other vector. */
-    double angle (IVector other);
-
-    /** Returns the direction of a vector pointing from this point to the specified other point. */
-    double direction (IVector other);
-
-    /** Returns the length of this vector. */
+    /** Returns the length (magnitude) of this vector. */
     double length ();
 
     /** Returns the squared length of this vector. */
@@ -51,6 +45,12 @@ public interface IVector
 
     /** Returns the squared distance from this vector to the specified other. */
     double distanceSq (IVector other);
+
+    /** Returns the angle of this vector. */
+    double angle ();
+
+    /** Returns the angle between this vector and the specified other vector. */
+    double angleBetween (IVector other);
 
     /** Scales this vector uniformly by the specified magnitude.
      * @return a new vector containing the result. */

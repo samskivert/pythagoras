@@ -110,6 +110,22 @@ public class Vector extends AbstractVector
         return this;
     }
 
+    /**
+     * Sets this vector's angle, preserving its magnitude.
+     * @return a reference to this vector, for chaining.
+     */
+    public Vector setAngle (double angle) {
+        double l = length();
+        return set(l * Math.cos(angle), l * Math.sin(angle));
+    }
+
+    /**
+     * Sets this vector's magnitude, preserving its angle.
+     */
+    public Vector setLength (double length) {
+        return normalizeLocal().scaleLocal(length);
+    }
+
     @Override // from AbstractVector
     public double x () {
         return x;

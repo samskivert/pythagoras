@@ -38,17 +38,6 @@ public abstract class AbstractVector implements IVector
     }
 
     @Override // from interface IVector
-    public double angle (IVector other) {
-        double cos = dot(other) / (length() * other.length());
-        return cos >= 1f ? 0f : Math.acos(cos);
-    }
-
-    @Override // from interface IVector
-    public double direction (IVector other) {
-        return Math.atan2(other.y() - y(), other.x() - x());
-    }
-
-    @Override // from interface IVector
     public double length () {
         return Math.sqrt(lengthSq());
     }
@@ -68,6 +57,17 @@ public abstract class AbstractVector implements IVector
     public double distanceSq (IVector other) {
         double dx = x() - other.x(), dy = y() - other.y();
         return dx*dx + dy*dy;
+    }
+
+    @Override // from interface IVector
+    public double angle () {
+        return Math.atan2(y(), x());
+    }
+
+    @Override // from interface IVector
+    public double angleBetween (IVector other) {
+        double cos = dot(other) / (length() * other.length());
+        return cos >= 1f ? 0f : Math.acos(cos);
     }
 
     @Override // from interface IVector

@@ -26,6 +26,13 @@ public class Vectors
     public static final IVector MAX_VALUE = new Vector(Float.MAX_VALUE, Float.MAX_VALUE);
 
     /**
+     * Creates a new vector from polar coordinates.
+     */
+    public static final Vector fromPolar (float magnitude, float angle) {
+        return new Vector(magnitude * FloatMath.cos(angle), magnitude * FloatMath.sin(angle));
+    }
+
+    /**
      * Returns the magnitude of the specified vector.
      */
     public static final float length (float x, float y) {
