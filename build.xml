@@ -54,7 +54,6 @@
     </jar>
   </target>
 
-  <property name="maven.install.repo" value="file://${user.home}/.m2/repository"/>
   <target name="install" depends="package"
           description="Deploys our build artifacts to a Maven repository.">
     <mavendeploy file="${target.dir}/${ant.project.name}.jar" srcdir="${src.dir}" pom="pom.xml"/>
