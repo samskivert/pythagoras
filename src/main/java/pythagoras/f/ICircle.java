@@ -28,13 +28,11 @@ public interface ICircle
     boolean contains (float x, float y);
 
     /** Translates the circle by the specified offset.
-     * @return a new Circle containing the result.
-     */
+     * @return a new Circle containing the result. */
     Circle offset (float x, float y);
 
     /** Translates the circle by the specified offset and stores the result in the supplied object.
-     * @return a reference to the result, for chaining.
-     */
+     * @return a reference to the result, for chaining. */
     Circle offset (float x, float y, Circle result);
 
     /** Returns a mutable copy of this circle. */

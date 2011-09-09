@@ -20,12 +20,14 @@ public abstract class AbstractCircle implements ICircle
 
     @Override // from ICircle
     public boolean contains (IPoint p) {
-        return Points.distanceSq(x(), y(), p.x(), p.y()) < radius() * radius();
+        float r = radius();
+        return Points.distanceSq(x(), y(), p.x(), p.y()) < r * r;
     }
 
     @Override // from ICircle
     public boolean contains (float x, float y) {
-        return Points.distanceSq(x(), y(), x, y) < radius() * radius();
+        float r = radius();
+        return Points.distanceSq(x(), y(), x, y) < r * r;
     }
 
     @Override // from ICircle
