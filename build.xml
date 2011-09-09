@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
 <project name="pythagoras" default="compile" basedir="." xmlns:artifact="urn:maven-artifact-ant">
   <property name="src.dir"      location="src/main/java"/>
-  <property name="test.dir"     location="src/test/java"/>
+  <property name="tsrc.dir"     location="src/test/java"/>
   <property name="target.dir"   location="target"/>
   <property name="classes.dir"  location="${target.dir}/classes"/>
   <property name="tclasses.dir" location="${target.dir}/test-classes"/>
-  <property name="javadoc.dir"  location="${target.dir}/docs"/>
 
   <property name="ooo-build.vers" value="2.6"/>
   <ant antfile="etc/bootstrap.xml"/>
@@ -32,42 +31,26 @@
       <exclude name="pythagoras/gwt/**"/>
     </ooojavac>
     <mkdir dir="${tclasses.dir}"/>
-    <ooojavac srcdir="${test.dir}" destdir="${tclasses.dir}" classpathref="test.classpath"/>
-  </target>
-
-  <target name="javadoc" depends="-prepare" description="Generates javadoc documentation.">
-    <mkdir dir="${javadoc.dir}"/>
-    <javadoc windowtitle="${ant.project.name} API" doctitle="${ant.project.name} API"
-             access="public" destdir="${javadoc.dir}" additionalparam="-breakiterator">
-      <packageset dir="${src.dir}"/>
-      <classpath refid="classpath"/>
-      <link href="http://download.oracle.com/javase/1.5.0/docs/api/"/>
-    </javadoc>
+    <ooojavac srcdir="${tsrc.dir}" destdir="${tclasses.dir}" classpathref="test.classpath"/>
   </target>
 
   <target name="test" depends="compile" description="Runs the unit tests.">
-    <!-- allows passing -Dtest=NamePrefix to restrict to subset of tests -->
-    <property name="test" value=""/>
     <taskdef name="unit" classpathref="test.path"
       classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask"/>
     <mkdir dir="${target.dir}/test-reports"/>
     <unit printsummary="off" haltonfailure="yes" fork="${junit.fork}">
       <classpath refid="test.classpath"/>
-      <sysproperty key="com.samskivert.depot.debug" value="${debug}"/>
       <formatter type="brief" usefile="false"/>
       <formatter type="xml"/>
       <batchtest todir="${target.dir}/test-reports">
-        <fileset dir="${test.dir}" includes="**/${test}*Test.java"/>
+        <fileset dir="${tsrc.dir}" includes="**/*Test.java"/>
       </batchtest>
     </unit>
   </target>
 
-  <!-- todo: depend on tests target -->
-  <target name="package" depends="compile" description="Compiles code and builds jar file.">
+  <target name="package" depends="test" description="Compiles code and builds jar file.">
     <jar destfile="${target.dir}/${ant.project.name}.jar">
-      <fileset dir="${src.dir}" includes="**"/> <!-- for use by GWT apps -->
-      <!-- this must follow src.dir so that Platform.java is properly overwritten -->
-      <fileset dir="${classes.dir}" includes="**"/>
+      <fileset dir="${src.dir}" includes="**"/>
     </jar>
   </target>
 
