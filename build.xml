@@ -50,7 +50,8 @@
 
   <target name="package" depends="test" description="Compiles code and builds jar file.">
     <jar destfile="${target.dir}/${ant.project.name}.jar">
-      <fileset dir="${src.dir}" includes="**"/>
+      <fileset dir="${classes.dir}" includes="**"/>
+      <fileset dir="${src.dir}" includes="**"/> <!-- include source for GWT -->
     </jar>
   </target>
 
