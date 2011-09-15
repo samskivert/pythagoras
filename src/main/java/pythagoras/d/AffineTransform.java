@@ -122,18 +122,18 @@ public class AffineTransform extends AbstractTransform
     @Override // from Transform
     public Transform setScaleX (double scaleX) {
         // normalize the scale to 1, then re-apply
-        double osx = scaleX();
-        m00 /= osx; m01 /= osx;
-        m00 *= scaleX; m01 *= scaleX;
+        double mult = scaleX / scaleX();
+        m00 *= mult;
+        m01 *= mult;
         return this;
     }
 
     @Override // from Transform
     public Transform setScaleY (double scaleY) {
         // normalize the scale to 1, then re-apply
-        double osy = scaleY();
-        m10 /= osy; m11 /= osy;
-        m10 *= scaleY; m11 *= scaleY;
+        double mult = scaleY / scaleY();
+        m10 *= mult;
+        m11 *= mult;
         return this;
     }
 
