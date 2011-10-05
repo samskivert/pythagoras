@@ -201,6 +201,15 @@ public class MathUtil
      */
     public static String toString (float value)
     {
+        return toString(value, TO_STRING_DECIMAL_PLACES);
+    }
+
+    /**
+     * Formats the supplied floating point value, truncated to the given number of decimal places.
+     * The value is also always preceded by a sign (e.g. +1.0 or -0.5).
+     */
+    public static String toString (float value, int decimalPlaces)
+    {
         StringBuilder buf = new StringBuilder();
         if (value >= 0) buf.append("+");
         else {
@@ -209,15 +218,15 @@ public class MathUtil
         }
         int ivalue = (int)value;
         buf.append(ivalue);
-        if (TO_STRING_DECIMAL_PLACES > 0) {
+        if (decimalPlaces > 0) {
             buf.append(".");
-            for (int ii = 0; ii < TO_STRING_DECIMAL_PLACES; ii++) {
+            for (int ii = 0; ii < decimalPlaces; ii++) {
                 value = (value - ivalue) * 10;
                 ivalue = (int)value;
                 buf.append(ivalue);
             }
             // trim trailing zeros
-            for (int ii = 0; ii < TO_STRING_DECIMAL_PLACES-1; ii++) {
+            for (int ii = 0; ii < decimalPlaces-1; ii++) {
                 if (buf.charAt(buf.length()-1) == '0') {
                     buf.setLength(buf.length()-1);
                 }
