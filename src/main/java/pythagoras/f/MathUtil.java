@@ -24,8 +24,7 @@ public class MathUtil
     /**
      * A cheaper version of {@link Math#round} that doesn't handle the special cases.
      */
-    public static int round (float v)
-    {
+    public static int round (float v) {
         return (v < 0f) ? (int)(v - 0.5f) : (int)(v + 0.5f);
     }
 
@@ -33,8 +32,7 @@ public class MathUtil
      * Returns the floor of v as an integer without calling the relatively expensive
      * {@link Math#floor}.
      */
-    public static int ifloor (float v)
-    {
+    public static int ifloor (float v) {
         int iv = (int)v;
         return (v < 0f) ? ((iv == v || iv == Integer.MIN_VALUE) ? iv : (iv - 1)) : iv;
     }
@@ -43,8 +41,7 @@ public class MathUtil
      * Returns the ceiling of v as an integer without calling the relatively expensive
      * {@link Math#ceil}.
      */
-    public static int iceil (float v)
-    {
+    public static int iceil (float v) {
         int iv = (int)v;
         return (v > 0f) ? ((iv == v || iv == Integer.MAX_VALUE) ? iv : (iv + 1)) : iv;
     }
@@ -52,16 +49,14 @@ public class MathUtil
     /**
      * Clamps a value to the range [lower, upper].
      */
-    public static float clamp (float v, float lower, float upper)
-    {
+    public static float clamp (float v, float lower, float upper) {
         return Math.min(Math.max(v, lower), upper);
     }
 
     /**
      * Rounds a value to the nearest multiple of a target.
      */
-    public static float roundNearest (float v, float target)
-    {
+    public static float roundNearest (float v, float target) {
         target = Math.abs(target);
         if (v >= 0) {
             return target * FloatMath.floor((v + 0.5f * target) / target);
@@ -73,8 +68,7 @@ public class MathUtil
     /**
      * Checks whether the value supplied is in [lower, upper].
      */
-    public static boolean isWithin (float v, float lower, float upper)
-    {
+    public static boolean isWithin (float v, float lower, float upper) {
         return v >= lower && v <= upper;
     }
 
@@ -86,8 +80,7 @@ public class MathUtil
      * @param mean the desired mean.
      * @param stddev the desired standard deviation.
      */
-    public static float normal (float normal, float mean, float stddev)
-    {
+    public static float normal (float normal, float mean, float stddev) {
         return stddev*normal + mean;
     }
 
@@ -97,8 +90,7 @@ public class MathUtil
      * @param random a uniformly distributed random value.
      * @param mean the desired mean.
      */
-    public static float exponential (float random, float mean)
-    {
+    public static float exponential (float random, float mean) {
         return -FloatMath.log(1f - random) * mean;
     }
 
@@ -106,8 +98,7 @@ public class MathUtil
      * Linearly interpolates between two angles, taking the shortest path around the circle.
      * This assumes that both angles are in [-pi, +pi].
      */
-    public static float lerpa (float a1, float a2, float t)
-    {
+    public static float lerpa (float a1, float a2, float t) {
         float ma1 = mirrorAngle(a1), ma2 = mirrorAngle(a2);
         float d = Math.abs(a2 - a1), md = Math.abs(ma1 - ma2);
         return (d < md) ? lerp(a1, a2, t) : mirrorAngle(lerp(ma1, ma2, t));
@@ -116,16 +107,14 @@ public class MathUtil
     /**
      * Linearly interpolates between v1 and v2 by the parameter t.
      */
-    public static float lerp (float v1, float v2, float t)
-    {
+    public static float lerp (float v1, float v2, float t) {
         return v1 + t*(v2 - v1);
     }
 
     /**
      * Determines whether two values are "close enough" to equal.
      */
-    public static boolean epsilonEquals (float v1, float v2)
-    {
+    public static boolean epsilonEquals (float v1, float v2) {
         return Math.abs(v1 - v2) < EPSILON;
     }
 
@@ -133,8 +122,7 @@ public class MathUtil
      * Returns the (shortest) distance between two angles, assuming that both angles are in
      * [-pi, +pi].
      */
-    public static float angularDistance (float a1, float a2)
-    {
+    public static float angularDistance (float a1, float a2) {
         float ma1 = mirrorAngle(a1), ma2 = mirrorAngle(a2);
         return Math.min(Math.abs(a1 - a2), Math.abs(ma1 - ma2));
     }
@@ -143,8 +131,7 @@ public class MathUtil
      * Returns the (shortest) difference between two angles, assuming that both angles are in
      * [-pi, +pi].
      */
-    public static float angularDifference (float a1, float a2)
-    {
+    public static float angularDifference (float a1, float a2) {
         float ma1 = mirrorAngle(a1), ma2 = mirrorAngle(a2);
         float diff = a1 - a2, mdiff = ma2 - ma1;
         return (Math.abs(diff) < Math.abs(mdiff)) ? diff : mdiff;
@@ -153,8 +140,7 @@ public class MathUtil
     /**
      * Returns an angle in the range [-pi, pi].
      */
-    public static float normalizeAngle (float a)
-    {
+    public static float normalizeAngle (float a) {
         while (a < -FloatMath.PI) {
             a += TWO_PI;
         }
@@ -167,8 +153,7 @@ public class MathUtil
     /**
      * Returns an angle in the range [0, 2pi].
      */
-    public static float normalizeAnglePositive (float a)
-    {
+    public static float normalizeAnglePositive (float a) {
         while (a < 0f) {
             a += TWO_PI;
         }
@@ -181,8 +166,7 @@ public class MathUtil
     /**
      * Returns the mirror angle of the specified angle (assumed to be in [-pi, +pi]).
      */
-    public static float mirrorAngle (float a)
-    {
+    public static float mirrorAngle (float a) {
         return (a > 0f ? FloatMath.PI : -FloatMath.PI) - a;
     }
 
@@ -196,11 +180,10 @@ public class MathUtil
     }
 
     /**
-     * Formats the supplied floating point value, truncated to the currently configured number of
-     * decimal places. The value is also always preceded by a sign (e.g. +1.0 or -0.5).
+     * Formats the supplied value, truncated to the currently configured number of decimal places.
+     * The value is also always preceded by a sign (e.g. +1.0 or -0.5).
      */
-    public static String toString (float value)
-    {
+    public static String toString (float value) {
         return toString(value, TO_STRING_DECIMAL_PLACES);
     }
 
@@ -208,8 +191,7 @@ public class MathUtil
      * Formats the supplied floating point value, truncated to the given number of decimal places.
      * The value is also always preceded by a sign (e.g. +1.0 or -0.5).
      */
-    public static String toString (float value, int decimalPlaces)
-    {
+    public static String toString (float value, int decimalPlaces) {
         StringBuilder buf = new StringBuilder();
         if (value >= 0) buf.append("+");
         else {

@@ -24,8 +24,7 @@ public class MathUtil
     /**
      * A cheaper version of {@link Math#round} that doesn't handle the special cases.
      */
-    public static int round (double v)
-    {
+    public static int round (double v) {
         return (v < 0f) ? (int)(v - 0.5f) : (int)(v + 0.5f);
     }
 
@@ -33,8 +32,7 @@ public class MathUtil
      * Returns the floor of v as an integer without calling the relatively expensive
      * {@link Math#floor}.
      */
-    public static int ifloor (double v)
-    {
+    public static int ifloor (double v) {
         int iv = (int)v;
         return (v < 0f) ? ((iv == v || iv == Integer.MIN_VALUE) ? iv : (iv - 1)) : iv;
     }
@@ -43,8 +41,7 @@ public class MathUtil
      * Returns the ceiling of v as an integer without calling the relatively expensive
      * {@link Math#ceil}.
      */
-    public static int iceil (double v)
-    {
+    public static int iceil (double v) {
         int iv = (int)v;
         return (v > 0f) ? ((iv == v || iv == Integer.MAX_VALUE) ? iv : (iv + 1)) : iv;
     }
@@ -52,16 +49,14 @@ public class MathUtil
     /**
      * Clamps a value to the range [lower, upper].
      */
-    public static double clamp (double v, double lower, double upper)
-    {
+    public static double clamp (double v, double lower, double upper) {
         return Math.min(Math.max(v, lower), upper);
     }
 
     /**
      * Rounds a value to the nearest multiple of a target.
      */
-    public static double roundNearest (double v, double target)
-    {
+    public static double roundNearest (double v, double target) {
         target = Math.abs(target);
         if (v >= 0) {
             return target * Math.floor((v + 0.5f * target) / target);
@@ -73,8 +68,7 @@ public class MathUtil
     /**
      * Checks whether the value supplied is in [lower, upper].
      */
-    public static boolean isWithin (double v, double lower, double upper)
-    {
+    public static boolean isWithin (double v, double lower, double upper) {
         return v >= lower && v <= upper;
     }
 
@@ -86,8 +80,7 @@ public class MathUtil
      * @param mean the desired mean.
      * @param stddev the desired standard deviation.
      */
-    public static double normal (double normal, double mean, double stddev)
-    {
+    public static double normal (double normal, double mean, double stddev) {
         return stddev*normal + mean;
     }
 
@@ -97,8 +90,7 @@ public class MathUtil
      * @param random a uniformly distributed random value.
      * @param mean the desired mean.
      */
-    public static double exponential (double random, double mean)
-    {
+    public static double exponential (double random, double mean) {
         return -Math.log(1f - random) * mean;
     }
 
@@ -106,8 +98,7 @@ public class MathUtil
      * Linearly interpolates between two angles, taking the shortest path around the circle.
      * This assumes that both angles are in [-pi, +pi].
      */
-    public static double lerpa (double a1, double a2, double t)
-    {
+    public static double lerpa (double a1, double a2, double t) {
         double ma1 = mirrorAngle(a1), ma2 = mirrorAngle(a2);
         double d = Math.abs(a2 - a1), md = Math.abs(ma1 - ma2);
         return (d < md) ? lerp(a1, a2, t) : mirrorAngle(lerp(ma1, ma2, t));
@@ -116,16 +107,14 @@ public class MathUtil
     /**
      * Linearly interpolates between v1 and v2 by the parameter t.
      */
-    public static double lerp (double v1, double v2, double t)
-    {
+    public static double lerp (double v1, double v2, double t) {
         return v1 + t*(v2 - v1);
     }
 
     /**
      * Determines whether two values are "close enough" to equal.
      */
-    public static boolean epsilonEquals (double v1, double v2)
-    {
+    public static boolean epsilonEquals (double v1, double v2) {
         return Math.abs(v1 - v2) < EPSILON;
     }
 
@@ -133,8 +122,7 @@ public class MathUtil
      * Returns the (shortest) distance between two angles, assuming that both angles are in
      * [-pi, +pi].
      */
-    public static double angularDistance (double a1, double a2)
-    {
+    public static double angularDistance (double a1, double a2) {
         double ma1 = mirrorAngle(a1), ma2 = mirrorAngle(a2);
         return Math.min(Math.abs(a1 - a2), Math.abs(ma1 - ma2));
     }
@@ -143,8 +131,7 @@ public class MathUtil
      * Returns the (shortest) difference between two angles, assuming that both angles are in
      * [-pi, +pi].
      */
-    public static double angularDifference (double a1, double a2)
-    {
+    public static double angularDifference (double a1, double a2) {
         double ma1 = mirrorAngle(a1), ma2 = mirrorAngle(a2);
         double diff = a1 - a2, mdiff = ma2 - ma1;
         return (Math.abs(diff) < Math.abs(mdiff)) ? diff : mdiff;
@@ -153,8 +140,7 @@ public class MathUtil
     /**
      * Returns an angle in the range [-pi, pi].
      */
-    public static double normalizeAngle (double a)
-    {
+    public static double normalizeAngle (double a) {
         while (a < -Math.PI) {
             a += TWO_PI;
         }
@@ -167,8 +153,7 @@ public class MathUtil
     /**
      * Returns an angle in the range [0, 2pi].
      */
-    public static double normalizeAnglePositive (double a)
-    {
+    public static double normalizeAnglePositive (double a) {
         while (a < 0f) {
             a += TWO_PI;
         }
@@ -181,8 +166,7 @@ public class MathUtil
     /**
      * Returns the mirror angle of the specified angle (assumed to be in [-pi, +pi]).
      */
-    public static double mirrorAngle (double a)
-    {
+    public static double mirrorAngle (double a) {
         return (a > 0f ? Math.PI : -Math.PI) - a;
     }
 
@@ -196,16 +180,15 @@ public class MathUtil
     }
 
     /**
-     * Formats the supplied double point value, truncated to the currently configured number of
-     * decimal places. The value is also always preceded by a sign (e.g. +1.0 or -0.5).
+     * Formats the supplied value, truncated to the currently configured number of decimal places.
+     * The value is also always preceded by a sign (e.g. +1.0 or -0.5).
      */
-    public static String toString (double value)
-    {
+    public static String toString (double value) {
         return toString(value, TO_STRING_DECIMAL_PLACES);
     }
 
     /**
-     * Formats the supplied double point value, truncated to the given number of decimal places.
+     * Formats the supplied doubleing point value, truncated to the given number of decimal places.
      * The value is also always preceded by a sign (e.g. +1.0 or -0.5).
      */
     public static String toString (double value, int decimalPlaces) {
