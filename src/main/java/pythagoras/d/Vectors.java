@@ -66,7 +66,7 @@ public class Vectors
      * magnitude.
      */
     public static boolean isEpsilonZero (double x, double y, double epsilon) {
-        return Math.abs(x) < epsilon && Math.abs(y) < epsilon;
+        return Math.abs(x) <= epsilon && Math.abs(y) <= epsilon;
     }
 
     /**
@@ -82,7 +82,7 @@ public class Vectors
      * {@code epsilon}.
      */
     public static boolean epsilonEquals (IVector v1, IVector v2, double epsilon) {
-        return Math.abs(v1.x() - v2.x()) < epsilon && Math.abs(v1.y() - v2.y()) < epsilon;
+        return Math.abs(v1.x() - v2.x()) <= epsilon && Math.abs(v1.y() - v2.y()) <= epsilon;
     }
 
     /**
