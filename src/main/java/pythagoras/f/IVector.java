@@ -40,6 +40,9 @@ public interface IVector
     /** Returns the squared length of this vector. */
     float lengthSq ();
 
+    /** Returns true if this vector has zero magnitude. */
+    boolean isZero ();
+
     /** Returns the distance from this vector to the specified other vector. */
     float distance (IVector other);
 

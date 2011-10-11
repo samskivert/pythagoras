@@ -49,6 +49,11 @@ public abstract class AbstractVector implements IVector
     }
 
     @Override // from interface IVector
+    public boolean isZero () {
+        return Vectors.isZero(x(), y());
+    }
+
+    @Override // from interface IVector
     public double distance (IVector other) {
         return Math.sqrt(distanceSq(other));
     }

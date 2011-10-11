@@ -28,6 +28,22 @@ public class Points
         return Math.sqrt(distanceSq(x1, y1, x2, y2));
     }
 
+    /**
+     * Returns true if the supplied points' x and y components are equal to one another within
+     * {@link MathUtil#EPSILON}.
+     */
+    public static boolean epsilonEquals (IPoint p1, IPoint p2) {
+        return epsilonEquals(p1, p2, MathUtil.EPSILON);
+    }
+
+    /**
+     * Returns true if the supplied points' x and y components are equal to one another within
+     * {@code epsilon}.
+     */
+    public static boolean epsilonEquals (IPoint p1, IPoint p2, double epsilon) {
+        return Math.abs(p1.x() - p2.x()) < epsilon && Math.abs(p1.y() - p2.y()) < epsilon;
+    }
+
     /** Transforms a point as specified, storing the result in the point provided.
      * @return a reference to the result point, for chaining. */
     public static Point transform (double x, double y, double sx, double sy, double rotation,

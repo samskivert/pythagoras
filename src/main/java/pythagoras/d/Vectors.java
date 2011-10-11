@@ -28,22 +28,61 @@ public class Vectors
     /**
      * Creates a new vector from polar coordinates.
      */
-    public static final Vector fromPolar (double magnitude, double angle) {
+    public static Vector fromPolar (double magnitude, double angle) {
         return new Vector(magnitude * Math.cos(angle), magnitude * Math.sin(angle));
     }
 
     /**
      * Returns the magnitude of the specified vector.
      */
-    public static final double length (double x, double y) {
+    public static double length (double x, double y) {
         return Math.sqrt(lengthSq(x, y));
     }
 
     /**
      * Returns the square of the magnitude of the specified vector.
      */
-    public static final double lengthSq (double x, double y) {
+    public static double lengthSq (double x, double y) {
         return (x*x + y*y);
+    }
+
+    /**
+     * Returns true if the supplied vector has zero magnitude.
+     */
+    public static boolean isZero (double x, double y) {
+        return x == 0 && y == 0;
+    }
+
+    /**
+     * Returns true if the supplied vector's x and y components are {@link MathUtil#EPSILON} close
+     * to zero magnitude.
+     */
+    public static boolean isEpsilonZero (double x, double y) {
+        return isEpsilonZero(x, y, MathUtil.EPSILON);
+    }
+
+    /**
+     * Returns true if the supplied vector's x and y components are {@code epsilon} close to zero
+     * magnitude.
+     */
+    public static boolean isEpsilonZero (double x, double y, double epsilon) {
+        return Math.abs(x) < epsilon && Math.abs(y) < epsilon;
+    }
+
+    /**
+     * Returns true if the supplied vectors' x and y components are equal to one another within
+     * {@link MathUtil#EPSILON}.
+     */
+    public static boolean epsilonEquals (IVector v1, IVector v2) {
+        return epsilonEquals(v1, v2, MathUtil.EPSILON);
+    }
+
+    /**
+     * Returns true if the supplied vectors' x and y components are equal to one another within
+     * {@code epsilon}.
+     */
+    public static boolean epsilonEquals (IVector v1, IVector v2, double epsilon) {
+        return Math.abs(v1.x() - v2.x()) < epsilon && Math.abs(v1.y() - v2.y()) < epsilon;
     }
 
     /**

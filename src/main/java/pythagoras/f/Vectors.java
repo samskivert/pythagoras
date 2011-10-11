@@ -28,22 +28,61 @@ public class Vectors
     /**
      * Creates a new vector from polar coordinates.
      */
-    public static final Vector fromPolar (float magnitude, float angle) {
+    public static Vector fromPolar (float magnitude, float angle) {
         return new Vector(magnitude * FloatMath.cos(angle), magnitude * FloatMath.sin(angle));
     }
 
     /**
      * Returns the magnitude of the specified vector.
      */
-    public static final float length (float x, float y) {
+    public static float length (float x, float y) {
         return FloatMath.sqrt(lengthSq(x, y));
     }
 
     /**
      * Returns the square of the magnitude of the specified vector.
      */
-    public static final float lengthSq (float x, float y) {
+    public static float lengthSq (float x, float y) {
         return (x*x + y*y);
+    }
+
+    /**
+     * Returns true if the supplied vector has zero magnitude.
+     */
+    public static boolean isZero (float x, float y) {
+        return x == 0 && y == 0;
+    }
+
+    /**
+     * Returns true if the supplied vector's x and y components are {@link MathUtil#EPSILON} close
+     * to zero magnitude.
+     */
+    public static boolean isEpsilonZero (float x, float y) {
+        return isEpsilonZero(x, y, MathUtil.EPSILON);
+    }
+
+    /**
+     * Returns true if the supplied vector's x and y components are {@code epsilon} close to zero
+     * magnitude.
+     */
+    public static boolean isEpsilonZero (float x, float y, float epsilon) {
+        return Math.abs(x) < epsilon && Math.abs(y) < epsilon;
+    }
+
+    /**
+     * Returns true if the supplied vectors' x and y components are equal to one another within
+     * {@link MathUtil#EPSILON}.
+     */
+    public static boolean epsilonEquals (IVector v1, IVector v2) {
+        return epsilonEquals(v1, v2, MathUtil.EPSILON);
+    }
+
+    /**
+     * Returns true if the supplied vectors' x and y components are equal to one another within
+     * {@code epsilon}.
+     */
+    public static boolean epsilonEquals (IVector v1, IVector v2, float epsilon) {
+        return Math.abs(v1.x() - v2.x()) < epsilon && Math.abs(v1.y() - v2.y()) < epsilon;
     }
 
     /**
