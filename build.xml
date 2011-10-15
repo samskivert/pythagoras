@@ -6,7 +6,7 @@
   <property name="classes.dir"  location="${target.dir}/classes"/>
   <property name="tclasses.dir" location="${target.dir}/test-classes"/>
 
-  <property name="ooo-build.vers" value="2.6"/>
+  <property name="ooo-build.vers" value="2.9"/>
   <ant antfile="etc/bootstrap.xml"/>
   <import file="${user.home}/.m2/ooo-build/${ooo-build.vers}/ooo-build.xml"/>
 
@@ -34,6 +34,14 @@
     <ooojavac srcdir="${tsrc.dir}" destdir="${tclasses.dir}" classpathref="test.classpath"/>
   </target>
 
+  <target name="javadoc" depends="-prepare" description="Builds the Java documentation">
+    <mkdir dir="${target.dir}/docs"/>
+    <javadoc sourcepath="${src.dir}" destdir="${target.dir}/docs"
+             additionalparam="-breakiterator" classpathref="pom.xml.path">
+      <link href="http://download.oracle.com/javase/6/docs/api/"/>
+    </javadoc>
+  </target>
+
   <target name="test" depends="compile" description="Runs the unit tests.">
     <taskdef name="unit" classpathref="test.path"
       classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask"/>
@@ -55,8 +63,12 @@
     </jar>
   </target>
 
-  <target name="install" depends="package"
-          description="Deploys our build artifacts to a Maven repository.">
-    <mavendeploy file="${target.dir}/${ant.project.name}.jar" srcdir="${src.dir}" pom="pom.xml"/>
+  <target name="install" depends="package" description="Installs to local Maven repository.">
+    <maveninstall file="${target.dir}/${ant.project.name}.jar" pom="pom.xml"/>
+  </target>
+
+  <target name="deploy" depends="package,javadoc" description="Deploys to remote Maven repository.">
+    <mavendeploy file="${target.dir}/${ant.project.name}.jar" pom="pom.xml"
+                 srcdir="${src.dir}" docdir="${target.dir}/docs"/>
   </target>
 </project>
