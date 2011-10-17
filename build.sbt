@@ -22,6 +22,3 @@ unmanagedSources in Compile ~= (_.filterNot(_.getPath.indexOf("pythagoras/gwt") 
 
 // add our sources to the main jar file (including super-sources)
 unmanagedResourceDirectories in Compile <+= baseDirectory / "src/main/java"
-
-// work around SBT bug
-unmanagedResources in Compile ~= (_.filterNot(_.isDirectory))
