@@ -138,26 +138,26 @@ public class MathUtil
     }
 
     /**
-     * Returns an angle in the range [-pi, pi].
+     * Returns an angle in the range [-pi, pi).
      */
     public static double normalizeAngle (double a) {
         while (a < -Math.PI) {
             a += TWO_PI;
         }
-        while (a > Math.PI) {
+        while (a >= Math.PI) {
             a -= TWO_PI;
         }
         return a;
     }
 
     /**
-     * Returns an angle in the range [0, 2pi].
+     * Returns an angle in the range [0, 2pi).
      */
     public static double normalizeAnglePositive (double a) {
         while (a < 0f) {
             a += TWO_PI;
         }
-        while (a > TWO_PI) {
+        while (a >= TWO_PI) {
             a -= TWO_PI;
         }
         return a;
