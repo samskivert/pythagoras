@@ -50,7 +50,9 @@ public class MathUtil
      * Clamps a value to the range [lower, upper].
      */
     public static double clamp (double v, double lower, double upper) {
-        return Math.min(Math.max(v, lower), upper);
+        if (v < lower) return lower;
+        else if (v > upper) return upper;
+        else return v;
     }
 
     /**
