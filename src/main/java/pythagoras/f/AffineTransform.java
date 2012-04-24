@@ -281,7 +281,7 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public void transform (IPoint[] src, int srcOff, Point[] dst, int dstOff, int count) { 
+    public void transform (IPoint[] src, int srcOff, Point[] dst, int dstOff, int count) {
         for (int ii = 0; ii < count; ii++) {
             transform(src[srcOff++], dst[dstOff++]);
         }
