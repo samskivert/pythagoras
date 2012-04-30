@@ -137,6 +137,16 @@ public abstract class AbstractVector implements IVector
     }
 
     @Override // from interface IVector
+    public Vector subtract (float x, float y) {
+        return subtract(x, y, new Vector());
+    }
+
+    @Override // from interface IVector
+    public Vector subtract (float x, float y, Vector result) {
+        return result.set(x() - x, y() - y);
+    }
+
+    @Override // from interface IVector
     public Vector addScaled (IVector other, float v) {
         return addScaled(other, v, new Vector());
     }

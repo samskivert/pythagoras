@@ -115,6 +115,14 @@ public interface IVector
      * @return a reference to the result, for chaining. */
     Vector subtract (IVector other, Vector result);
 
+    /** Subtracts a vector from this one.
+     * @return a new vector containing the result. */
+    Vector subtract (float x, float y);
+
+    /** Subtracts a vector from this one and places the result in the supplied object.
+     * @return a reference to the result, for chaining. */
+    Vector subtract (float x, float y, Vector result);
+
     /** Rotates this vector by the specified angle.
      * @return a new vector containing the result. */
     Vector rotate (float angle);
