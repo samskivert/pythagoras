@@ -32,7 +32,7 @@ public interface IPlane
     //  *
     //  * @return a new plane containing the result.
     //  */
-    // Plane transform (Transform transform);
+    // Plane transform (Transform3D transform);
 
     // /**
     //  * Transforms this plane by the specified transformation, placing the result in the object
@@ -40,7 +40,7 @@ public interface IPlane
     //  *
     //  * @return a reference to the result plane, for chaining.
     //  */
-    // Plane transform (Transform transform, Plane result);
+    // Plane transform (Transform3D transform, Plane result);
 
     /**
      * Negates this plane.
@@ -56,19 +56,19 @@ public interface IPlane
      */
     Plane negate (Plane result);
 
-    // /**
-    //  * Computes the intersection of the supplied ray with this plane, placing the result
-    //  * in the given vector (if the ray intersects).
-    //  *
-    //  * @return true if the ray intersects the plane (in which case the result will contain
-    //  * the point of intersection), false if not.
-    //  */
-    // boolean intersection (Ray3D ray, Vector3 result);
+    /**
+     * Computes the intersection of the supplied ray with this plane, placing the result
+     * in the given vector (if the ray intersects).
+     *
+     * @return true if the ray intersects the plane (in which case the result will contain
+     * the point of intersection), false if not.
+     */
+    boolean intersection (IRay3 ray, Vector3 result);
 
-    // /**
-    //  * Computes the signed distance to this plane along the specified ray.
-    //  *
-    //  * @return the signed distance, or {@link Float#NaN} if the ray runs parallel to the plane.
-    //  */
-    // double distance (Ray3D ray);
+    /**
+     * Computes the signed distance to this plane along the specified ray.
+     *
+     * @return the signed distance, or {@link Float#NaN} if the ray runs parallel to the plane.
+     */
+    double distance (IRay3 ray);
 }

@@ -176,6 +176,12 @@ public interface Transform
      * @throws NoninvertibleTransformException if the transform is not invertible. */
     Point inverseTransform (IPoint p, Point into);
 
+    /** Transforms the supplied vector as a point (accounting for translation), writing the result
+     * into {@code into}.
+     * @param into a vector into which to store the result, may be the same object as {@code v}.
+     * @return {@code into}, for chaining. */
+    Vector transformPoint (IVector v, Vector into);
+
     /** Transforms the supplied vector, writing the result into {@code into}.
      * @param into a vector into which to store the result, may be the same object as {@code v}.
      * @return {@code into}, for chaining. */

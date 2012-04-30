@@ -129,7 +129,7 @@ public class Plane implements IPlane, Serializable
     //  *
     //  * @return a reference to this plane, for chaining.
     //  */
-    // public Plane transformLocal (Transform transform) {
+    // public Plane transformLocal (Transform3D transform) {
     //     return transform(transform, this);
     // }
 
@@ -163,12 +163,12 @@ public class Plane implements IPlane, Serializable
     }
 
     // @Override // from IPlane
-    // public Plane transform (Transform transform) {
+    // public Plane transform (Transform3D transform) {
     //     return transform(transform, new Plane());
     // }
 
     // @Override // from IPlane
-    // public Plane transform (Transform transform, Plane result) {
+    // public Plane transform (Transform3D transform, Plane result) {
     //     transform.transformPointLocal(_normal.mult(-constant, _v1));
     //     transform.transformVector(_normal, _v2).normalizeLocal();
     //     return result.fromPointNormal(_v1, _v2);
@@ -186,29 +186,29 @@ public class Plane implements IPlane, Serializable
         return result;
     }
 
-    // @Override // from IPlane
-    // public boolean intersection (Ray3D ray, Vector3 result) {
-    //     double distance = distance(ray);
-    //     if (Double.isNaN(distance) || distance < 0f) {
-    //         return false;
-    //     } else {
-    //         ray.origin().addScaled(ray.direction(), distance, result);
-    //         return true;
-    //     }
-    // }
+    @Override // from IPlane
+    public boolean intersection (IRay3 ray, Vector3 result) {
+        double distance = distance(ray);
+        if (Float.isNaN(distance) || distance < 0f) {
+            return false;
+        } else {
+            ray.origin().addScaled(ray.direction(), distance, result);
+            return true;
+        }
+    }
 
-    // @Override // from IPlane
-    // public double distance (Ray3D ray) {
-    //     double dividend = -distance(ray.origin());
-    //     double divisor = _normal.dot(ray.direction());
-    //     if (Math.abs(dividend) < MathUtil.EPSILON) {
-    //         return 0f; // origin is on plane
-    //     } else if (Math.abs(divisor) < MathUtil.EPSILON) {
-    //         return Float.NaN; // ray is parallel to plane
-    //     } else {
-    //         return dividend / divisor;
-    //     }
-    // }
+    @Override // from IPlane
+    public double distance (IRay3 ray) {
+        double dividend = -distance(ray.origin());
+        double divisor = _normal.dot(ray.direction());
+        if (Math.abs(dividend) < MathUtil.EPSILON) {
+            return 0f; // origin is on plane
+        } else if (Math.abs(divisor) < MathUtil.EPSILON) {
+            return Float.NaN; // ray is parallel to plane
+        } else {
+            return dividend / divisor;
+        }
+    }
 
     @Override
     public int hashCode () {

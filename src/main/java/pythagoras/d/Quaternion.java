@@ -308,7 +308,7 @@ public class Quaternion implements IQuaternion, Serializable
 
     @Override // from IQuaternion
     public boolean hasNaN () {
-        return Double.isNaN(x) || Double.isNaN(y) || Double.isNaN(z) || Double.isNaN(w);
+        return Float.isNaN(x) || Float.isNaN(y) || Float.isNaN(z) || Float.isNaN(w);
     }
 
     @Override // from IQuaternion

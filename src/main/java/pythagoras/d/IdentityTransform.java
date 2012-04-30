@@ -87,6 +87,11 @@ public class IdentityTransform extends AbstractTransform
     }
 
     @Override // from Transform
+    public Vector transformPoint (IVector v, Vector into) {
+        return into.set(v);
+    }
+
+    @Override // from Transform
     public Vector transform (IVector v, Vector into) {
         return into.set(v);
     }

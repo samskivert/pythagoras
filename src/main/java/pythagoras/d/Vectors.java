@@ -85,12 +85,21 @@ public class Vectors
         return Math.abs(v1.x() - v2.x()) <= epsilon && Math.abs(v1.y() - v2.y()) <= epsilon;
     }
 
+    /** Transforms a vector as specified (as a point, accounting for translation), storing the
+     * result in the vector provided.
+     * @return a reference to the result vector, for chaining. */
+    public static Vector transform (double x, double y, double sx, double sy, double rotation,
+                                    double tx, double ty, Vector result) {
+        return transform(x, y, sx, sy, Math.sin(rotation), Math.cos(rotation), tx, ty,
+                         result);
+    }
+
     /**
-     * Transforms a point as specified, storing the result in the point provided.
+     * Transforms a vector as specified, storing the result in the vector provided.
      * @return a reference to the result vector, for chaining.
      */
     public static Vector transform (double x, double y, double sx, double sy, double rotation,
-                                   Vector result) {
+                                    Vector result) {
         return transform(x, y, sx, sy, Math.sin(rotation), Math.cos(rotation), result);
     }
 
@@ -103,8 +112,16 @@ public class Vectors
         return result.set((x*cosa - y*sina) * sx, (x*sina + y*cosa) * sy);
     }
 
+    /** Transforms a vector as specified (as a point, accounting for translation), storing the
+     * result in the vector provided.
+     * @return a reference to the result vector, for chaining. */
+    public static Vector transform (double x, double y, double sx, double sy, double sina, double cosa,
+                                    double tx, double ty, Vector result) {
+        return result.set((x*cosa - y*sina) * sx + tx, (x*sina + y*cosa) * sy + ty);
+    }
+
     /**
-     * Inverse transforms a point as specified, storing the result in the point provided.
+     * Inverse transforms a vector as specified, storing the result in the vector provided.
      * @return a reference to the result vector, for chaining.
      */
     public static Vector inverseTransform (double x, double y, double sx, double sy, double rotation,

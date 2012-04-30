@@ -156,8 +156,18 @@ public interface IBox
      */
     Box expand (double x, double y, double z, Box result);
 
-    // /**
-    //  * Determines whether the specified ray intersects this box.
-    //  */
-    // boolean intersects (Ray3D ray);
+    /**
+     * Determines whether the specified ray intersects this box.
+     */
+    boolean intersects (IRay3 ray);
+
+    /**
+     * Finds the location of the (first) intersection between the specified ray and this box. This
+     * will be the ray origin if the ray starts inside the box.
+     *
+     * @param result a vector to hold the location of the intersection.
+     * @return true if the ray intersects the box (in which case the result vector will be
+     * populated with the location of the intersection), false if not.
+     */
+    boolean intersection (IRay3 ray, Vector3 result);
 }

@@ -310,6 +310,12 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
+    public Vector transformPoint (IVector v, Vector into) {
+        double x = v.x(), y = v.y();
+        return into.set(m00*x + m10*y + tx, m01*x + m11*y + ty);
+    }
+
+    @Override // from Transform
     public Vector transform (IVector v, Vector into) {
         double x = v.x(), y = v.y();
         return into.set(m00*x + m10*y, m01*x + m11*y);

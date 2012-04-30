@@ -145,7 +145,7 @@ public class RigidTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public void transform (IPoint[] src, int srcOff, Point[] dst, int dstOff, int count) { 
+    public void transform (IPoint[] src, int srcOff, Point[] dst, int dstOff, int count) {
         double sina = Math.sin(rotation), cosa = Math.cos(rotation);
         for (int ii = 0; ii < count; ii++) {
             IPoint s = src[srcOff++];
@@ -167,6 +167,11 @@ public class RigidTransform extends AbstractTransform
     @Override // from Transform
     public Point inverseTransform (IPoint p, Point into) {
         return Points.inverseTransform(p.x(), p.y(), 1, 1, rotation, tx, ty, into);
+    }
+
+    @Override // from Transform
+    public Vector transformPoint (IVector v, Vector into) {
+        return Vectors.transform(v.x(), v.y(), 1, 1, rotation, tx, ty, into);
     }
 
     @Override // from Transform
