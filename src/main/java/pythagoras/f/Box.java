@@ -366,54 +366,45 @@ public class Box implements IBox, Serializable
             _maxExtent.z >= omin.z() && _minExtent.z <= omax.z();
     }
 
-    // /**
-    //  * Determines whether the specified ray intersects this box.
-    //  */
-    // public boolean intersects (Ray3D ray) {
-    //     Vector3 dir = ray.direction();
-    //     return
-    //         Math.abs(dir.x) > MathUtil.EPSILON &&
-    //             (intersectsX(ray, _minExtent.x) || intersectsX(ray, _maxExtent.x)) ||
-    //         Math.abs(dir.y) > MathUtil.EPSILON &&
-    //             (intersectsY(ray, _minExtent.y) || intersectsY(ray, _maxExtent.y)) ||
-    //         Math.abs(dir.z) > MathUtil.EPSILON &&
-    //             (intersectsZ(ray, _minExtent.z) || intersectsZ(ray, _maxExtent.z));
-    // }
+    @Override // from IBox
+    public boolean intersects (IRay3 ray) {
+        IVector3 dir = ray.direction();
+        return
+            Math.abs(dir.x()) > MathUtil.EPSILON &&
+                (intersectsX(ray, _minExtent.x) || intersectsX(ray, _maxExtent.x)) ||
+            Math.abs(dir.y()) > MathUtil.EPSILON &&
+                (intersectsY(ray, _minExtent.y) || intersectsY(ray, _maxExtent.y)) ||
+            Math.abs(dir.z()) > MathUtil.EPSILON &&
+                (intersectsZ(ray, _minExtent.z) || intersectsZ(ray, _maxExtent.z));
+    }
 
-    // /**
-    //  * Finds the location of the (first) intersection between the specified ray and this box.
-    //  * This will be the ray origin if the ray starts inside the box.
-    //  *
-    //  * @param result a vector to hold the location of the intersection.
-    //  * @return true if the ray intersects the box (in which case the result vector will be
-    //  * populated with the location of the intersection), false if not.
-    //  */
-    // public boolean intersection (Ray3D ray, Vector3 result) {
-    //     Vector3 origin = ray.origin();
-    //     if (contains(origin)) {
-    //         result.set(origin);
-    //         return true;
-    //     }
-    //     Vector3 dir = ray.direction();
-    //     float t = Float.MAX_VALUE;
-    //     if (Math.abs(dir.x) > MathUtil.EPSILON) {
-    //         t = Math.min(t, intersectionX(ray, _minExtent.x));
-    //         t = Math.min(t, intersectionX(ray, _maxExtent.x));
-    //     }
-    //     if (Math.abs(dir.y) > MathUtil.EPSILON) {
-    //         t = Math.min(t, intersectionY(ray, _minExtent.y));
-    //         t = Math.min(t, intersectionY(ray, _maxExtent.y));
-    //     }
-    //     if (Math.abs(dir.z) > MathUtil.EPSILON) {
-    //         t = Math.min(t, intersectionZ(ray, _minExtent.z));
-    //         t = Math.min(t, intersectionZ(ray, _maxExtent.z));
-    //     }
-    //     if (t == Float.MAX_VALUE) {
-    //         return false;
-    //     }
-    //     origin.addScaled(dir, t, result);
-    //     return true;
-    // }
+    @Override // from IBox
+    public boolean intersection (IRay3 ray, Vector3 result) {
+        IVector3 origin = ray.origin();
+        if (contains(origin)) {
+            result.set(origin);
+            return true;
+        }
+        IVector3 dir = ray.direction();
+        float t = Float.MAX_VALUE;
+        if (Math.abs(dir.x()) > MathUtil.EPSILON) {
+            t = Math.min(t, intersectionX(ray, _minExtent.x));
+            t = Math.min(t, intersectionX(ray, _maxExtent.x));
+        }
+        if (Math.abs(dir.y()) > MathUtil.EPSILON) {
+            t = Math.min(t, intersectionY(ray, _minExtent.y));
+            t = Math.min(t, intersectionY(ray, _maxExtent.y));
+        }
+        if (Math.abs(dir.z()) > MathUtil.EPSILON) {
+            t = Math.min(t, intersectionZ(ray, _minExtent.z));
+            t = Math.min(t, intersectionZ(ray, _maxExtent.z));
+        }
+        if (t == Float.MAX_VALUE) {
+            return false;
+        }
+        origin.addScaled(dir, t, result);
+        return true;
+    }
 
     @Override // documentation inherited
     public String toString () {
@@ -434,98 +425,98 @@ public class Box implements IBox, Serializable
         return _minExtent.equals(obox._minExtent) && _maxExtent.equals(obox._maxExtent);
     }
 
-    // /**
-    //  * Helper method for {@link #intersects(Ray3D)}.  Determines whether the ray intersects the box
-    //  * at the plane where x equals the value specified.
-    //  */
-    // protected boolean intersectsX (Ray3D ray, float x) {
-    //     Vector3 origin = ray.origin(), dir = ray.direction();
-    //     float t = (x - origin.x) / dir.x;
-    //     if (t < 0f) {
-    //         return false;
-    //     }
-    //     float iy = origin.y + t*dir.y, iz = origin.z + t*dir.z;
-    //     return iy >= _minExtent.y && iy <= _maxExtent.y &&
-    //         iz >= _minExtent.z && iz <= _maxExtent.z;
-    // }
+    /**
+     * Helper method for {@link #intersects(Ray3)}.  Determines whether the ray intersects the box
+     * at the plane where x equals the value specified.
+     */
+    protected boolean intersectsX (IRay3 ray, float x) {
+        IVector3 origin = ray.origin(), dir = ray.direction();
+        float t = (x - origin.x()) / dir.x();
+        if (t < 0f) {
+            return false;
+        }
+        float iy = origin.y() + t*dir.y(), iz = origin.z() + t*dir.z();
+        return iy >= _minExtent.y && iy <= _maxExtent.y &&
+            iz >= _minExtent.z && iz <= _maxExtent.z;
+    }
 
-    // /**
-    //  * Helper method for {@link #intersects(Ray3D)}.  Determines whether the ray intersects the box
-    //  * at the plane where y equals the value specified.
-    //  */
-    // protected boolean intersectsY (Ray3D ray, float y) {
-    //     Vector3 origin = ray.origin(), dir = ray.direction();
-    //     float t = (y - origin.y) / dir.y;
-    //     if (t < 0f) {
-    //         return false;
-    //     }
-    //     float ix = origin.x + t*dir.x, iz = origin.z + t*dir.z;
-    //     return ix >= _minExtent.x && ix <= _maxExtent.x &&
-    //         iz >= _minExtent.z && iz <= _maxExtent.z;
-    // }
+    /**
+     * Helper method for {@link #intersects(Ray3)}.  Determines whether the ray intersects the box
+     * at the plane where y equals the value specified.
+     */
+    protected boolean intersectsY (IRay3 ray, float y) {
+        IVector3 origin = ray.origin(), dir = ray.direction();
+        float t = (y - origin.y()) / dir.y();
+        if (t < 0f) {
+            return false;
+        }
+        float ix = origin.x() + t*dir.x(), iz = origin.z() + t*dir.z();
+        return ix >= _minExtent.x && ix <= _maxExtent.x &&
+            iz >= _minExtent.z && iz <= _maxExtent.z;
+    }
 
-    // /**
-    //  * Helper method for {@link #intersects(Ray3D)}.  Determines whether the ray intersects the box
-    //  * at the plane where z equals the value specified.
-    //  */
-    // protected boolean intersectsZ (Ray3D ray, float z) {
-    //     Vector3 origin = ray.origin(), dir = ray.direction();
-    //     float t = (z - origin.z) / dir.z;
-    //     if (t < 0f) {
-    //         return false;
-    //     }
-    //     float ix = origin.x + t*dir.x, iy = origin.y + t*dir.y;
-    //     return ix >= _minExtent.x && ix <= _maxExtent.x &&
-    //         iy >= _minExtent.y && iy <= _maxExtent.y;
-    // }
+    /**
+     * Helper method for {@link #intersects(Ray3)}.  Determines whether the ray intersects the box
+     * at the plane where z equals the value specified.
+     */
+    protected boolean intersectsZ (IRay3 ray, float z) {
+        IVector3 origin = ray.origin(), dir = ray.direction();
+        float t = (z - origin.z()) / dir.z();
+        if (t < 0f) {
+            return false;
+        }
+        float ix = origin.x() + t*dir.x(), iy = origin.y() + t*dir.y();
+        return ix >= _minExtent.x && ix <= _maxExtent.x &&
+            iy >= _minExtent.y && iy <= _maxExtent.y;
+    }
 
-    // /**
-    //  * Helper method for {@link #intersection}.  Finds the <code>t</code> value where the ray
-    //  * intersects the box at the plane where x equals the value specified, or returns
-    //  * {@link Float#MAX_VALUE} if there is no such intersection.
-    //  */
-    // protected float intersectionX (Ray3D ray, float x) {
-    //     Vector3 origin = ray.origin(), dir = ray.direction();
-    //     float t = (x - origin.x) / dir.x;
-    //     if (t < 0f) {
-    //         return Float.MAX_VALUE;
-    //     }
-    //     float iy = origin.y + t*dir.y, iz = origin.z + t*dir.z;
-    //     return (iy >= _minExtent.y && iy <= _maxExtent.y &&
-    //         iz >= _minExtent.z && iz <= _maxExtent.z) ? t : Float.MAX_VALUE;
-    // }
+    /**
+     * Helper method for {@link #intersection}.  Finds the <code>t</code> value where the ray
+     * intersects the box at the plane where x equals the value specified, or returns
+     * {@link Float#MAX_VALUE} if there is no such intersection.
+     */
+    protected float intersectionX (IRay3 ray, float x) {
+        IVector3 origin = ray.origin(), dir = ray.direction();
+        float t = (x - origin.x()) / dir.x();
+        if (t < 0f) {
+            return Float.MAX_VALUE;
+        }
+        float iy = origin.y() + t*dir.y(), iz = origin.z() + t*dir.z();
+        return (iy >= _minExtent.y && iy <= _maxExtent.y &&
+            iz >= _minExtent.z && iz <= _maxExtent.z) ? t : Float.MAX_VALUE;
+    }
 
-    // /**
-    //  * Helper method for {@link #intersection}.  Finds the <code>t</code> value where the ray
-    //  * intersects the box at the plane where y equals the value specified, or returns
-    //  * {@link Float#MAX_VALUE} if there is no such intersection.
-    //  */
-    // protected float intersectionY (Ray3D ray, float y) {
-    //     Vector3 origin = ray.origin(), dir = ray.direction();
-    //     float t = (y - origin.y) / dir.y;
-    //     if (t < 0f) {
-    //         return Float.MAX_VALUE;
-    //     }
-    //     float ix = origin.x + t*dir.x, iz = origin.z + t*dir.z;
-    //     return (ix >= _minExtent.x && ix <= _maxExtent.x &&
-    //         iz >= _minExtent.z && iz <= _maxExtent.z) ? t : Float.MAX_VALUE;
-    // }
+    /**
+     * Helper method for {@link #intersection}.  Finds the <code>t</code> value where the ray
+     * intersects the box at the plane where y equals the value specified, or returns
+     * {@link Float#MAX_VALUE} if there is no such intersection.
+     */
+    protected float intersectionY (IRay3 ray, float y) {
+        IVector3 origin = ray.origin(), dir = ray.direction();
+        float t = (y - origin.y()) / dir.y();
+        if (t < 0f) {
+            return Float.MAX_VALUE;
+        }
+        float ix = origin.x() + t*dir.x(), iz = origin.z() + t*dir.z();
+        return (ix >= _minExtent.x && ix <= _maxExtent.x &&
+            iz >= _minExtent.z && iz <= _maxExtent.z) ? t : Float.MAX_VALUE;
+    }
 
-    // /**
-    //  * Helper method for {@link #intersection}.  Finds the <code>t</code> value where the ray
-    //  * intersects the box at the plane where z equals the value specified, or returns
-    //  * {@link Float#MAX_VALUE} if there is no such intersection.
-    //  */
-    // protected float intersectionZ (Ray3D ray, float z) {
-    //     Vector3 origin = ray.origin(), dir = ray.direction();
-    //     float t = (z - origin.z) / dir.z;
-    //     if (t < 0f) {
-    //         return Float.MAX_VALUE;
-    //     }
-    //     float ix = origin.x + t*dir.x, iy = origin.y + t*dir.y;
-    //     return (ix >= _minExtent.x && ix <= _maxExtent.x &&
-    //         iy >= _minExtent.y && iy <= _maxExtent.y) ? t : Float.MAX_VALUE;
-    // }
+    /**
+     * Helper method for {@link #intersection}.  Finds the <code>t</code> value where the ray
+     * intersects the box at the plane where z equals the value specified, or returns
+     * {@link Float#MAX_VALUE} if there is no such intersection.
+     */
+    protected float intersectionZ (IRay3 ray, float z) {
+        IVector3 origin = ray.origin(), dir = ray.direction();
+        float t = (z - origin.z()) / dir.z();
+        if (t < 0f) {
+            return Float.MAX_VALUE;
+        }
+        float ix = origin.x() + t*dir.x(), iy = origin.y() + t*dir.y();
+        return (ix >= _minExtent.x && ix <= _maxExtent.x &&
+            iy >= _minExtent.y && iy <= _maxExtent.y) ? t : Float.MAX_VALUE;
+    }
 
     /** The box's minimum extent. */
     protected final Vector3 _minExtent = new Vector3();

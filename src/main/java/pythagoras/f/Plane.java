@@ -186,29 +186,29 @@ public class Plane implements IPlane, Serializable
         return result;
     }
 
-    // @Override // from IPlane
-    // public boolean intersection (Ray3D ray, Vector3 result) {
-    //     float distance = distance(ray);
-    //     if (Float.isNaN(distance) || distance < 0f) {
-    //         return false;
-    //     } else {
-    //         ray.origin().addScaled(ray.direction(), distance, result);
-    //         return true;
-    //     }
-    // }
+    @Override // from IPlane
+    public boolean intersection (IRay3 ray, Vector3 result) {
+        float distance = distance(ray);
+        if (Float.isNaN(distance) || distance < 0f) {
+            return false;
+        } else {
+            ray.origin().addScaled(ray.direction(), distance, result);
+            return true;
+        }
+    }
 
-    // @Override // from IPlane
-    // public float distance (Ray3D ray) {
-    //     float dividend = -distance(ray.origin());
-    //     float divisor = _normal.dot(ray.direction());
-    //     if (Math.abs(dividend) < MathUtil.EPSILON) {
-    //         return 0f; // origin is on plane
-    //     } else if (Math.abs(divisor) < MathUtil.EPSILON) {
-    //         return Float.NaN; // ray is parallel to plane
-    //     } else {
-    //         return dividend / divisor;
-    //     }
-    // }
+    @Override // from IPlane
+    public float distance (IRay3 ray) {
+        float dividend = -distance(ray.origin());
+        float divisor = _normal.dot(ray.direction());
+        if (Math.abs(dividend) < MathUtil.EPSILON) {
+            return 0f; // origin is on plane
+        } else if (Math.abs(divisor) < MathUtil.EPSILON) {
+            return Float.NaN; // ray is parallel to plane
+        } else {
+            return dividend / divisor;
+        }
+    }
 
     @Override
     public int hashCode () {
