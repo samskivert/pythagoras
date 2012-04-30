@@ -198,6 +198,11 @@ public class UniformTransform extends AbstractTransform
     }
 
     @Override // from Transform
+    public Vector transformPoint (IVector p, Vector into) {
+        return Vectors.transform(p.x(), p.y(), scale, scale, rotation, tx, ty, into);
+    }
+
+    @Override // from Transform
     public Vector transform (IVector v, Vector into) {
         return Vectors.transform(v.x(), v.y(), scale, scale, rotation, into);
     }

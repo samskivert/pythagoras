@@ -32,7 +32,7 @@ public interface IPlane
     //  *
     //  * @return a new plane containing the result.
     //  */
-    // Plane transform (Transform transform);
+    // Plane transform (Transform3D transform);
 
     // /**
     //  * Transforms this plane by the specified transformation, placing the result in the object
@@ -40,7 +40,7 @@ public interface IPlane
     //  *
     //  * @return a reference to the result plane, for chaining.
     //  */
-    // Plane transform (Transform transform, Plane result);
+    // Plane transform (Transform3D transform, Plane result);
 
     /**
      * Negates this plane.

@@ -129,7 +129,7 @@ public class Plane implements IPlane, Serializable
     //  *
     //  * @return a reference to this plane, for chaining.
     //  */
-    // public Plane transformLocal (Transform transform) {
+    // public Plane transformLocal (Transform3D transform) {
     //     return transform(transform, this);
     // }
 
@@ -163,12 +163,12 @@ public class Plane implements IPlane, Serializable
     }
 
     // @Override // from IPlane
-    // public Plane transform (Transform transform) {
+    // public Plane transform (Transform3D transform) {
     //     return transform(transform, new Plane());
     // }
 
     // @Override // from IPlane
-    // public Plane transform (Transform transform, Plane result) {
+    // public Plane transform (Transform3D transform, Plane result) {
     //     transform.transformPointLocal(_normal.mult(-constant, _v1));
     //     transform.transformVector(_normal, _v2).normalizeLocal();
     //     return result.fromPointNormal(_v1, _v2);

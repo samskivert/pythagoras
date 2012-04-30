@@ -232,6 +232,11 @@ public class NonUniformTransform extends AbstractTransform
     }
 
     @Override // from Transform
+    public Vector transformPoint (IVector v, Vector into) {
+        return Vectors.transform(v.x(), v.y(), scaleX, scaleY, rotation, tx, ty, into);
+    }
+
+    @Override // from Transform
     public Vector transform (IVector v, Vector into) {
         return Vectors.transform(v.x(), v.y(), scaleX, scaleY, rotation, into);
     }

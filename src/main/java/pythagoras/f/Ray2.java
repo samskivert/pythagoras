@@ -56,14 +56,14 @@ public class Ray2 implements IRay2
         return this;
     }
 
-    // /**
-    //  * Transforms this ray in-place.
-    //  *
-    //  * @return a reference to this ray, for chaining.
-    //  */
-    // public Ray2 transformLocal (Transform2D transform) {
-    //     return transform(transform, this);
-    // }
+    /**
+     * Transforms this ray in-place.
+     *
+     * @return a reference to this ray, for chaining.
+     */
+    public Ray2 transformLocal (Transform transform) {
+        return transform(transform, this);
+    }
 
     @Override // from IRay2
     public IVector origin () {
@@ -75,17 +75,17 @@ public class Ray2 implements IRay2
         return direction;
     }
 
-    // @Override // from IRay2
-    // public Ray2 transform (Transform2D transform) {
-    //     return transform(transform, new Ray2());
-    // }
+    @Override // from IRay2
+    public Ray2 transform (Transform transform) {
+        return transform(transform, new Ray2());
+    }
 
-    // @Override // from IRay2
-    // public Ray2 transform (Transform2D transform, Ray2 result) {
-    //     transform.transformPoint(origin, result.origin);
-    //     transform.transformVector(direction, result.direction).normalizeLocal();
-    //     return result;
-    // }
+    @Override // from IRay2
+    public Ray2 transform (Transform transform, Ray2 result) {
+        transform.transformPoint(origin, result.origin);
+        transform.transform(direction, result.direction).normalizeLocal();
+        return result;
+    }
 
     @Override // from IRay2
     public boolean intersects (IVector pt) {

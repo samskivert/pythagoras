@@ -19,19 +19,19 @@ public interface IRay2
      */
     IVector direction ();
 
-    // /**
-    //  * Transforms this ray.
-    //  *
-    //  * @return a new ray containing the result.
-    //  */
-    // Ray2 transform (Transform2D transform);
+    /**
+     * Transforms this ray.
+     *
+     * @return a new ray containing the result.
+     */
+    Ray2 transform (Transform transform);
 
-    // /**
-    //  * Transforms this ray, placing the result in the object provided.
-    //  *
-    //  * @return a reference to the result ray, for chaining.
-    //  */
-    // Ray2 transform (Transform2D transform, Ray2 result);
+    /**
+     * Transforms this ray, placing the result in the object provided.
+     *
+     * @return a reference to the result ray, for chaining.
+     */
+    Ray2 transform (Transform transform, Ray2 result);
 
     /**
      * Determines whether the ray intersects the specified point.
