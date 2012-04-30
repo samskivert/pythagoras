@@ -29,6 +29,13 @@ public class Vector extends AbstractVector
     public Vector () {
     }
 
+    /** Computes the cross product of this and the specified other vector, storing the result in
+     * this vector.
+     * @return a reference to this vector, for chaining. */
+    public Vector crossLocal (IVector other) {
+        return cross(other, this);
+    }
+
     /** Negates this vector in-place.
      * @return a reference to this vector, for chaining. */
     public Vector negateLocal () {

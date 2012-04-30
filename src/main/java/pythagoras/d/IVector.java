@@ -18,6 +18,15 @@ public interface IVector
     /** Computes and returns the dot product of this and the specified other vector. */
     double dot (IVector other);
 
+    /** Computes the cross product of this and the specified other vector.
+     * @return a new vector containing the result. */
+    Vector cross (IVector other);
+
+    /** Computes the cross product of this and the specified other vector, placing the result in
+     * the object supplied.
+     * @return a reference to the result, for chaining. */
+    Vector cross (IVector other, Vector result);
+
     /** Negates this vector.
      * @return a new vector containing the result. */
     Vector negate ();
@@ -105,6 +114,14 @@ public interface IVector
     /** Subtracts a vector from this one and places the result in the supplied object.
      * @return a reference to the result, for chaining. */
     Vector subtract (IVector other, Vector result);
+
+    /** Subtracts a vector from this one.
+     * @return a new vector containing the result. */
+    Vector subtract (double x, double y);
+
+    /** Subtracts a vector from this one and places the result in the supplied object.
+     * @return a reference to the result, for chaining. */
+    Vector subtract (double x, double y, Vector result);
 
     /** Rotates this vector by the specified angle.
      * @return a new vector containing the result. */
