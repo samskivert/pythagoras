@@ -107,7 +107,7 @@ public class Ray2 implements IRay2
         float dx = end.x() - start.x(), dy = end.y() - start.y();
 
         float divisor = bx*dy - by*dx;
-        if (Math.abs(divisor) < FloatMath.EPSILON) {
+        if (Math.abs(divisor) < MathUtil.EPSILON) {
             // the lines are parallel (or the segment is zero-length)
             float t = Math.min(getIntersection(start), getIntersection(end));
             boolean isect = (t != Float.MAX_VALUE);
@@ -135,7 +135,7 @@ public class Ray2 implements IRay2
         // compute the segment's line parameters
         float a = starty - end.y(), b = end.x() - startx;
         float len = FloatMath.hypot(a, b);
-        if (len < FloatMath.EPSILON) { // start equals end; check as circle
+        if (len < MathUtil.EPSILON) { // start equals end; check as circle
             return getIntersection(start, radius, result);
         }
         float rlen = 1f / len;
@@ -149,7 +149,7 @@ public class Ray2 implements IRay2
         float x, y;
         if (above || below) { // check the intersection with the top/bottom boundary
             float divisor = a*direction.x + b*direction.y;
-            if (Math.abs(divisor) < FloatMath.EPSILON) { // lines are parallel
+            if (Math.abs(divisor) < MathUtil.EPSILON) { // lines are parallel
                 return false;
             }
             c += (above ? -radius : +radius);
