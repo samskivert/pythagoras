@@ -189,7 +189,7 @@ public class Plane implements IPlane, Serializable
     @Override // from IPlane
     public boolean intersection (IRay3 ray, Vector3 result) {
         double distance = distance(ray);
-        if (Float.isNaN(distance) || distance < 0f) {
+        if (Double.isNaN(distance) || distance < 0f) {
             return false;
         } else {
             ray.origin().addScaled(ray.direction(), distance, result);
