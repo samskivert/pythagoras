@@ -18,6 +18,15 @@ public interface IVector
     /** Computes and returns the dot product of this and the specified other vector. */
     float dot (IVector other);
 
+    /** Computes the cross product of this and the specified other vector.
+     * @return a new vector containing the result. */
+    Vector cross (IVector other);
+
+    /** Computes the cross product of this and the specified other vector, placing the result in
+     * the object supplied.
+     * @return a reference to the result, for chaining. */
+    Vector cross (IVector other, Vector result);
+
     /** Negates this vector.
      * @return a new vector containing the result. */
     Vector negate ();

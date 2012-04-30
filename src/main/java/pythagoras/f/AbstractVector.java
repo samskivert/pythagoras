@@ -18,6 +18,17 @@ public abstract class AbstractVector implements IVector
     }
 
     @Override // from interface IVector
+    public Vector cross (IVector other) {
+        return cross(other, new Vector());
+    }
+
+    @Override // from interface IVector
+    public Vector cross (IVector other, Vector result) {
+        float x = x(), y = y(), ox = other.x(), oy = other.y();
+        return result.set(y*ox - x*oy, x*oy - y*ox);
+    }
+
+    @Override // from interface IVector
     public Vector negate () {
         return negate(new Vector());
     }
