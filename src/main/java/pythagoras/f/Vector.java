@@ -79,6 +79,12 @@ public class Vector extends AbstractVector
         return add(x, y, this);
     }
 
+    /** Subtracts a vector in-place from this one.
+     * @return a reference to this vector, for chaining. */
+    public Vector subtractLocal (float x, float y) {
+        return subtract(x, y, this);
+    }
+
     /** Adds a scaled vector in-place to this one.
      * @return a reference to this vector, for chaining. */
     public Vector addScaledLocal (IVector other, float v) {
