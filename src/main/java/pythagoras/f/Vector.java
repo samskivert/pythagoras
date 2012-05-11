@@ -139,12 +139,12 @@ public class Vector extends AbstractVector
         return normalizeLocal().scaleLocal(length);
     }
 
-    @Override // from AbstractVector
+    @Override // from XY
     public float x () {
         return x;
     }
 
-    @Override // from AbstractVector
+    @Override // from XY
     public float y () {
         return y;
     }

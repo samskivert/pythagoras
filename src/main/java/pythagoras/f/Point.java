@@ -69,12 +69,18 @@ public class Point extends AbstractPoint implements Serializable
         return rotate(angle, this);
     }
 
-    @Override // from interface IPoint
+    /** Subtracts the supplied x/y from this point.
+     * @return a reference to this point, for chaining. */
+    public Point subtractLocal (float x, float y) {
+        return subtract(x, y, this);
+    }
+
+    @Override // from XY
     public float x () {
         return x;
     }
 
-    @Override // from interface IPoint
+    @Override // from XY
     public float y () {
         return y;
     }

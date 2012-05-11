@@ -7,14 +7,8 @@ package pythagoras.d;
 /**
  * Provides read-only access to a {@link Point}.
  */
-public interface IPoint extends Cloneable
+public interface IPoint extends XY, Cloneable
 {
-    /** Returns this point's x-coordinate. */
-    double x ();
-
-    /** Returns this point's y-coordinate. */
-    double y ();
-
     /** Returns the squared Euclidian distance between this point and the specified point. */
     double distanceSq (double px, double py);
 
@@ -48,16 +42,16 @@ public interface IPoint extends Cloneable
     Point add (double x, double y, Point result);
 
     /** Subtracts the supplied point from {@code this}.
-     * @return a new vector containing the result. */
-    Vector subtract (double x, double y);
+     * @return a new point containing the result. */
+    Point subtract (double x, double y);
 
     /** Subtracts the supplied point from {@code this} and stores the result in {@code result}.
      * @return a reference to the result, for chaining. */
-    Vector subtract (double x, double y, Vector result);
+    Point subtract (double x, double y, Point result);
 
     /** Subtracts the supplied point from {@code this} and stores the result in {@code result}.
      * @return a reference to the result, for chaining. */
-    Vector subtract (IPoint other, Vector result);
+    Point subtract (IPoint other, Point result);
 
     /** Rotates this point around the origin by the specified angle.
      * @return a new point containing the result. */

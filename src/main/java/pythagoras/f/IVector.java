@@ -7,14 +7,8 @@ package pythagoras.f;
 /**
  * Provides read-only access to a {@link Vector}.
  */
-public interface IVector
+public interface IVector extends XY
 {
-    /** Returns the x-component of this vector. */
-    float x ();
-
-    /** Returns the y-component of this vector. */
-    float y ();
-
     /** Computes and returns the dot product of this and the specified other vector. */
     float dot (IVector other);
 
