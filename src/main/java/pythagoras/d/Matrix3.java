@@ -448,12 +448,12 @@ public class Matrix3 implements IMatrix3, Serializable
 
     @Override // from IMatrix3
     public Matrix3 multAffine (IMatrix3 other, Matrix3 result) {
-        double m00 = this.m00, m01 = this.m01, m02 = this.m02;
-        double m10 = this.m10, m11 = this.m11, m12 = this.m12;
-        double m20 = this.m20, m21 = this.m21, m22 = this.m22;
-        double om00 = other.m00(), om01 = other.m01(), om02 = other.m02();
-        double om10 = other.m10(), om11 = other.m11(), om12 = other.m12();
-        double om20 = other.m20(), om21 = other.m21(), om22 = other.m22();
+        double m00 = this.m00, m01 = this.m01;
+        double m10 = this.m10, m11 = this.m11;
+        double m20 = this.m20, m21 = this.m21;
+        double om00 = other.m00(), om01 = other.m01();
+        double om10 = other.m10(), om11 = other.m11();
+        double om20 = other.m20(), om21 = other.m21();
         return result.set(m00*om00 + m10*om01,
                           m00*om10 + m10*om11,
                           m00*om20 + m10*om21 + m20,
@@ -512,9 +512,9 @@ public class Matrix3 implements IMatrix3, Serializable
 
     @Override // from IMatrix3
     public Matrix3 invertAffine (Matrix3 result) throws SingularMatrixException {
-        double m00 = this.m00, m01 = this.m01, m02 = this.m02;
-        double m10 = this.m10, m11 = this.m11, m12 = this.m12;
-        double m20 = this.m20, m21 = this.m21, m22 = this.m22;
+        double m00 = this.m00, m01 = this.m01;
+        double m10 = this.m10, m11 = this.m11;
+        double m20 = this.m20, m21 = this.m21;
         // compute the determinant, storing the subdeterminants for later use
         double det = m00*m11 - m10*m01;
         if (Math.abs(det) == 0f) {
@@ -566,12 +566,12 @@ public class Matrix3 implements IMatrix3, Serializable
 
     @Override // from IMatrix3
     public Matrix3 lerpAffine (IMatrix3 other, double t, Matrix3 result) {
-        double m00 = this.m00, m01 = this.m01, m02 = this.m02;
-        double m10 = this.m10, m11 = this.m11, m12 = this.m12;
-        double m20 = this.m20, m21 = this.m21, m22 = this.m22;
-        double om00 = other.m00(), om01 = other.m01(), om02 = other.m02();
-        double om10 = other.m10(), om11 = other.m11(), om12 = other.m12();
-        double om20 = other.m20(), om21 = other.m21(), om22 = other.m22();
+        double m00 = this.m00, m01 = this.m01;
+        double m10 = this.m10, m11 = this.m11;
+        double m20 = this.m20, m21 = this.m21;
+        double om00 = other.m00(), om01 = other.m01();
+        double om10 = other.m10(), om11 = other.m11();
+        double om20 = other.m20(), om21 = other.m21();
         return result.set(m00 + t*(om00 - m00),
                           m10 + t*(om10 - m10),
                           m20 + t*(om20 - m20),

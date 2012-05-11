@@ -754,7 +754,6 @@ public final class Matrix4 implements IMatrix4, Serializable
         double m00 = this.m00, m10 = this.m10, m20 = this.m20, m30 = this.m30;
         double m01 = this.m01, m11 = this.m11, m21 = this.m21, m31 = this.m31;
         double m02 = this.m02, m12 = this.m12, m22 = this.m22, m32 = this.m32;
-        double m03 = this.m03, m13 = this.m13, m23 = this.m23, m33 = this.m33;
         // compute the determinant, storing the subdeterminants for later use
         double sd00 = m11*m22 - m21*m12;
         double sd10 = m01*m22 - m21*m02;
@@ -826,7 +825,6 @@ public final class Matrix4 implements IMatrix4, Serializable
         double m00 = this.m00, m10 = this.m10, m20 = this.m20, m30 = this.m30;
         double m01 = this.m01, m11 = this.m11, m21 = this.m21, m31 = this.m31;
         double m02 = this.m02, m12 = this.m12, m22 = this.m22, m32 = this.m32;
-        double m03 = this.m03, m13 = this.m13, m23 = this.m23, m33 = this.m33;
         return result.set(m00 + t*(other.m00() - m00),
                           m10 + t*(other.m10() - m10),
                           m20 + t*(other.m20() - m20),
