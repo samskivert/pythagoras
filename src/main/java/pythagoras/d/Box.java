@@ -45,8 +45,8 @@ public class Box implements IBox, Serializable
     }
 
     /**
-     * Sets the parameters of the box to the empty values ({@link Vector3f#MAX_VALUE} and
-     * {@link Vector3f#MIN_VALUE} for the minimum and maximum, respectively).
+     * Sets the parameters of the box to the empty values ({@link Vector3#MAX_VALUE} and
+     * {@link Vector3#MIN_VALUE} for the minimum and maximum, respectively).
      *
      * @return a reference to this box, for chaining.
      */

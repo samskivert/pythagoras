@@ -471,7 +471,7 @@ public class Matrix3 implements IMatrix3, Serializable
     }
 
     /**
-     * @{@inheritDoc} This code is based on the examples in the
+     * {@inheritDoc} This code is based on the examples in the
      * <a href="http://www.j3d.org/matrix_faq/matrfaq_latest.html">Matrix and Quaternion FAQ</a>.
      */
     @Override // from IMatrix3

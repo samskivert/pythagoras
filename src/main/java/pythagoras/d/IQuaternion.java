@@ -32,9 +32,9 @@ public interface IQuaternion
     boolean hasNaN ();
 
     /**
-     * Computes the angles to pass to {@link #fromAngles} to reproduce this rotation, placing them
-     * in the provided vector. This uses the factorization method described in David Eberly's
-     * <a href="http://www.geometrictools.com/Documentation/EulerAngles.pdf">Euler Angle
+     * Computes the angles to pass to {@link Quaternion#fromAngles} to reproduce this rotation,
+     * placing them in the provided vector. This uses the factorization method described in David
+     * Eberly's <a href="http://www.geometrictools.com/Documentation/EulerAngles.pdf">Euler Angle
      * Formulas</a>.
      *
      * @return a reference to the result vector, for chaining.
@@ -42,7 +42,8 @@ public interface IQuaternion
     Vector3 toAngles (Vector3 result);
 
     /**
-     * Computes and returns the angles to pass to {@link #fromAngles} to reproduce this rotation.
+     * Computes and returns the angles to pass to {@link Quaternion#fromAngles} to reproduce this
+     * rotation.
      *
      * @return a new vector containing the resulting angles.
      */
