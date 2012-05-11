@@ -34,7 +34,7 @@ public class MathUtil
      */
     public static int ifloor (float v) {
         int iv = (int)v;
-        return (v < 0f) ? ((iv == v || iv == Integer.MIN_VALUE) ? iv : (iv - 1)) : iv;
+        return (v >= 0f || iv == v || iv == Integer.MIN_VALUE) ? iv : (iv - 1);
     }
 
     /**
@@ -43,7 +43,7 @@ public class MathUtil
      */
     public static int iceil (float v) {
         int iv = (int)v;
-        return (v > 0f) ? ((iv == v || iv == Integer.MAX_VALUE) ? iv : (iv + 1)) : iv;
+        return (v <= 0f || iv == v || iv == Integer.MAX_VALUE) ? iv : (iv + 1);
     }
 
     /**
