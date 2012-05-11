@@ -250,7 +250,7 @@ public class Box implements IBox, Serializable
     //  */
     // public Box transform (Transform3D transform, Box result) {
     //     // the corners of the box cover the eight permutations of ([minX|maxX], [minY|maxY],
-    //     // [minZ|maxZ]).  to find the new minimum and maximum for each element, we transform
+    //     // [minZ|maxZ]). To find the new minimum and maximum for each element, we transform
     //     // selecting either the minimum or maximum for each component based on whether it will
     //     // increase or decrease the total (which depends on the sign of the matrix element).
     //     transform.update(Transform3D.AFFINE);
@@ -426,7 +426,7 @@ public class Box implements IBox, Serializable
     }
 
     /**
-     * Helper method for {@link #intersects(Ray3)}.  Determines whether the ray intersects the box
+     * Helper method for {@link #intersects(Ray3)}. Determines whether the ray intersects the box
      * at the plane where x equals the value specified.
      */
     protected boolean intersectsX (IRay3 ray, float x) {
@@ -441,7 +441,7 @@ public class Box implements IBox, Serializable
     }
 
     /**
-     * Helper method for {@link #intersects(Ray3)}.  Determines whether the ray intersects the box
+     * Helper method for {@link #intersects(Ray3)}. Determines whether the ray intersects the box
      * at the plane where y equals the value specified.
      */
     protected boolean intersectsY (IRay3 ray, float y) {
@@ -456,7 +456,7 @@ public class Box implements IBox, Serializable
     }
 
     /**
-     * Helper method for {@link #intersects(Ray3)}.  Determines whether the ray intersects the box
+     * Helper method for {@link #intersects(Ray3)}. Determines whether the ray intersects the box
      * at the plane where z equals the value specified.
      */
     protected boolean intersectsZ (IRay3 ray, float z) {
@@ -471,7 +471,7 @@ public class Box implements IBox, Serializable
     }
 
     /**
-     * Helper method for {@link #intersection}.  Finds the <code>t</code> value where the ray
+     * Helper method for {@link #intersection}. Finds the <code>t</code> value where the ray
      * intersects the box at the plane where x equals the value specified, or returns
      * {@link Float#MAX_VALUE} if there is no such intersection.
      */
@@ -487,7 +487,7 @@ public class Box implements IBox, Serializable
     }
 
     /**
-     * Helper method for {@link #intersection}.  Finds the <code>t</code> value where the ray
+     * Helper method for {@link #intersection}. Finds the <code>t</code> value where the ray
      * intersects the box at the plane where y equals the value specified, or returns
      * {@link Float#MAX_VALUE} if there is no such intersection.
      */
@@ -503,7 +503,7 @@ public class Box implements IBox, Serializable
     }
 
     /**
-     * Helper method for {@link #intersection}.  Finds the <code>t</code> value where the ray
+     * Helper method for {@link #intersection}. Finds the <code>t</code> value where the ray
      * intersects the box at the plane where z equals the value specified, or returns
      * {@link Float#MAX_VALUE} if there is no such intersection.
      */

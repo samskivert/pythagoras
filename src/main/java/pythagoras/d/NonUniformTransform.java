@@ -207,7 +207,7 @@ public class NonUniformTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public void transform (IPoint[] src, int srcOff, Point[] dst, int dstOff, int count) { 
+    public void transform (IPoint[] src, int srcOff, Point[] dst, int dstOff, int count) {
         double sina = Math.sin(rotation), cosa = Math.cos(rotation);
         for (int ii = 0; ii < count; ii++) {
             IPoint s = src[srcOff++];

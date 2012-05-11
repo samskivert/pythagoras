@@ -87,7 +87,7 @@ public class Matrix3 implements IMatrix3, Serializable
     }
 
     /**
-     * Sets this to a rotation matrix.  The formula comes from the OpenGL documentation for the
+     * Sets this to a rotation matrix. The formula comes from the OpenGL documentation for the
      * glRotatef function.
      *
      * @return a reference to this matrix, for chaining.
@@ -101,7 +101,7 @@ public class Matrix3 implements IMatrix3, Serializable
     }
 
     /**
-     * Sets this to a rotation matrix.  The formula comes from the
+     * Sets this to a rotation matrix. The formula comes from the
      * <a href="http://www.j3d.org/matrix_faq/matrfaq_latest.html">Matrix and Quaternion FAQ</a>.
      *
      * @return a reference to this matrix, for chaining.
@@ -448,12 +448,12 @@ public class Matrix3 implements IMatrix3, Serializable
 
     @Override // from IMatrix3
     public Matrix3 multAffine (IMatrix3 other, Matrix3 result) {
-        float m00 = this.m00, m01 = this.m01, m02 = this.m02;
-        float m10 = this.m10, m11 = this.m11, m12 = this.m12;
-        float m20 = this.m20, m21 = this.m21, m22 = this.m22;
-        float om00 = other.m00(), om01 = other.m01(), om02 = other.m02();
-        float om10 = other.m10(), om11 = other.m11(), om12 = other.m12();
-        float om20 = other.m20(), om21 = other.m21(), om22 = other.m22();
+        float m00 = this.m00, m01 = this.m01;
+        float m10 = this.m10, m11 = this.m11;
+        float m20 = this.m20, m21 = this.m21;
+        float om00 = other.m00(), om01 = other.m01();
+        float om10 = other.m10(), om11 = other.m11();
+        float om20 = other.m20(), om21 = other.m21();
         return result.set(m00*om00 + m10*om01,
                           m00*om10 + m10*om11,
                           m00*om20 + m10*om21 + m20,
@@ -471,12 +471,13 @@ public class Matrix3 implements IMatrix3, Serializable
     }
 
     /**
-     * Inverts this matrix and places the result in the given object.  This code is based on the
+     * Inverts this matrix and places the result in the given object. This code is based on the
      * examples in the <a href="http://www.j3d.org/matrix_faq/matrfaq_latest.html">Matrix and
      * Quaternion FAQ</a>.
      *
      * @return a reference to the result matrix, for chaining.
      */
+    @Override // from IMatrix3
     public Matrix3 invert (Matrix3 result) throws SingularMatrixException {
         float m00 = this.m00, m01 = this.m01, m02 = this.m02;
         float m10 = this.m10, m11 = this.m11, m12 = this.m12;
@@ -511,9 +512,9 @@ public class Matrix3 implements IMatrix3, Serializable
 
     @Override // from IMatrix3
     public Matrix3 invertAffine (Matrix3 result) throws SingularMatrixException {
-        float m00 = this.m00, m01 = this.m01, m02 = this.m02;
-        float m10 = this.m10, m11 = this.m11, m12 = this.m12;
-        float m20 = this.m20, m21 = this.m21, m22 = this.m22;
+        float m00 = this.m00, m01 = this.m01;
+        float m10 = this.m10, m11 = this.m11;
+        float m20 = this.m20, m21 = this.m21;
         // compute the determinant, storing the subdeterminants for later use
         float det = m00*m11 - m10*m01;
         if (Math.abs(det) == 0f) {
@@ -565,12 +566,12 @@ public class Matrix3 implements IMatrix3, Serializable
 
     @Override // from IMatrix3
     public Matrix3 lerpAffine (IMatrix3 other, float t, Matrix3 result) {
-        float m00 = this.m00, m01 = this.m01, m02 = this.m02;
-        float m10 = this.m10, m11 = this.m11, m12 = this.m12;
-        float m20 = this.m20, m21 = this.m21, m22 = this.m22;
-        float om00 = other.m00(), om01 = other.m01(), om02 = other.m02();
-        float om10 = other.m10(), om11 = other.m11(), om12 = other.m12();
-        float om20 = other.m20(), om21 = other.m21(), om22 = other.m22();
+        float m00 = this.m00, m01 = this.m01;
+        float m10 = this.m10, m11 = this.m11;
+        float m20 = this.m20, m21 = this.m21;
+        float om00 = other.m00(), om01 = other.m01();
+        float om10 = other.m10(), om11 = other.m11();
+        float om20 = other.m20(), om21 = other.m21();
         return result.set(m00 + t*(om00 - m00),
                           m10 + t*(om10 - m10),
                           m20 + t*(om20 - m20),

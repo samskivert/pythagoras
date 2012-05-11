@@ -33,7 +33,7 @@ public interface IQuaternion
 
     /**
      * Computes the angles to pass to {@link #fromAngles} to reproduce this rotation, placing them
-     * in the provided vector.  This uses the factorization method described in David Eberly's
+     * in the provided vector. This uses the factorization method described in David Eberly's
      * <a href="http://www.geometrictools.com/Documentation/EulerAngles.pdf">Euler Angle
      * Formulas</a>.
      *
@@ -99,7 +99,7 @@ public interface IQuaternion
 
     /**
      * Interpolates between this and the specified other quaternion, placing the result in the
-     * object provided.  Based on the code in Nick Bobick's article,
+     * object provided. Based on the code in Nick Bobick's article,
      * <a href="http://www.gamasutra.com/features/19980703/quaternions_01.htm">Rotating Objects
      * Using Quaternions</a>.
      *

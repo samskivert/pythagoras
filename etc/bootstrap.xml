@@ -9,7 +9,7 @@
        <ant antfile="bootstrap.xml"/>
        <import file="${user.home}/.m2/ooo-build/${ooo-build.vers}/ooo-build.xml"/>
 
-       to the top level of your build.xml.  Then you can depend on -init-ooo in your lowest level
+       to the top level of your build.xml. Then you can depend on -init-ooo in your lowest level
        target to expose ooo-build's maven macros, javac macros, and antcontrib.
   -->
 
