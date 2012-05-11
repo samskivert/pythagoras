@@ -471,11 +471,8 @@ public class Matrix3 implements IMatrix3, Serializable
     }
 
     /**
-     * Inverts this matrix and places the result in the given object. This code is based on the
-     * examples in the <a href="http://www.j3d.org/matrix_faq/matrfaq_latest.html">Matrix and
-     * Quaternion FAQ</a>.
-     *
-     * @return a reference to the result matrix, for chaining.
+     * @{@inheritDoc} This code is based on the examples in the
+     * <a href="http://www.j3d.org/matrix_faq/matrfaq_latest.html">Matrix and Quaternion FAQ</a>.
      */
     @Override // from IMatrix3
     public Matrix3 invert (Matrix3 result) throws SingularMatrixException {
@@ -641,6 +638,11 @@ public class Matrix3 implements IMatrix3, Serializable
         return result.set(m00*vx + m10*vy, m01*vx + m11*vy);
     }
 
+    /**
+     * {@inheritDoc} This uses the iterative polar decomposition algorithm described by
+     * <a href="http://www.cs.wisc.edu/graphics/Courses/838-s2002/Papers/polar-decomp.pdf">Ken
+     * Shoemake</a>.
+     */
     @Override // from IMatrix3
     public double extractRotation () {
         // start with the contents of the upper 2x2 portion of the matrix

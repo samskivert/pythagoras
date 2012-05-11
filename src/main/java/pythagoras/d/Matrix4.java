@@ -705,6 +705,10 @@ public final class Matrix4 implements IMatrix4, Serializable
         return invert(new Matrix4());
     }
 
+    /**
+     * {@inheritDoc} This code is based on the examples in the
+     * <a href="http://www.j3d.org/matrix_faq/matrfaq_latest.html">Matrix and Quaternion FAQ</a>.
+     */
     @Override // from IMatrix4
     public Matrix4 invert (Matrix4 result) throws SingularMatrixException {
         double m00 = this.m00, m10 = this.m10, m20 = this.m20, m30 = this.m30;
@@ -917,6 +921,11 @@ public final class Matrix4 implements IMatrix4, Serializable
         return extractRotation(new Quaternion());
     }
 
+    /**
+     * {@inheritDoc} This uses the iterative polar decomposition algorithm described by
+     * <a href="http://www.cs.wisc.edu/graphics/Courses/838-s2002/Papers/polar-decomp.pdf">Ken
+     * Shoemake</a>.
+     */
     @Override // from IMatrix4
     public Quaternion extractRotation (Quaternion result) throws SingularMatrixException {
         // start with the contents of the upper 3x3 portion of the matrix
