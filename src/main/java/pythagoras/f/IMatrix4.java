@@ -120,9 +120,7 @@ public interface IMatrix4
     Matrix4 invert ();
 
     /**
-     * Inverts this matrix and places the result in the given object.  This code is based on the
-     * examples in the <a href="http://www.j3d.org/matrix_faq/matrfaq_latest.html">Matrix and
-     * Quaternion FAQ</a>.
+     * Inverts this matrix and places the result in the given object.
      *
      * @return a reference to the result matrix, for chaining.
      */
@@ -258,9 +256,7 @@ public interface IMatrix4
 
     /**
      * Extracts the rotation component of the matrix and places it in the provided result
-     * quaternion.  This uses the iterative polar decomposition algorithm described by
-     * <a href="http://www.cs.wisc.edu/graphics/Courses/838-s2002/Papers/polar-decomp.pdf">Ken
-     * Shoemake</a>.
+     * quaternion.
      *
      * @return a reference to the result quaternion, for chaining.
      */
