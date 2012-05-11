@@ -33,6 +33,13 @@ public class Vectors
     }
 
     /**
+     * Creates a vector from {@code from} to {@code to}.
+     */
+    public static Vector from (IPoint from, IPoint to) {
+        return new Vector(to.x() - from.x(), to.y() - from.y());
+    }
+
+    /**
      * Returns the magnitude of the specified vector.
      */
     public static float length (float x, float y) {
