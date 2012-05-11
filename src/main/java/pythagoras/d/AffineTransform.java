@@ -299,13 +299,13 @@ public class AffineTransform extends AbstractTransform
     @Override // from Transform
     public Point inverseTransform (IPoint p, Point into) {
         double x = p.x() - tx, y = p.y() - ty;
-	    double det = m00 * m11 - m01 * m10;
+        double det = m00 * m11 - m01 * m10;
         if (Math.abs(det) == 0f) {
             // determinant is zero; matrix is not invertible
             throw new NoninvertibleTransformException(this.toString());
         }
         double rdet = 1 / det;
-	    return into.set((x * m11 - y * m10) * rdet,
+        return into.set((x * m11 - y * m10) * rdet,
                         (y * m00 - x * m01) * rdet);
     }
 
@@ -324,13 +324,13 @@ public class AffineTransform extends AbstractTransform
     @Override // from Transform
     public Vector inverseTransform (IVector v, Vector into) {
         double x = v.x(), y = v.y();
-	    double det = m00 * m11 - m01 * m10;
+        double det = m00 * m11 - m01 * m10;
         if (Math.abs(det) == 0f) {
             // determinant is zero; matrix is not invertible
             throw new NoninvertibleTransformException(this.toString());
         }
         double rdet = 1 / det;
-	    return into.set((x * m11 - y * m10) * rdet,
+        return into.set((x * m11 - y * m10) * rdet,
                         (y * m00 - x * m01) * rdet);
     }
 

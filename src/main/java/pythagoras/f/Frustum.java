@@ -169,7 +169,7 @@ public class Frustum
     // }
 
     /**
-     * Determines the maximum signed distance of the point from the planes of the frustum.  If
+     * Determines the maximum signed distance of the point from the planes of the frustum. If
      * the distance is less than or equal to zero, the point lies inside the frustum.
      */
     public float distance (Vector3 point) {
@@ -240,7 +240,7 @@ public class Frustum
     /** The vertices of the frustum. */
     protected Vector3[] _vertices = new Vector3[8];
 
-    /** The planes of the frustum (as derived from the vertices).  The plane normals point out of
+    /** The planes of the frustum (as derived from the vertices). The plane normals point out of
      * the frustum. */
     protected Plane[] _planes = new Plane[6];
 

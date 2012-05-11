@@ -10,7 +10,7 @@ import java.util.Random;
 import pythagoras.util.Platform;
 
 /**
- * A unit quaternion.  Many of the formulas come from the
+ * A unit quaternion. Many of the formulas come from the
  * <a href="http://www.j3d.org/matrix_faq/matrfaq_latest.html">Matrix and Quaternion FAQ</a>.
  */
 public class Quaternion implements IQuaternion, Serializable

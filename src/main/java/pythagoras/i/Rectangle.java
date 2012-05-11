@@ -37,7 +37,7 @@ public class Rectangle extends AbstractRectangle implements Serializable
     }
 
     /**
-     * Constructs a rectangle with upper-left corner at (0,) and the supplied dimensions.
+     * Constructs a rectangle with upper-left corner at (0,0) and the supplied dimensions.
      */
     public Rectangle (IDimension d) {
         setBounds(0, 0, d.width(), d.height());

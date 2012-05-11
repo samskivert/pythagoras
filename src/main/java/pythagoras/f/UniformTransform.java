@@ -173,7 +173,7 @@ public class UniformTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public void transform (IPoint[] src, int srcOff, Point[] dst, int dstOff, int count) { 
+    public void transform (IPoint[] src, int srcOff, Point[] dst, int dstOff, int count) {
         float sina = FloatMath.sin(rotation), cosa = FloatMath.cos(rotation);
         for (int ii = 0; ii < count; ii++) {
             IPoint p = src[srcOff++];

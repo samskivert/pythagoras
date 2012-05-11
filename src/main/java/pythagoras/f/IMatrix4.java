@@ -167,7 +167,7 @@ public interface IMatrix4
 
     /**
      * Linearly interpolates between this and the specified other matrix (treating the matrices as
-     * affine);, placing the result in the object provided.
+     * affine), placing the result in the object provided.
      *
      * @return a reference to the result object, for chaining.
      */
@@ -282,7 +282,7 @@ public interface IMatrix4
 
     /**
      * Returns an approximation of the uniform scale for this matrix (the cube root of the
-     * signed volume of the parallelepiped spanned by the axis vectors);.
+     * signed volume of the parallelepiped spanned by the axis vectors).
      */
     float approximateUniformScale ();
 

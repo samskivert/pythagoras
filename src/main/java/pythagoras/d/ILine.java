@@ -32,7 +32,7 @@ public interface ILine extends IShape, Cloneable
     Point p2 ();
 
     /** Initializes the supplied point with this line's ending point.
-     * @return the supplied point.  */
+     * @return the supplied point. */
     Point p2 (Point target);
 
     /** Returns the square of the distance from the specified point to the line defined by this

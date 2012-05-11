@@ -190,7 +190,7 @@ public final class Matrix4 implements IMatrix4, Serializable
     }
 
     /**
-     * Sets this to a rotation matrix.  The formula comes from the OpenGL documentation for the
+     * Sets this to a rotation matrix. The formula comes from the OpenGL documentation for the
      * glRotatef function.
      *
      * @return a reference to this matrix, for chaining.
@@ -205,7 +205,7 @@ public final class Matrix4 implements IMatrix4, Serializable
     }
 
     /**
-     * Sets this to a rotation matrix.  The formula comes from the
+     * Sets this to a rotation matrix. The formula comes from the
      * <a href="http://www.j3d.org/matrix_faq/matrfaq_latest.html">Matrix and Quaternion FAQ</a>.
      *
      * @return a reference to this matrix, for chaining.
@@ -339,7 +339,7 @@ public final class Matrix4 implements IMatrix4, Serializable
     }
 
     /**
-     * Sets this to a perspective projection matrix.  The formula comes from the OpenGL
+     * Sets this to a perspective projection matrix. The formula comes from the OpenGL
      * documentation for the gluPerspective function.
      *
      * @return a reference to this matrix, for chaining.
@@ -353,7 +353,7 @@ public final class Matrix4 implements IMatrix4, Serializable
     }
 
     /**
-     * Sets this to a perspective projection matrix.  The formula comes from the OpenGL
+     * Sets this to a perspective projection matrix. The formula comes from the OpenGL
      * documentation for the glFrustum function.
      *
      * @return a reference to this matrix, for chaining.
@@ -383,7 +383,7 @@ public final class Matrix4 implements IMatrix4, Serializable
     }
 
     /**
-     * Sets this to an orthographic projection matrix.  The formula comes from the OpenGL
+     * Sets this to an orthographic projection matrix. The formula comes from the OpenGL
      * documentation for the glOrtho function.
      *
      * @return a reference to this matrix, for chaining.

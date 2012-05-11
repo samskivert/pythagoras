@@ -87,7 +87,7 @@ public class Matrix3 implements IMatrix3, Serializable
     }
 
     /**
-     * Sets this to a rotation matrix.  The formula comes from the OpenGL documentation for the
+     * Sets this to a rotation matrix. The formula comes from the OpenGL documentation for the
      * glRotatef function.
      *
      * @return a reference to this matrix, for chaining.
@@ -101,7 +101,7 @@ public class Matrix3 implements IMatrix3, Serializable
     }
 
     /**
-     * Sets this to a rotation matrix.  The formula comes from the
+     * Sets this to a rotation matrix. The formula comes from the
      * <a href="http://www.j3d.org/matrix_faq/matrfaq_latest.html">Matrix and Quaternion FAQ</a>.
      *
      * @return a reference to this matrix, for chaining.
@@ -471,7 +471,7 @@ public class Matrix3 implements IMatrix3, Serializable
     }
 
     /**
-     * Inverts this matrix and places the result in the given object.  This code is based on the
+     * Inverts this matrix and places the result in the given object. This code is based on the
      * examples in the <a href="http://www.j3d.org/matrix_faq/matrfaq_latest.html">Matrix and
      * Quaternion FAQ</a>.
      *

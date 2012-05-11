@@ -140,7 +140,7 @@ public abstract class AbstractRoundRectangle extends RectangularShape implements
         PathIterator.SEG_CUBICTO, PathIterator.SEG_LINETO, PathIterator.SEG_CUBICTO
     };
 
-    /** The coefficient to calculate control points of Bezier curves.  */
+    /** The coefficient to calculate control points of Bezier curves. */
     protected static final double U = 0.5f - 2f / 3f * (Math.sqrt(2f) - 1f);
 
     /** The points coordinates calculation table. */
