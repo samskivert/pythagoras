@@ -477,6 +477,7 @@ public class Matrix3 implements IMatrix3, Serializable
      *
      * @return a reference to the result matrix, for chaining.
      */
+    @Override // from IMatrix3
     public Matrix3 invert (Matrix3 result) throws SingularMatrixException {
         float m00 = this.m00, m01 = this.m01, m02 = this.m02;
         float m10 = this.m10, m11 = this.m11, m12 = this.m12;
