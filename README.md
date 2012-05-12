@@ -8,7 +8,7 @@ the [Clyde] library.
 
 * [API documentation] is available.
 
-* Pythagoras can be obtained via Maven Central: `com.samskivert:pythagoras:1.1`.
+* Pythagoras can be obtained via Maven Central: `com.samskivert:pythagoras:1.2`.
   Or you can download the pre-built [jar file].
 
 ## Design
@@ -57,6 +57,6 @@ in the `LICENSE` file and at http://www.apache.org/licenses/LICENSE-2.0 on the
 web.
 
 [API documentation]: http://samskivert.github.com/pythagoras/apidocs/overview-summary.html
-[jar file]: http://repo2.maven.org/maven2/com/samskivert/pythagoras/1.1/pythagoras-1.1.jar
+[jar file]: http://repo2.maven.org/maven2/com/samskivert/pythagoras/1.2/pythagoras-1.2.jar
 [Apache Harmony]: http://harmony.apache.org/
 [Clyde]: https://github.com/threerings/clyde
