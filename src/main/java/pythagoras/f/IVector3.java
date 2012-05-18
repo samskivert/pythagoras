@@ -61,6 +61,20 @@ public interface IVector3
     Vector3 negate (Vector3 result);
 
     /**
+     * Absolute-values this vector.
+     *
+     * @return a new vector containing the result.
+     */
+    Vector3 abs ();
+
+    /**
+     * Absolute-values this vector, storing the result in the supplied object.
+     *
+     * @return a reference to the result, for chaining.
+     */
+    Vector3 abs (Vector3 result);
+
+    /**
      * Normalizes this vector.
      *
      * @return a new vector containing the result.
@@ -138,12 +152,13 @@ public interface IVector3
      * @return a new vector containing the result.
      */
     Vector3 add (IVector3 other);
+
     /**
      * Adds a vector to this one, storing the result in the object provided.
      *
      * @return a reference to the result, for chaining.
      */
-    public IVector3 add (IVector3 other, Vector3 result);
+    Vector3 add (IVector3 other, Vector3 result);
 
     /**
      * Subtracts a vector from this one.

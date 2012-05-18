@@ -278,6 +278,13 @@ public interface IMatrix4
     Quaternion extractRotation (Quaternion result);
 
     /**
+     * Extracts the rotation and scale components and places them in the provided result.
+     *
+     * @return a reference to {@code result}, for chaining.
+     */
+    Matrix3 extractRotationScale (Matrix3 result);
+
+    /**
      * Extracts the scale component of the matrix.
      *
      * @return a new vector containing the result.

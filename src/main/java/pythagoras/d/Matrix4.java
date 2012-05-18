@@ -82,6 +82,18 @@ public final class Matrix4 implements IMatrix4, Serializable
     }
 
     /**
+     * Sets this matrix to all zeroes.
+     *
+     * @return a reference to this matrix, for chaining.
+     */
+    public Matrix4 setToZero () {
+        return set(0f, 0f, 0f, 0f,
+                   0f, 0f, 0f, 0f,
+                   0f, 0f, 0f, 0f,
+                   0f, 0f, 0f, 0f);
+    }
+
+    /**
      * Sets this to a matrix that first rotates, then translates.
      *
      * @return a reference to this matrix, for chaining.
@@ -219,6 +231,18 @@ public final class Matrix4 implements IMatrix4, Serializable
                    2f*(xy + zw), 1f - 2f*(xx + zz), 2f*(yz - xw), 0f,
                    2f*(xz - yw), 2f*(yz + xw), 1f - 2f*(xx + yy), 0f,
                    0f, 0f, 0f, 1f);
+    }
+
+    /**
+     * Sets this to a rotation plus scale matrix.
+     *
+     * @return a reference to this matrix, for chaining.
+     */
+    public Matrix4 setToRotationScale (IMatrix3 rotScale) {
+        return set(rotScale.m00(), rotScale.m01(), rotScale.m02(), 0f,
+                   rotScale.m10(), rotScale.m11(), rotScale.m12(), 0f,
+                   rotScale.m20(), rotScale.m21(), rotScale.m22(), 0f,
+                   0, 0, 0, 1);
     }
 
     /**
@@ -424,7 +448,7 @@ public final class Matrix4 implements IMatrix4, Serializable
     }
 
     /**
-     * Copies the elements of an array.
+     * Copies the elements of a row-major array.
      *
      * @return a reference to this matrix, for chaining.
      */
@@ -436,7 +460,7 @@ public final class Matrix4 implements IMatrix4, Serializable
     }
 
     /**
-     * Sets the contents of this matrix from the supplied buffer.
+     * Sets the contents of this matrix from the supplied (column-major) buffer.
      *
      * @return a reference to this matrix, for chaining.
      */
@@ -995,6 +1019,13 @@ public final class Matrix4 implements IMatrix4, Serializable
             0.5f * Math.sqrt(z2) * (n01 >= n10 ? +1f : -1f),
             0.5f * Math.sqrt(w2));
         return result;
+    }
+
+    @Override // from IMatrix4
+    public Matrix3 extractRotationScale (Matrix3 result) {
+        return result.set(m00, m01, m02,
+                          m10, m11, m12,
+                          m20, m21, m22);
     }
 
     @Override // from IMatrix4

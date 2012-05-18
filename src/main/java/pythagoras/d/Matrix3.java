@@ -135,6 +135,17 @@ public class Matrix3 implements IMatrix3, Serializable
     }
 
     /**
+     * Sets this matrix to all zeroes.
+     *
+     * @return a reference to this matrix, for chaining.
+     */
+    public Matrix3 setToZero () {
+        return set(0f, 0f, 0f,
+                   0f, 0f, 0f,
+                   0f, 0f, 0f);
+    }
+
+    /**
      * Sets this to a rotation matrix that rotates one vector onto another.
      *
      * @return a reference to this matrix, for chaining.
@@ -335,6 +346,15 @@ public class Matrix3 implements IMatrix3, Serializable
      */
     public Matrix3 multLocal (IMatrix3 other) {
         return mult(other, this);
+    }
+
+    /**
+     * Adds {@code other} to this matrix, in place.
+     *
+     * @return a reference to this matrix, for chaining.
+     */
+    public Matrix3 addLocal (IMatrix3 other) {
+        return add(other, this);
     }
 
     /**
@@ -550,6 +570,18 @@ public class Matrix3 implements IMatrix3, Serializable
                           m02*om00 + m12*om01 + m22*om02,
                           m02*om10 + m12*om11 + m22*om12,
                           m02*om20 + m12*om21 + m22*om22);
+    }
+
+    @Override // from IMatrix3
+    public Matrix3 add (IMatrix3 other) {
+        return add(other, new Matrix3());
+    }
+
+    @Override // from IMatrix3
+    public Matrix3 add (IMatrix3 other, Matrix3 result) {
+        return result.set(m00 + other.m00(), m01 + other.m01(), m02 + other.m02(),
+                          m10 + other.m10(), m11 + other.m11(), m12 + other.m12(),
+                          m20 + other.m20(), m21 + other.m21(), m22 + other.m22());
     }
 
     @Override // from IMatrix3

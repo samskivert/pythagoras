@@ -91,6 +91,15 @@ public class Vector3 implements IVector3, Serializable
     }
 
     /**
+     * Absolute-values this vector in-place.
+     *
+     * @return a reference to this vector, for chaining.
+     */
+    public Vector3 absLocal () {
+        return abs(this);
+    }
+
+    /**
      * Normalizes this vector in-place.
      *
      * @return a reference to this vector, for chaining.
@@ -239,6 +248,16 @@ public class Vector3 implements IVector3, Serializable
     @Override // from interface IVector3
     public Vector3 negate (Vector3 result) {
         return result.set(-x, -y, -z);
+    }
+
+    @Override // from interface IVector3
+    public Vector3 abs () {
+        return abs(new Vector3());
+    }
+
+    @Override // from interface IVector3
+    public Vector3 abs (Vector3 result) {
+        return result.set(Math.abs(x), Math.abs(y), Math.abs(z));
     }
 
     @Override // from interface IVector3

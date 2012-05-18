@@ -93,11 +93,38 @@ public class Vector4 implements IVector4, Serializable
     }
 
     /**
+     * Negates this vector in-place.
+     *
+     * @return a reference to this vector, for chaining.
+     */
+    public Vector4 negateLocal () {
+        return negate(this);
+    }
+
+    /**
+     * Absolute-values this vector in-place.
+     *
+     * @return a reference to this vector, for chaining.
+     */
+    public Vector4 absLocal () {
+        return abs(this);
+    }
+
+    /**
+     * Multiplies this vector by a scalar and stores the result back in this vector.
+     *
+     * @return a reference to this vector, for chaining.
+     */
+    public Vector4 multLocal (double v) {
+        return mult(v, this);
+    }
+
+    /**
      * Multiplies this vector by a matrix (V * M) and stores the result back in this vector.
      *
      * @return a reference to this vector, for chaining.
      */
-    public IVector4 multLocal (IMatrix4 matrix) {
+    public Vector4 multLocal (IMatrix4 matrix) {
         return mult(matrix, this);
     }
 
@@ -134,13 +161,43 @@ public class Vector4 implements IVector4, Serializable
                 Math.abs(w - other.w()) < epsilon);
     }
 
+    @Override // from interface IVector4
+    public Vector4 negate () {
+        return negate(new Vector4());
+    }
+
+    @Override // from interface IVector4
+    public Vector4 negate (Vector4 result) {
+        return result.set(-x, -y, -z, -w);
+    }
+
+    @Override // from interface IVector4
+    public Vector4 abs () {
+        return abs(new Vector4());
+    }
+
+    @Override // from interface IVector4
+    public Vector4 abs (Vector4 result) {
+        return result.set(Math.abs(x), Math.abs(y), Math.abs(z), Math.abs(w));
+    }
+
+    @Override // from interface IVector4
+    public Vector4 mult (double v) {
+        return mult(v, new Vector4());
+    }
+
+    @Override // from interface IVector4
+    public Vector4 mult (double v, Vector4 result) {
+        return result.set(x*v, y*v, z*v, w*v);
+    }
+
     @Override // from IVector4
-    public IVector4 mult (IMatrix4 matrix) {
+    public Vector4 mult (IMatrix4 matrix) {
         return mult(matrix, new Vector4());
     }
 
     @Override // from IVector4
-    public IVector4 mult (IMatrix4 matrix, Vector4 result) {
+    public Vector4 mult (IMatrix4 matrix, Vector4 result) {
         double m00 = matrix.m00(), m10 = matrix.m10(), m20 = matrix.m20(), m30 = matrix.m30();
         double m01 = matrix.m01(), m11 = matrix.m11(), m21 = matrix.m21(), m31 = matrix.m31();
         double m02 = matrix.m02(), m12 = matrix.m12(), m22 = matrix.m22(), m32 = matrix.m32();

@@ -78,6 +78,20 @@ interface IMatrix3
     Matrix3 mult (IMatrix3 other, Matrix3 result);
 
     /**
+     * Adds this matrix to another.
+     *
+     * @return a new matrix containing the result.
+     */
+    Matrix3 add (IMatrix3 other);
+
+    /**
+     * Adds this matrix to another and stores the result in the object provided.
+     *
+     * @return a reference to the result matrix, for chaining.
+     */
+    Matrix3 add (IMatrix3 other, Matrix3 result);
+
+    /**
      * Determines whether this matrix represents an affine transformation.
      */
     boolean isAffine ();
