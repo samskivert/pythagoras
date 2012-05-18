@@ -34,4 +34,18 @@ public interface IVector4
      * Compares this vector to another with the provided epsilon.
      */
     boolean epsilonEquals (IVector4 other, float epsilon);
+
+    /**
+     * Multiplies this vector by a matrix (V * M).
+     *
+     * @return a new vector containing the result.
+     */
+    IVector4 mult (IMatrix4 matrix);
+
+    /**
+     * Multiplies this vector by a matrix (V * M) and stores the result in the object provided.
+     *
+     * @return a reference to the result vector, for chaining.
+     */
+    IVector4 mult (IMatrix4 matrix, Vector4 result);
 }

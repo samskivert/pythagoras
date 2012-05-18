@@ -92,6 +92,15 @@ public class Vector4 implements IVector4, Serializable
         return this;
     }
 
+    /**
+     * Multiplies this vector by a matrix (V * M) and stores the result back in this vector.
+     *
+     * @return a reference to this vector, for chaining.
+     */
+    public IVector4 multLocal (IMatrix4 matrix) {
+        return mult(matrix, this);
+    }
+
     @Override // from IVector4
     public double x () {
         return x;
@@ -123,6 +132,24 @@ public class Vector4 implements IVector4, Serializable
                 Math.abs(y - other.y()) < epsilon &&
                 Math.abs(z - other.z()) < epsilon &&
                 Math.abs(w - other.w()) < epsilon);
+    }
+
+    @Override // from IVector4
+    public IVector4 mult (IMatrix4 matrix) {
+        return mult(matrix, new Vector4());
+    }
+
+    @Override // from IVector4
+    public IVector4 mult (IMatrix4 matrix, Vector4 result) {
+        double m00 = matrix.m00(), m10 = matrix.m10(), m20 = matrix.m20(), m30 = matrix.m30();
+        double m01 = matrix.m01(), m11 = matrix.m11(), m21 = matrix.m21(), m31 = matrix.m31();
+        double m02 = matrix.m02(), m12 = matrix.m12(), m22 = matrix.m22(), m32 = matrix.m32();
+        double m03 = matrix.m03(), m13 = matrix.m13(), m23 = matrix.m23(), m33 = matrix.m33();
+        double vx = x, vy = y, vz = z, vw = w;
+        return result.set(m00*vx + m01*vy + m02*vz + m03*vw,
+                          m10*vx + m11*vy + m12*vz + m13*vw,
+                          m20*vx + m21*vy + m22*vz + m23*vw,
+                          m30*vx + m31*vy + m32*vz + m33*vw);
     }
 
     @Override

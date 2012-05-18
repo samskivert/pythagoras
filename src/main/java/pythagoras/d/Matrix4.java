@@ -917,6 +917,20 @@ public final class Matrix4 implements IMatrix4, Serializable
     }
 
     @Override // from IMatrix4
+    public Vector4 transform (IVector4 vector) {
+        return transform(vector, new Vector4());
+    }
+
+    @Override // from IMatrix4
+    public Vector4 transform (IVector4 vector, Vector4 result) {
+        double vx = vector.x(), vy = vector.y(), vz = vector.z(), vw = vector.w();
+        return result.set(m00*vx + m10*vy + m20*vz + m30*vw,
+                          m01*vx + m11*vy + m21*vz + m31*vw,
+                          m02*vx + m12*vy + m22*vz + m32*vw,
+                          m03*vx + m13*vy + m23*vz + m33*vw);
+    }
+
+    @Override // from IMatrix4
     public Quaternion extractRotation () {
         return extractRotation(new Quaternion());
     }

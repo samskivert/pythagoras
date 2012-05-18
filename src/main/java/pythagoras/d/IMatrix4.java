@@ -248,6 +248,21 @@ public interface IMatrix4
     Vector3 transformVector (IVector3 vector, Vector3 result);
 
     /**
+     * Transforms {@code vector} by this matrix (M * V).
+     *
+     * @return a new vector containing the result.
+     */
+    Vector4 transform (IVector4 vector);
+
+    /**
+     * Transforms {@code vector} by this matrix (M * V) and stores the result in the object
+     * provided.
+     *
+     * @return a reference to the result vector, for chaining.
+     */
+    Vector4 transform (IVector4 vector, Vector4 result);
+
+    /**
      * Extracts the rotation component of the matrix.
      *
      * @return a new quaternion containing the result.
