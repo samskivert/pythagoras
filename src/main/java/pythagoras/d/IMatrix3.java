@@ -13,32 +13,41 @@ import pythagoras.util.SingularMatrixException;
  */
 interface IMatrix3
 {
-    /** Returns the (0,0)th component of the matrix. */
+    /** Returns column 0, row 0 of the matrix. */
     double m00 ();
 
-    /** Returns the (1,0)th component of the matrix. */
+    /** Returns column 1, row 0 of the matrix. */
     double m10 ();
 
-    /** Returns the (2,0)th component of the matrix. */
+    /** Returns column 2, row 0 of the matrix. */
     double m20 ();
 
-    /** Returns the (0,1)th component of the matrix. */
+    /** Returns column 0, row 1 of the matrix. */
     double m01 ();
 
-    /** Returns the (1,1)th component of the matrix. */
+    /** Returns column 1, row 1 of the matrix. */
     double m11 ();
 
-    /** Returns the (2,1)th component of the matrix. */
+    /** Returns column 2, row 1 of the matrix. */
     double m21 ();
 
-    /** Returns the (0,2)th component of the matrix. */
+    /** Returns column 0, row 2 of the matrix. */
     double m02 ();
 
-    /** Returns the (1,2)th component of the matrix. */
+    /** Returns column 1, row 2 of the matrix. */
     double m12 ();
 
-    /** Returns the (2,2)th component of the matrix. */
+    /** Returns column 2, row 2 of the matrix. */
     double m22 ();
+
+    /** Returns the matrix element at the specified row and column. */
+    double element (int row, int col);
+
+    /** Copies the requested row (0, 1, 2) into {@code result}. */
+    void getRow (int row, Vector3 result);
+
+    /** Copies the requested column (0, 1, 2) into {@code result}. */
+    void getColumn (int col, Vector3 result);
 
     /**
      * Transposes this matrix.

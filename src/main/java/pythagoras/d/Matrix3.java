@@ -18,7 +18,7 @@ public class Matrix3 implements IMatrix3, Serializable
     /** the identity matrix. */
     public static final Matrix3 IDENTITY = new Matrix3();
 
-    /** The values of the matrix. */
+    /** The values of the matrix. The names take the form {@mCOLROW}. */
     public double m00, m10, m20;
     public double m01, m11, m21;
     public double m02, m12, m22;
@@ -53,6 +53,74 @@ public class Matrix3 implements IMatrix3, Serializable
      */
     public Matrix3 () {
         setToIdentity();
+    }
+
+    /**
+     * Sets the matrix element at the specified row and column.
+     */
+    public void setElement (int row, int col, double value) {
+        switch (col) {
+        case 0:
+            switch (row) {
+            case 0: m00 = value; return;
+            case 1: m01 = value; return;
+            case 2: m02 = value; return;
+            }
+            break;
+        case 1:
+            switch (row) {
+            case 0: m10 = value; return;
+            case 1: m11 = value; return;
+            case 2: m12 = value; return;
+            }
+            break;
+        case 2:
+            switch (row) {
+            case 0: m20 = value; return;
+            case 1: m21 = value; return;
+            case 2: m22 = value; return;
+            }
+            break;
+        }
+        throw new ArrayIndexOutOfBoundsException();
+    }
+
+    /**
+     * Sets the specified row (0, 1, 2) to the supplied values.
+     */
+    public void setRow (int row, double x, double y, double z) {
+        switch (row) {
+        case 0: m00 = x; m10 = y; m20 = z; break;
+        case 1: m01 = x; m11 = y; m21 = z; break;
+        case 2: m02 = x; m12 = y; m22 = z; break;
+        default: throw new ArrayIndexOutOfBoundsException();
+        }
+    }
+
+    /**
+     * Sets the specified row (0, 1, 2) to the supplied vector.
+     */
+    public void setRow (int row, Vector3 v) {
+        setRow(row, v.x(), v.y(), v.z());
+    }
+
+    /**
+     * Sets the specified column (0, 1, 2) to the supplied values.
+     */
+    public void setColumn (int col, double x, double y, double z) {
+        switch (col) {
+        case 0: m00 = x; m01 = y; m02 = z; break;
+        case 1: m10 = x; m11 = y; m12 = z; break;
+        case 2: m20 = x; m21 = y; m22 = z; break;
+        default: throw new ArrayIndexOutOfBoundsException();
+        }
+    }
+
+    /**
+     * Sets the specified column (0, 1, 2) to the supplied vector.
+     */
+    public void setColumn (int col, Vector3 v) {
+        setColumn(col, v.x(), v.y(), v.z());
     }
 
     /**
@@ -396,6 +464,54 @@ public class Matrix3 implements IMatrix3, Serializable
     @Override // from IMatrix3
     public double m22 () {
         return m22;
+    }
+
+    @Override // from IMatrix3
+    public double element (int row, int col) {
+        switch (col) {
+        case 0:
+            switch (row) {
+            case 0: return m00;
+            case 1: return m01;
+            case 2: return m02;
+            }
+            break;
+        case 1:
+            switch (row) {
+            case 0: return m10;
+            case 1: return m11;
+            case 2: return m12;
+            }
+            break;
+        case 2:
+            switch (row) {
+            case 0: return m20;
+            case 1: return m21;
+            case 2: return m22;
+            }
+            break;
+        }
+        throw new ArrayIndexOutOfBoundsException();
+    }
+
+    @Override // from IMatrix3
+    public void getRow (int row, Vector3 result) {
+        switch (row) {
+        case 0: result.x = m00; result.y = m10; result.z = m20; break;
+        case 1: result.x = m01; result.y = m11; result.z = m21; break;
+        case 2: result.x = m02; result.y = m12; result.z = m22; break;
+        default: throw new ArrayIndexOutOfBoundsException();
+        }
+    }
+
+    @Override // from IMatrix3
+    public void getColumn (int col, Vector3 result) {
+        switch (col) {
+        case 0: result.x = m00; result.y = m01; result.z = m02; break;
+        case 1: result.x = m10; result.y = m11; result.z = m12; break;
+        case 2: result.x = m20; result.y = m21; result.z = m22; break;
+        default: throw new ArrayIndexOutOfBoundsException();
+        }
     }
 
     @Override // from IMatrix3
