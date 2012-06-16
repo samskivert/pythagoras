@@ -64,6 +64,14 @@ public class UniformTransform extends AbstractTransform
     }
 
     @Override // from Transform
+    public void transform (double[] matrix) {
+        double sina = Math.sin(rotation), cosa = Math.cos(rotation);
+        matrix[0] = cosa * scale;  matrix[1] = sina * scale;
+        matrix[2] = -sina * scale; matrix[3] = cosa * scale;
+        matrix[4] = tx;            matrix[5] = ty;
+    }
+
+    @Override // from Transform
     public Transform setUniformScale (double scale) {
         if (scale == 0) throw new IllegalArgumentException("Scale must be non-zero.");
         this.scale = scale;

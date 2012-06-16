@@ -39,6 +39,10 @@ public interface Transform
     /** Returns the y-coordinate of the translation component. */
     float ty ();
 
+    /** Copies the affine transform matrix into the supplied array.
+     * @param matrix the array which receives {@code m00, m01, m10, m11, tx, ty}. */
+    void transform (float[] matrix);
+
     /** Sets the uniform scale of this transform.
      * @return this instance, for chaining.
      * @throws IllegalArgumentException if the supplied scale is zero.
