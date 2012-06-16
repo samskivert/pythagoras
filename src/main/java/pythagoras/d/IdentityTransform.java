@@ -43,7 +43,7 @@ public class IdentityTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public void transform (double[] matrix) {
+    public void get (double[] matrix) {
         matrix[0] = 1; matrix[1] = 0;
         matrix[2] = 0; matrix[3] = 1;
         matrix[4] = 0; matrix[5] = 0;

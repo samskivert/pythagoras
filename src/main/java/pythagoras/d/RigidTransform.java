@@ -59,7 +59,7 @@ public class RigidTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public void transform (double[] matrix) {
+    public void get (double[] matrix) {
         double sina = Math.sin(rotation), cosa = Math.cos(rotation);
         matrix[0] = cosa;  matrix[1] = sina;
         matrix[2] = -sina; matrix[3] = cosa;

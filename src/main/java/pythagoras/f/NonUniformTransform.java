@@ -64,7 +64,7 @@ public class NonUniformTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public void transform (float[] matrix) {
+    public void get (float[] matrix) {
         float sina = FloatMath.sin(rotation), cosa = FloatMath.cos(rotation);
         matrix[0] = cosa * scaleX;  matrix[1] = sina * scaleY;
         matrix[2] = -sina * scaleX; matrix[3] = cosa * scaleY;

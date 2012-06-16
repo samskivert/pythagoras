@@ -41,7 +41,7 @@ public interface Transform
 
     /** Copies the affine transform matrix into the supplied array.
      * @param matrix the array which receives {@code m00, m01, m10, m11, tx, ty}. */
-    void transform (double[] matrix);
+    void get (double[] matrix);
 
     /** Sets the uniform scale of this transform.
      * @return this instance, for chaining.

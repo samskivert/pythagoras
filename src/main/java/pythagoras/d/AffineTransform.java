@@ -115,7 +115,7 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public void transform (double[] matrix) {
+    public void get (double[] matrix) {
         matrix[0] = m00; matrix[1] = m01;
         matrix[2] = m10; matrix[3] = m11;
         matrix[4] =  tx; matrix[5] = ty;

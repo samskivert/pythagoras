@@ -64,7 +64,7 @@ public class UniformTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public void transform (double[] matrix) {
+    public void get (double[] matrix) {
         double sina = Math.sin(rotation), cosa = Math.cos(rotation);
         matrix[0] = cosa * scale;  matrix[1] = sina * scale;
         matrix[2] = -sina * scale; matrix[3] = cosa * scale;
