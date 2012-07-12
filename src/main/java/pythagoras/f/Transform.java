@@ -197,8 +197,11 @@ public interface Transform
      * @throws NoninvertibleTransformException if the transform is not invertible. */
     Vector inverseTransform (IVector v, Vector into);
 
-    /** Returns a clone of this transform. */
-    Transform clone ();
+    /** @deprecated Use {@link #copy}. */
+    @Deprecated Transform clone ();
+
+    /** Returns a copy of this transform. */
+    Transform copy ();
 
     /** Returns an integer that increases monotonically with the generality of the transform
      * implementation. Used internally when combining transforms. */

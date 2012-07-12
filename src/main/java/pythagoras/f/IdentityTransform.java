@@ -109,7 +109,7 @@ public class IdentityTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public Transform clone () {
+    public Transform copy () {
         return this;
     }
 

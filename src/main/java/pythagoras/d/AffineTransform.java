@@ -190,25 +190,24 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
+    public Transform scale (double scaleX, double scaleY) {
+        return Transforms.multiply(this, scaleX, 0, 0, scaleY, 0, 0, this);
+    }
+
+    @Override // from Transform
     public Transform scaleX (double scaleX) {
-        m00 *= scaleX;
-        m01 *= scaleX;
-        tx  *= scaleX;
-        return this;
+        return Transforms.multiply(this, scaleX, 0, 0, 1, 0, 0, this);
     }
 
     @Override // from Transform
     public Transform scaleY (double scaleY) {
-        m10 *= scaleY;
-        m11 *= scaleY;
-        ty  *= scaleY;
-        return this;
+        return Transforms.multiply(this, 1, 0, 0, scaleY, 0, 0, this);
     }
 
     @Override // from Transform
     public Transform rotate (double angle) {
         double sina = Math.sin(angle), cosa = Math.cos(angle);
-        return Transforms.multiply(cosa, sina, -sina, cosa, 0, 0, this, this);
+        return Transforms.multiply(this, cosa, sina, -sina, cosa, 0, 0, this);
     }
 
     @Override // from Transform
@@ -342,7 +341,7 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public Transform clone () {
+    public Transform copy () {
         return new AffineTransform(m00, m01, m10, m11, tx, ty);
     }
 
@@ -358,7 +357,7 @@ public class AffineTransform extends AbstractTransform
     }
 
     // we don't publicize this because it might encourage someone to do something stupid like
-    // create a new AffineTransform from another AffineTransform using this instead of clone()
+    // create a new AffineTransform from another AffineTransform using this instead of copy()
     protected AffineTransform (Transform other) {
         this(other.scaleX(), other.scaleY(), other.rotation(),
              other.tx(), other.ty());
