@@ -98,6 +98,23 @@ public abstract class AbstractTransform implements Transform
     }
 
     @Override // from Transform
+    public Transform shear (float sx, float sy) {
+        shearX(sx);
+        shearY(sy);
+        return this;
+    }
+
+    @Override // from Transform
+    public Transform shearX (float sx) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override // from Transform
+    public Transform shearY (float sy) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override // from Transform
     public Transform setTx (float tx) {
         throw new UnsupportedOperationException();
     }

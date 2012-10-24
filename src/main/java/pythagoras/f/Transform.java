@@ -137,6 +137,21 @@ public interface Transform
      * @throws UnsupportedOperationException if the transform is not rigid body or greater. */
     Transform translateY (float ty);
 
+    /** Shears this transform.
+     * @return this instance, for chaining.
+     * @throws UnsupportedOperationException if the transform is not affine or greater. */
+    Transform shear (float tx, float ty);
+
+    /** Shears this transform in the x dimension.
+     * @return this instance, for chaining.
+     * @throws UnsupportedOperationException if the transform is not affine or greater. */
+    Transform shearX (float tx);
+
+    /** Shears this transform in the y dimension.
+     * @return this instance, for chaining.
+     * @throws UnsupportedOperationException if the transform is not affine or greater. */
+    Transform shearY (float ty);
+
     /** Returns a new transform that represents the inverse of this transform.
      * @throws NoninvertibleTransformException if the transform is not invertible. */
     Transform invert ();
