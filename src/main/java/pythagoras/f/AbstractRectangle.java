@@ -108,7 +108,7 @@ public abstract class AbstractRectangle extends RectangularShape implements IRec
 
         px -= x;
         py -= y;
-        return px < width() && py < height();
+        return px <= width() && py <= height();
     }
 
     @Override // from interface IShape
