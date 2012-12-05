@@ -191,7 +191,11 @@ public class AffineTransform extends AbstractTransform
 
     @Override // from Transform
     public Transform scale (double scaleX, double scaleY) {
-        return Transforms.multiply(this, scaleX, 0, 0, scaleY, 0, 0, this);
+        m00 *= scaleX;
+        m01 *= scaleX;
+        m10 *= scaleY;
+        m11 *= scaleY;
+        return this;
     }
 
     @Override // from Transform
@@ -212,7 +216,9 @@ public class AffineTransform extends AbstractTransform
 
     @Override // from Transform
     public Transform translate (double tx, double ty) {
-        return Transforms.multiply(this, 1, 0, 0, 1, tx, ty, this);
+        this.tx += m00*tx + m10*ty;
+        this.ty += m11*ty + m01*tx;
+        return this;
     }
 
     @Override // from Transform
