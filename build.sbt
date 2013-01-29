@@ -2,7 +2,7 @@ seq(samskivert.POMUtil.pomToSettings("pom.xml") :_*)
 
 crossPaths := false
 
-scalaVersion := "2.9.1"
+scalaVersion := "2.10.0"
 
 autoScalaLibrary := false // no scala-library dependency
 
