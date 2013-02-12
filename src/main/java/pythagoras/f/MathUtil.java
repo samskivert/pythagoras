@@ -166,9 +166,20 @@ public class MathUtil
     }
 
     /**
-     * Returns the mirror angle of the specified angle (assumed to be in [-pi, +pi]).
+     * Returns the mirror angle of the specified angle (assumed to be in [-pi, +pi]). The angle is
+     * mirrored around the PI/2 if it is positive, and -PI/2 if it is negative. One can visualize
+     * this as mirroring around the "y-axis".
      */
     public static float mirrorAngle (float a) {
+        return (a > 0f ? FloatMath.PI : -FloatMath.PI) - a;
+    }
+
+    /**
+     * Returns the mirror angle of the specified angle (assumed to be in [-pi, +pi]). The angle is
+     * mirrored around the origin (zero degrees). One can visualize this as mirroring around the
+     * "x-axis".
+     */
+    public static float mirrorAngleOrigin (float a) {
         return a + (a > 0f ? -FloatMath.PI : FloatMath.PI);
     }
 
