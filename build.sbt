@@ -4,7 +4,7 @@ crossPaths := false
 
 scalaVersion := "2.10.0"
 
-autoScalaLibrary := false // no scala-library dependency
+autoScalaLibrary in Compile := false // no scala-library dependency
 
 javacOptions ++= Seq("-Xlint", "-Xlint:-serial", "-source", "1.6", "-target", "1.6")
 
