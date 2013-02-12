@@ -103,7 +103,7 @@ public class MathUtil
     public static float lerpa (float a1, float a2, float t) {
         float ma1 = mirrorAngle(a1), ma2 = mirrorAngle(a2);
         float d = Math.abs(a2 - a1), md = Math.abs(ma1 - ma2);
-        return (d < md) ? lerp(a1, a2, t) : mirrorAngle(lerp(ma1, ma2, t));
+        return (d <= md) ? lerp(a1, a2, t) : mirrorAngle(lerp(ma1, ma2, t));
     }
 
     /**
