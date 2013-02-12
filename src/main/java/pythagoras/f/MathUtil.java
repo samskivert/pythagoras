@@ -169,7 +169,7 @@ public class MathUtil
      * Returns the mirror angle of the specified angle (assumed to be in [-pi, +pi]).
      */
     public static float mirrorAngle (float a) {
-        return (a > 0f ? FloatMath.PI : -FloatMath.PI) - a;
+        return a + (a > 0f ? -FloatMath.PI : FloatMath.PI);
     }
 
     /**
