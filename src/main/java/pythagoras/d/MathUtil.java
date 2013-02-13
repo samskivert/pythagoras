@@ -103,7 +103,7 @@ public class MathUtil
     public static double lerpa (double a1, double a2, double t) {
         double ma1 = mirrorAngle(a1), ma2 = mirrorAngle(a2);
         double d = Math.abs(a2 - a1), md = Math.abs(ma1 - ma2);
-        return (d < md) ? lerp(a1, a2, t) : mirrorAngle(lerp(ma1, ma2, t));
+        return (d <= md) ? lerp(a1, a2, t) : mirrorAngle(lerp(ma1, ma2, t));
     }
 
     /**
@@ -166,10 +166,21 @@ public class MathUtil
     }
 
     /**
-     * Returns the mirror angle of the specified angle (assumed to be in [-pi, +pi]).
+     * Returns the mirror angle of the specified angle (assumed to be in [-pi, +pi]). The angle is
+     * mirrored around the PI/2 if it is positive, and -PI/2 if it is negative. One can visualize
+     * this as mirroring around the "y-axis".
      */
     public static double mirrorAngle (double a) {
         return (a > 0f ? Math.PI : -Math.PI) - a;
+    }
+
+    /**
+     * Returns the mirror angle of the specified angle (assumed to be in [-pi, +pi]). The angle is
+     * mirrored around the origin (zero degrees). One can visualize this as mirroring around the
+     * "x-axis".
+     */
+    public static double mirrorAngleOrigin (double a) {
+        return a + (a > 0f ? -Math.PI : Math.PI);
     }
 
     /**

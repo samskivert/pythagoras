@@ -232,6 +232,21 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
+    public Transform shear (double sx, double sy) {
+        return Transforms.multiply(this, 1, sy, sx, 1, 0, 0, this);
+    }
+
+    @Override // from Transform
+    public Transform shearX (double sx) {
+        return Transforms.multiply(this, 1, 0, sx, 1, 0, 0, this);
+    }
+
+    @Override // from Transform
+    public Transform shearY (double sy) {
+        return Transforms.multiply(this, 1, sy, 0, 1, 0, 0, this);
+    }
+
+    @Override // from Transform
     public Transform invert () {
         // compute the determinant, storing the subdeterminants for later use
         double det = m00*m11 - m10*m01;
