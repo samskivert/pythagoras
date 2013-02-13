@@ -175,15 +175,6 @@ public class MathUtil
     }
 
     /**
-     * Returns the mirror angle of the specified angle (assumed to be in [-pi, +pi]). The angle is
-     * mirrored around the origin (zero degrees). One can visualize this as mirroring around the
-     * "x-axis".
-     */
-    public static float mirrorAngleOrigin (float a) {
-        return a + (a > 0f ? -FloatMath.PI : FloatMath.PI);
-    }
-
-    /**
      * Sets the number of decimal places to show when formatting values. By default, they are
      * formatted to three decimal places.
      */

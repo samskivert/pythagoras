@@ -30,9 +30,4 @@ public class MathUtilTest
 
         assertEquals(MathUtil.lerpa(3*PI4, -3*PI4, 0.5f), -PI, MathUtil.EPSILON);
     }
-
-    @Test public void testMirrorAngleOrigin() {
-        assertEquals(-PI2, MathUtil.mirrorAngleOrigin(PI2), MathUtil.EPSILON);
-        assertEquals(PI2, MathUtil.mirrorAngleOrigin(-PI2), MathUtil.EPSILON);
-    }
 }
