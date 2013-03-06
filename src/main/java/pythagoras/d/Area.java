@@ -289,6 +289,12 @@ public class Area implements IShape, Cloneable
         return area;
     }
 
+    @Override // from Object
+    public String toString () {
+        return "Area[coords=" + _coordsSize + ", rules=" + _rulesSize +
+            ", isPoly=" + _isPolygonal + "]";
+    }
+
     private void addCurvePolygon (Area area) {
         CurveCrossingHelper crossHelper = new CurveCrossingHelper(
             new double[][] {_coords, area._coords},
