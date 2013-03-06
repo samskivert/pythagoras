@@ -31,37 +31,37 @@ public class Area implements IShape, Cloneable
         int coordsIndex = 0;
 
         for (PathIterator pi = s.pathIterator(null); !pi.isDone(); pi.next()) {
-            coords = adjustSize(coords, coordsIndex + 6);
-            rules = adjustSize(rules, rulesIndex + 1);
-            offsets = adjustSize(offsets, rulesIndex + 1);
-            rules[rulesIndex] = pi.currentSegment(segmentCoords);
-            offsets[rulesIndex] = coordsIndex;
+            _coords = adjustSize(_coords, coordsIndex + 6);
+            _rules = adjustSize(_rules, rulesIndex + 1);
+            _offsets = adjustSize(_offsets, rulesIndex + 1);
+            _rules[rulesIndex] = pi.currentSegment(segmentCoords);
+            _offsets[rulesIndex] = coordsIndex;
 
-            switch (rules[rulesIndex]) {
+            switch (_rules[rulesIndex]) {
             case PathIterator.SEG_MOVETO:
-                coords[coordsIndex++] = segmentCoords[0];
-                coords[coordsIndex++] = segmentCoords[1];
+                _coords[coordsIndex++] = segmentCoords[0];
+                _coords[coordsIndex++] = segmentCoords[1];
                 lastMoveX = segmentCoords[0];
                 lastMoveY = segmentCoords[1];
-                ++moveToCount;
+                ++_moveToCount;
                 break;
             case PathIterator.SEG_LINETO:
                 if ((segmentCoords[0] != lastMoveX) || (segmentCoords[1] != lastMoveY)) {
-                    coords[coordsIndex++] = segmentCoords[0];
-                    coords[coordsIndex++] = segmentCoords[1];
+                    _coords[coordsIndex++] = segmentCoords[0];
+                    _coords[coordsIndex++] = segmentCoords[1];
                 } else {
                     --rulesIndex;
                 }
                 break;
             case PathIterator.SEG_QUADTO:
-                System.arraycopy(segmentCoords, 0, coords, coordsIndex, 4);
+                System.arraycopy(segmentCoords, 0, _coords, coordsIndex, 4);
                 coordsIndex += 4;
-                isPolygonal = false;
+                _isPolygonal = false;
                 break;
             case PathIterator.SEG_CUBICTO:
-                System.arraycopy(segmentCoords, 0, coords, coordsIndex, 6);
+                System.arraycopy(segmentCoords, 0, _coords, coordsIndex, 6);
                 coordsIndex += 6;
-                isPolygonal = false;
+                _isPolygonal = false;
                 break;
             case PathIterator.SEG_CLOSE:
                 break;
@@ -69,44 +69,44 @@ public class Area implements IShape, Cloneable
             ++rulesIndex;
         }
 
-        if ((rulesIndex != 0) && (rules[rulesIndex - 1] != PathIterator.SEG_CLOSE)) {
-            rules[rulesIndex] = PathIterator.SEG_CLOSE;
-            offsets[rulesIndex] = coordsSize;
+        if ((rulesIndex != 0) && (_rules[rulesIndex - 1] != PathIterator.SEG_CLOSE)) {
+            _rules[rulesIndex] = PathIterator.SEG_CLOSE;
+            _offsets[rulesIndex] = _coordsSize;
         }
 
-        rulesSize = rulesIndex;
-        coordsSize = coordsIndex;
+        _rulesSize = rulesIndex;
+        _coordsSize = coordsIndex;
     }
 
     /**
      * Returns true if this area is polygonal.
      */
     public boolean isPolygonal () {
-        return isPolygonal;
+        return _isPolygonal;
     }
 
     /**
      * Returns true if this area is rectangular.
      */
     public boolean isRectangular () {
-        return (isPolygonal) && (rulesSize <= 5) && (coordsSize <= 8) &&
-            (coords[1] == coords[3]) && (coords[7] == coords[5]) &&
-            (coords[0] == coords[6]) && (coords[2] == coords[4]);
+        return (_isPolygonal) && (_rulesSize <= 5) && (_coordsSize <= 8) &&
+            (_coords[1] == _coords[3]) && (_coords[7] == _coords[5]) &&
+            (_coords[0] == _coords[6]) && (_coords[2] == _coords[4]);
     }
 
     /**
      * Returns true if this area encloses only a single contiguous space.
      */
     public boolean isSingular () {
-        return (moveToCount <= 1);
+        return (_moveToCount <= 1);
     }
 
     /**
      * Resets this area to empty.
      */
     public void reset () {
-        coordsSize = 0;
-        rulesSize = 0;
+        _coordsSize = 0;
+        _rulesSize = 0;
     }
 
     /**
@@ -199,7 +199,7 @@ public class Area implements IShape, Cloneable
 
     @Override // from interface IShape
     public boolean isEmpty () {
-        return (rulesSize == 0) && (coordsSize == 0);
+        return (_rulesSize == 0) && (_coordsSize == 0);
     }
 
     @Override // from interface IShape
@@ -246,13 +246,13 @@ public class Area implements IShape, Cloneable
 
     @Override // from interface IShape
     public Rectangle bounds (Rectangle target) {
-        float maxX = coords[0], maxY = coords[1];
-        float minX = coords[0], minY = coords[1];
-        for (int i = 0; i < coordsSize;) {
-            minX = Math.min(minX, coords[i]);
-            maxX = Math.max(maxX, coords[i++]);
-            minY = Math.min(minY, coords[i]);
-            maxY = Math.max(maxY, coords[i++]);
+        float maxX = _coords[0], maxY = _coords[1];
+        float minX = _coords[0], minY = _coords[1];
+        for (int i = 0; i < _coordsSize;) {
+            minX = Math.min(minX, _coords[i]);
+            maxX = Math.max(maxX, _coords[i++]);
+            minY = Math.min(minY, _coords[i]);
+            maxY = Math.max(maxY, _coords[i++]);
         }
         return new Rectangle(minX, minY, maxX - minX, maxY - minY);
     }
@@ -288,33 +288,33 @@ public class Area implements IShape, Cloneable
 
     private void addCurvePolygon (Area area) {
         CurveCrossingHelper crossHelper = new CurveCrossingHelper(
-            new float[][] { coords, area.coords },
-            new int[] { coordsSize, area.coordsSize },
-            new int[][] { rules, area.rules },
-            new int[] { rulesSize, area.rulesSize },
-            new int[][] { offsets, area.offsets });
+            new float[][] {_coords, area._coords},
+            new int[] {_coordsSize, area._coordsSize},
+            new int[][] {_rules, area._rules},
+            new int[] {_rulesSize, area._rulesSize},
+            new int[][] {_offsets, area._offsets});
         IntersectPoint[] intersectPoints = crossHelper.findCrossing();
 
         if (intersectPoints.length == 0) {
             if (area.contains(bounds())) {
                 copy(area, this);
             } else if (!contains(area.bounds())) {
-                coords = adjustSize(coords, coordsSize + area.coordsSize);
-                System.arraycopy(area.coords, 0, coords, coordsSize, area.coordsSize);
-                coordsSize += area.coordsSize;
-                rules = adjustSize(rules, rulesSize + area.rulesSize);
-                System.arraycopy(area.rules, 0, rules, rulesSize, area.rulesSize);
-                rulesSize += area.rulesSize;
-                offsets = adjustSize(offsets, rulesSize + area.rulesSize);
-                System.arraycopy(area.offsets, 0, offsets, rulesSize, area.rulesSize);
+                _coords = adjustSize(_coords, _coordsSize + area._coordsSize);
+                System.arraycopy(area._coords, 0, _coords, _coordsSize, area._coordsSize);
+                _coordsSize += area._coordsSize;
+                _rules = adjustSize(_rules, _rulesSize + area._rulesSize);
+                System.arraycopy(area._rules, 0, _rules, _rulesSize, area._rulesSize);
+                _rulesSize += area._rulesSize;
+                _offsets = adjustSize(_offsets, _rulesSize + area._rulesSize);
+                System.arraycopy(area._offsets, 0, _offsets, _rulesSize, area._rulesSize);
             }
 
             return;
         }
 
-        float[] resultCoords = new float[coordsSize + area.coordsSize + intersectPoints.length];
-        int[] resultRules = new int[rulesSize + area.rulesSize + intersectPoints.length];
-        int[] resultOffsets = new int[rulesSize + area.rulesSize + intersectPoints.length];
+        float[] resultCoords = new float[_coordsSize + area._coordsSize + intersectPoints.length];
+        int[] resultRules = new int[_rulesSize + area._rulesSize + intersectPoints.length];
+        int[] resultOffsets = new int[_rulesSize + area._rulesSize + intersectPoints.length];
         int resultCoordPos = 0;
         int resultRulesPos = 0;
         boolean isCurrentArea = true;
@@ -329,20 +329,20 @@ public class Area implements IShape, Cloneable
             int curIndex = point.endIndex(true);
             if (curIndex < 0) {
                 isCurrentArea = !isCurrentArea;
-            } else if (area.containsExact(coords[2 * curIndex], coords[2 * curIndex + 1]) > 0) {
+            } else if (area.containsExact(_coords[2 * curIndex], _coords[2 * curIndex + 1]) > 0) {
                 isCurrentArea = false;
             } else {
                 isCurrentArea = true;
             }
 
             IntersectPoint nextPoint = nextIntersectPoint(intersectPoints, point, isCurrentArea);
-            float[] coords = (isCurrentArea) ? this.coords : area.coords;
-            int[] offsets = (isCurrentArea) ? this.offsets : area.offsets;
-            int[] rules = (isCurrentArea) ? this.rules : area.rules;
+            float[] coords = (isCurrentArea) ? this._coords : area._coords;
+            int[] offsets = (isCurrentArea) ? this._offsets : area._offsets;
+            int[] rules = (isCurrentArea) ? this._rules : area._rules;
             int offset = point.ruleIndex(isCurrentArea);
             boolean isCopyUntilZero = false;
             if ((point.ruleIndex(isCurrentArea) > nextPoint.ruleIndex(isCurrentArea))) {
-                int rulesSize = (isCurrentArea) ? this.rulesSize : area.rulesSize;
+                int rulesSize = (isCurrentArea) ? this._rulesSize : area._rulesSize;
                 resultCoordPos = includeCoordsAndRules(offset + 1, rulesSize, rules, offsets,
                         resultRules, resultOffsets, resultCoords, coords, resultRulesPos,
                         resultCoordPos, point, isCurrentArea, false, 0);
@@ -365,38 +365,38 @@ public class Area implements IShape, Cloneable
 
         resultRules[resultRulesPos++] = PathIterator.SEG_CLOSE;
         resultOffsets[resultRulesPos - 1] = resultCoordPos;
-        this.coords = resultCoords;
-        this.rules = resultRules;
-        this.offsets = resultOffsets;
-        this.coordsSize = resultCoordPos;
-        this.rulesSize = resultRulesPos;
+        this._coords = resultCoords;
+        this._rules = resultRules;
+        this._offsets = resultOffsets;
+        this._coordsSize = resultCoordPos;
+        this._rulesSize = resultRulesPos;
     }
 
     private void addPolygon (Area area) {
         CrossingHelper crossHelper = new CrossingHelper(
-            new float[][] { coords, area.coords },
-            new int[] { coordsSize, area.coordsSize });
+            new float[][] {_coords, area._coords},
+            new int[] {_coordsSize, area._coordsSize});
         IntersectPoint[] intersectPoints = crossHelper.findCrossing();
 
         if (intersectPoints.length == 0) {
             if (area.contains(bounds())) {
                 copy(area, this);
             } else if (!contains(area.bounds())) {
-                coords = adjustSize(coords, coordsSize + area.coordsSize);
-                System.arraycopy(area.coords, 0, coords, coordsSize, area.coordsSize);
-                coordsSize += area.coordsSize;
-                rules = adjustSize(rules, rulesSize + area.rulesSize);
-                System.arraycopy(area.rules, 0, rules, rulesSize, area.rulesSize);
-                rulesSize += area.rulesSize;
-                offsets = adjustSize(offsets, rulesSize + area.rulesSize);
-                System.arraycopy(area.offsets, 0, offsets, rulesSize, area.rulesSize);
+                _coords = adjustSize(_coords, _coordsSize + area._coordsSize);
+                System.arraycopy(area._coords, 0, _coords, _coordsSize, area._coordsSize);
+                _coordsSize += area._coordsSize;
+                _rules = adjustSize(_rules, _rulesSize + area._rulesSize);
+                System.arraycopy(area._rules, 0, _rules, _rulesSize, area._rulesSize);
+                _rulesSize += area._rulesSize;
+                _offsets = adjustSize(_offsets, _rulesSize + area._rulesSize);
+                System.arraycopy(area._offsets, 0, _offsets, _rulesSize, area._rulesSize);
             }
             return;
         }
 
-        float[] resultCoords = new float[coordsSize + area.coordsSize + intersectPoints.length];
-        int[] resultRules = new int[rulesSize + area.rulesSize + intersectPoints.length];
-        int[] resultOffsets = new int[rulesSize + area.rulesSize + intersectPoints.length];
+        float[] resultCoords = new float[_coordsSize + area._coordsSize + intersectPoints.length];
+        int[] resultRules = new int[_rulesSize + area._rulesSize + intersectPoints.length];
+        int[] resultOffsets = new int[_rulesSize + area._rulesSize + intersectPoints.length];
         int resultCoordPos = 0;
         int resultRulesPos = 0;
         boolean isCurrentArea = true;
@@ -413,18 +413,18 @@ public class Area implements IShape, Cloneable
             int curIndex = point.endIndex(true);
             if (curIndex < 0) {
                 isCurrentArea = !isCurrentArea;
-            } else if (area.containsExact(coords[2 * curIndex], coords[2 * curIndex + 1]) > 0) {
+            } else if (area.containsExact(_coords[2 * curIndex], _coords[2 * curIndex + 1]) > 0) {
                 isCurrentArea = false;
             } else {
                 isCurrentArea = true;
             }
 
             IntersectPoint nextPoint = nextIntersectPoint(intersectPoints, point, isCurrentArea);
-            float[] coords = (isCurrentArea) ? this.coords : area.coords;
+            float[] coords = (isCurrentArea) ? this._coords : area._coords;
             int offset = 2 * point.endIndex(isCurrentArea);
             if ((offset >= 0) &&
                 (nextPoint.begIndex(isCurrentArea) < point.endIndex(isCurrentArea))) {
-                int coordSize = (isCurrentArea) ? this.coordsSize : area.coordsSize;
+                int coordSize = (isCurrentArea) ? this._coordsSize : area._coordsSize;
                 int length = coordSize - offset;
                 System.arraycopy(coords, offset, resultCoords, resultCoordPos, length);
 
@@ -453,20 +453,20 @@ public class Area implements IShape, Cloneable
 
         resultRules[resultRulesPos - 1] = PathIterator.SEG_CLOSE;
         resultOffsets[resultRulesPos - 1] = resultCoordPos;
-        coords = resultCoords;
-        rules = resultRules;
-        offsets = resultOffsets;
-        coordsSize = resultCoordPos;
-        rulesSize = resultRulesPos;
+        _coords = resultCoords;
+        _rules = resultRules;
+        _offsets = resultOffsets;
+        _coordsSize = resultCoordPos;
+        _rulesSize = resultRulesPos;
     }
 
     private void intersectCurvePolygon (Area area) {
         CurveCrossingHelper crossHelper = new CurveCrossingHelper(
-            new float[][] { coords, area.coords },
-            new int[] { coordsSize, area.coordsSize },
-            new int[][] { rules, area.rules },
-            new int[] { rulesSize, area.rulesSize },
-            new int[][] { offsets, area.offsets });
+            new float[][] {_coords, area._coords},
+            new int[] {_coordsSize, area._coordsSize},
+            new int[][] {_rules, area._rules},
+            new int[] {_rulesSize, area._rulesSize},
+            new int[][] {_offsets, area._offsets});
         IntersectPoint[] intersectPoints = crossHelper.findCrossing();
         if (intersectPoints.length == 0) {
             if (contains(area.bounds())) {
@@ -477,9 +477,9 @@ public class Area implements IShape, Cloneable
             return;
         }
 
-        float[] resultCoords = new float[coordsSize + area.coordsSize + intersectPoints.length];
-        int[] resultRules = new int[rulesSize + area.rulesSize + intersectPoints.length];
-        int[] resultOffsets = new int[rulesSize + area.rulesSize + intersectPoints.length];
+        float[] resultCoords = new float[_coordsSize + area._coordsSize + intersectPoints.length];
+        int[] resultRules = new int[_rulesSize + area._rulesSize + intersectPoints.length];
+        int[] resultOffsets = new int[_rulesSize + area._rulesSize + intersectPoints.length];
         int resultCoordPos = 0;
         int resultRulesPos = 0;
         boolean isCurrentArea = true;
@@ -495,23 +495,23 @@ public class Area implements IShape, Cloneable
 
             int curIndex = point.endIndex(true);
             if ((curIndex < 0) ||
-                (area.containsExact(coords[2 * curIndex], coords[2 * curIndex + 1]) == 0)) {
+                (area.containsExact(_coords[2 * curIndex], _coords[2 * curIndex + 1]) == 0)) {
                 isCurrentArea = !isCurrentArea;
-            } else if (area.containsExact(coords[2 * curIndex], coords[2 * curIndex + 1]) > 0) {
+            } else if (area.containsExact(_coords[2 * curIndex], _coords[2 * curIndex + 1]) > 0) {
                 isCurrentArea = true;
             } else {
                 isCurrentArea = false;
             }
 
             nextPoint = nextIntersectPoint(intersectPoints, point, isCurrentArea);
-            float[] coords = (isCurrentArea) ? this.coords : area.coords;
-            int[] offsets = (isCurrentArea) ? this.offsets : area.offsets;
-            int[] rules = (isCurrentArea) ? this.rules : area.rules;
+            float[] coords = (isCurrentArea) ? this._coords : area._coords;
+            int[] offsets = (isCurrentArea) ? this._offsets : area._offsets;
+            int[] rules = (isCurrentArea) ? this._rules : area._rules;
             int offset = point.ruleIndex(isCurrentArea);
             boolean isCopyUntilZero = false;
 
             if (point.ruleIndex(isCurrentArea) > nextPoint.ruleIndex(isCurrentArea)) {
-                int rulesSize = (isCurrentArea) ? this.rulesSize : area.rulesSize;
+                int rulesSize = (isCurrentArea) ? this._rulesSize : area._rulesSize;
                 resultCoordPos = includeCoordsAndRules(
                     offset + 1, rulesSize, rules, offsets, resultRules, resultOffsets,
                     resultCoords, coords, resultRulesPos, resultCoordPos, point, isCurrentArea,
@@ -554,17 +554,17 @@ public class Area implements IShape, Cloneable
         }
 
         resultOffsets[resultRulesPos - 1] = resultCoordPos;
-        coords = resultCoords;
-        rules = resultRules;
-        offsets = resultOffsets;
-        coordsSize = resultCoordPos;
-        rulesSize = resultRulesPos;
+        _coords = resultCoords;
+        _rules = resultRules;
+        _offsets = resultOffsets;
+        _coordsSize = resultCoordPos;
+        _rulesSize = resultRulesPos;
     }
 
     private void intersectPolygon (Area area) {
         CrossingHelper crossHelper = new CrossingHelper(
-            new float[][] { coords, area.coords },
-            new int[] { coordsSize, area.coordsSize });
+            new float[][] {_coords, area._coords},
+            new int[] {_coordsSize, area._coordsSize});
         IntersectPoint[] intersectPoints = crossHelper.findCrossing();
         if (intersectPoints.length == 0) {
             if (contains(area.bounds())) {
@@ -575,9 +575,9 @@ public class Area implements IShape, Cloneable
             return;
         }
 
-        float[] resultCoords = new float[coordsSize + area.coordsSize + intersectPoints.length];
-        int[] resultRules = new int[rulesSize + area.rulesSize + intersectPoints.length];
-        int[] resultOffsets = new int[rulesSize + area.rulesSize + intersectPoints.length];
+        float[] resultCoords = new float[_coordsSize + area._coordsSize + intersectPoints.length];
+        int[] resultRules = new int[_rulesSize + area._rulesSize + intersectPoints.length];
+        int[] resultOffsets = new int[_rulesSize + area._rulesSize + intersectPoints.length];
         int resultCoordPos = 0;
         int resultRulesPos = 0;
         boolean isCurrentArea = true;
@@ -594,20 +594,20 @@ public class Area implements IShape, Cloneable
             int curIndex = point.endIndex(true);
 
             if ((curIndex < 0) ||
-                (area.containsExact(coords[2 * curIndex], coords[2 * curIndex + 1]) == 0)) {
+                (area.containsExact(_coords[2 * curIndex], _coords[2 * curIndex + 1]) == 0)) {
                 isCurrentArea = !isCurrentArea;
-            } else if (area.containsExact(coords[2 * curIndex], coords[2 * curIndex + 1]) > 0) {
+            } else if (area.containsExact(_coords[2 * curIndex], _coords[2 * curIndex + 1]) > 0) {
                 isCurrentArea = true;
             } else {
                 isCurrentArea = false;
             }
 
             IntersectPoint nextPoint = nextIntersectPoint(intersectPoints, point, isCurrentArea);
-            float[] coords = (isCurrentArea) ? this.coords : area.coords;
+            float[] coords = (isCurrentArea) ? this._coords : area._coords;
             int offset = 2 * point.endIndex(isCurrentArea);
             if ((offset >= 0) &&
                 (nextPoint.begIndex(isCurrentArea) < point.endIndex(isCurrentArea))) {
-                int coordSize = (isCurrentArea) ? this.coordsSize : area.coordsSize;
+                int coordSize = (isCurrentArea) ? this._coordsSize : area._coordsSize;
                 int length = coordSize - offset;
                 System.arraycopy(coords, offset, resultCoords, resultCoordPos, length);
 
@@ -636,29 +636,29 @@ public class Area implements IShape, Cloneable
 
         resultRules[resultRulesPos - 1] = PathIterator.SEG_CLOSE;
         resultOffsets[resultRulesPos - 1] = resultCoordPos;
-        coords = resultCoords;
-        rules = resultRules;
-        offsets = resultOffsets;
-        coordsSize = resultCoordPos;
-        rulesSize = resultRulesPos;
+        _coords = resultCoords;
+        _rules = resultRules;
+        _offsets = resultOffsets;
+        _coordsSize = resultCoordPos;
+        _rulesSize = resultRulesPos;
     }
 
     private void subtractCurvePolygon (Area area) {
         CurveCrossingHelper crossHelper = new CurveCrossingHelper(
-            new float[][] { coords, area.coords },
-            new int[] { coordsSize, area.coordsSize },
-            new int[][] { rules, area.rules },
-            new int[] { rulesSize, area.rulesSize },
-            new int[][] { offsets, area.offsets });
+            new float[][] {_coords, area._coords},
+            new int[] {_coordsSize, area._coordsSize},
+            new int[][] {_rules, area._rules},
+            new int[] {_rulesSize, area._rulesSize},
+            new int[][] {_offsets, area._offsets});
         IntersectPoint[] intersectPoints = crossHelper.findCrossing();
         if (intersectPoints.length == 0 && contains(area.bounds())) {
             copy(area, this);
             return;
         }
 
-        float[] resultCoords = new float[coordsSize + area.coordsSize + intersectPoints.length];
-        int[] resultRules = new int[rulesSize + area.rulesSize + intersectPoints.length];
-        int[] resultOffsets = new int[rulesSize + area.rulesSize + intersectPoints.length];
+        float[] resultCoords = new float[_coordsSize + area._coordsSize + intersectPoints.length];
+        int[] resultRules = new int[_rulesSize + area._rulesSize + intersectPoints.length];
+        int[] resultOffsets = new int[_rulesSize + area._rulesSize + intersectPoints.length];
         int resultCoordPos = 0;
         int resultRulesPos = 0;
         boolean isCurrentArea = true;
@@ -670,10 +670,10 @@ public class Area implements IShape, Cloneable
         do {
             resultCoords[resultCoordPos++] = point.x();
             resultCoords[resultCoordPos++] = point.y();
-            int curIndex = offsets[point.ruleIndex(true)] % coordsSize;
-            if (area.containsExact(coords[curIndex], coords[curIndex + 1]) == 0) {
+            int curIndex = _offsets[point.ruleIndex(true)] % _coordsSize;
+            if (area.containsExact(_coords[curIndex], _coords[curIndex + 1]) == 0) {
                 isCurrentArea = !isCurrentArea;
-            } else if (area.containsExact(coords[curIndex], coords[curIndex + 1]) > 0) {
+            } else if (area.containsExact(_coords[curIndex], _coords[curIndex + 1]) > 0) {
                 isCurrentArea = false;
             } else {
                 isCurrentArea = true;
@@ -682,9 +682,9 @@ public class Area implements IShape, Cloneable
             IntersectPoint nextPoint = (isCurrentArea) ?
                 nextIntersectPoint(intersectPoints, point, isCurrentArea) :
                 prevIntersectPoint(intersectPoints, point, isCurrentArea);
-            float[] coords = (isCurrentArea) ? this.coords : area.coords;
-            int[] offsets = (isCurrentArea) ? this.offsets : area.offsets;
-            int[] rules = (isCurrentArea) ? this.rules : area.rules;
+            float[] coords = (isCurrentArea) ? this._coords : area._coords;
+            int[] offsets = (isCurrentArea) ? this._offsets : area._offsets;
+            int[] rules = (isCurrentArea) ? this._rules : area._rules;
             int offset = (isCurrentArea) ? point.ruleIndex(isCurrentArea) :
                 nextPoint.ruleIndex(isCurrentArea);
             boolean isCopyUntilZero = false;
@@ -693,7 +693,7 @@ public class Area implements IShape, Cloneable
                  (point.ruleIndex(isCurrentArea) > nextPoint.ruleIndex(isCurrentArea))) ||
                 ((!isCurrentArea) &&
                  (nextPoint.ruleIndex(isCurrentArea) > nextPoint.ruleIndex(isCurrentArea)))) {
-                int rulesSize = (isCurrentArea) ? this.rulesSize : area.rulesSize;
+                int rulesSize = (isCurrentArea) ? this._rulesSize : area._rulesSize;
                 resultCoordPos = includeCoordsAndRules(
                     offset + 1, rulesSize, rules, offsets, resultRules, resultOffsets, resultCoords,
                     coords, resultRulesPos, resultCoordPos, point, isCurrentArea, false, 2);
@@ -727,17 +727,17 @@ public class Area implements IShape, Cloneable
 
         resultRules[resultRulesPos++] = PathIterator.SEG_CLOSE;
         resultOffsets[resultRulesPos - 1] = resultCoordPos;
-        coords = resultCoords;
-        rules = resultRules;
-        offsets = resultOffsets;
-        coordsSize = resultCoordPos;
-        rulesSize = resultRulesPos;
+        _coords = resultCoords;
+        _rules = resultRules;
+        _offsets = resultOffsets;
+        _coordsSize = resultCoordPos;
+        _rulesSize = resultRulesPos;
     }
 
     private void subtractPolygon (Area area) {
         CrossingHelper crossHelper = new CrossingHelper(
-            new float[][] { coords, area.coords },
-            new int[] { coordsSize, area.coordsSize });
+            new float[][] {_coords, area._coords},
+            new int[] {_coordsSize, area._coordsSize});
         IntersectPoint[] intersectPoints = crossHelper.findCrossing();
         if (intersectPoints.length == 0) {
             if (contains(area.bounds())) {
@@ -748,9 +748,9 @@ public class Area implements IShape, Cloneable
         }
 
         float[] resultCoords = new float[
-            2 * (coordsSize + area.coordsSize + intersectPoints.length)];
-        int[] resultRules = new int[2 * (rulesSize + area.rulesSize + intersectPoints.length)];
-        int[] resultOffsets = new int[2 * (rulesSize + area.rulesSize + intersectPoints.length)];
+            2 * (_coordsSize + area._coordsSize + intersectPoints.length)];
+        int[] resultRules = new int[2 * (_rulesSize + area._rulesSize + intersectPoints.length)];
+        int[] resultOffsets = new int[2 * (_rulesSize + area._rulesSize + intersectPoints.length)];
         int resultCoordPos = 0;
         int resultRulesPos = 0;
         boolean isCurrentArea = true;
@@ -770,13 +770,13 @@ public class Area implements IShape, Cloneable
             int curIndex = point.endIndex(true);
 
             if ((curIndex < 0) ||
-                (area.isVertex(coords[2 * curIndex], coords[2 * curIndex + 1]) &&
-                 crossHelper.containsPoint(new float[] { coords[2 * curIndex],
-                                                         coords[2 * curIndex + 1] }) &&
-                 (coords[2 * curIndex] != point.x() ||
-                  coords[2 * curIndex + 1] != point.y()))) {
+                (area.isVertex(_coords[2 * curIndex], _coords[2 * curIndex + 1]) &&
+                 crossHelper.containsPoint(new float[] { _coords[2 * curIndex],
+                                                         _coords[2 * curIndex + 1] }) &&
+                 (_coords[2 * curIndex] != point.x() ||
+                  _coords[2 * curIndex + 1] != point.y()))) {
                 isCurrentArea = !isCurrentArea;
-            } else if (area.containsExact(coords[2 * curIndex], coords[2 * curIndex + 1]) > 0) {
+            } else if (area.containsExact(_coords[2 * curIndex], _coords[2 * curIndex + 1]) > 0) {
                 isCurrentArea = false;
             } else {
                 isCurrentArea = true;
@@ -795,7 +795,7 @@ public class Area implements IShape, Cloneable
             IntersectPoint nextPoint = (isCurrentArea) ?
                 nextIntersectPoint(intersectPoints, point, isCurrentArea) :
                 prevIntersectPoint(intersectPoints, point, isCurrentArea);
-            float[] coords = (isCurrentArea) ? this.coords : area.coords;
+            float[] coords = (isCurrentArea) ? this._coords : area._coords;
 
             int offset = (isCurrentArea) ? 2 * point.endIndex(isCurrentArea) :
                 2 * nextPoint.endIndex(isCurrentArea);
@@ -806,7 +806,7 @@ public class Area implements IShape, Cloneable
                  ((!isCurrentArea) &&
                   (nextPoint.endIndex(isCurrentArea) < nextPoint.begIndex(isCurrentArea))))) {
 
-                int coordSize = (isCurrentArea) ? this.coordsSize : area.coordsSize;
+                int coordSize = (isCurrentArea) ? this._coordsSize : area._coordsSize;
                 int length = coordSize - offset;
 
                 if (isCurrentArea) {
@@ -854,11 +854,11 @@ public class Area implements IShape, Cloneable
 
         resultRules[resultRulesPos - 1] = PathIterator.SEG_CLOSE;
         resultOffsets[resultRulesPos - 1] = resultCoordPos;
-        coords = resultCoords;
-        rules = resultRules;
-        offsets = resultOffsets;
-        coordsSize = resultCoordPos;
-        rulesSize = resultRulesPos;
+        _coords = resultCoords;
+        _rules = resultRules;
+        _offsets = resultOffsets;
+        _coordsSize = resultCoordPos;
+        _rulesSize = resultRulesPos;
     }
 
     private IntersectPoint nextIntersectPoint (IntersectPoint[] iPoints,
@@ -1039,12 +1039,12 @@ public class Area implements IShape, Cloneable
     }
 
     private void copy (Area src, Area dst) {
-        dst.coordsSize = src.coordsSize;
-        dst.coords = Platform.clone(src.coords);
-        dst.rulesSize = src.rulesSize;
-        dst.rules = Platform.clone(src.rules);
-        dst.moveToCount = src.moveToCount;
-        dst.offsets = Platform.clone(src.offsets);
+        dst._coordsSize = src._coordsSize;
+        dst._coords = Platform.clone(src._coords);
+        dst._rulesSize = src._rulesSize;
+        dst._rules = Platform.clone(src._rules);
+        dst._moveToCount = src._moveToCount;
+        dst._offsets = Platform.clone(src._offsets);
     }
 
     private int containsExact (float x, float y) {
@@ -1129,8 +1129,8 @@ public class Area implements IShape, Cloneable
     }
 
     private boolean isVertex (float x, float y) {
-        for (int i = 0; i < coordsSize;) {
-            if (x == coords[i++] && y == coords[i++]) {
+        for (int i = 0; i < _coordsSize;) {
+            if (x == _coords[i++] && y == _coords[i++]) {
                 return true;
             }
         }
@@ -1172,11 +1172,11 @@ public class Area implements IShape, Cloneable
         }
 
         @Override public boolean isDone () {
-            return curRuleIndex >= rulesSize;
+            return curRuleIndex >= _rulesSize;
         }
 
         @Override public void next () {
-            switch (rules[curRuleIndex]) {
+            switch (_rules[curRuleIndex]) {
             case PathIterator.SEG_MOVETO:
             case PathIterator.SEG_LINETO:
                 curCoordIndex += 2;
@@ -1199,19 +1199,19 @@ public class Area implements IShape, Cloneable
 
             int count = 0;
             // the fallthrough below is on purpose
-            switch (rules[curRuleIndex]) {
+            switch (_rules[curRuleIndex]) {
             case PathIterator.SEG_CUBICTO:
-                c[4] = coords[curCoordIndex + 4];
-                c[5] = coords[curCoordIndex + 5];
+                c[4] = _coords[curCoordIndex + 4];
+                c[5] = _coords[curCoordIndex + 5];
                 count = 1;
             case PathIterator.SEG_QUADTO:
-                c[2] = coords[curCoordIndex + 2];
-                c[3] = coords[curCoordIndex + 3];
+                c[2] = _coords[curCoordIndex + 2];
+                c[3] = _coords[curCoordIndex + 3];
                 count += 1;
             case PathIterator.SEG_MOVETO:
             case PathIterator.SEG_LINETO:
-                c[0] = coords[curCoordIndex];
-                c[1] = coords[curCoordIndex + 1];
+                c[0] = _coords[curCoordIndex];
+                c[1] = _coords[curCoordIndex + 1];
                 count += 1;
             }
 
@@ -1219,28 +1219,28 @@ public class Area implements IShape, Cloneable
                 transform.transform(c, 0, c, 0, count);
             }
 
-            return rules[curRuleIndex];
+            return _rules[curRuleIndex];
         }
     }
 
     /** The coordinates array of the shape vertices. */
-    private float[] coords = new float[20];
+    private float[] _coords = new float[20];
 
     /** The coordinates quantity. */
-    private int coordsSize = 0;
+    private int _coordsSize = 0;
 
-    /** The rules array for the drawing of the shape edges. */
-    private int[] rules = new int[10];
+    /** The _rules array for the drawing of the shape edges. */
+    private int[] _rules = new int[10];
 
-    /** The rules quantity. */
-    private int rulesSize = 0;
+    /** The _rules quantity. */
+    private int _rulesSize = 0;
 
-    /** offsets[i] - index in array of coords and i - index in array of rules. */
-    private int[] offsets = new int[10];
+    /** _offsets[i] - index in array of _coords and i - index in array of _rules. */
+    private int[] _offsets = new int[10];
 
     /** The quantity of MOVETO rule occurrences. */
-    private int moveToCount = 0;
+    private int _moveToCount = 0;
 
     /** True if the shape is polygonal. */
-    private boolean isPolygonal = true;
+    private boolean _isPolygonal = true;
 }
