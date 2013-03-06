@@ -70,8 +70,11 @@ public class Area implements IShape, Cloneable
         }
 
         if ((rulesIndex != 0) && (_rules[rulesIndex - 1] != PathIterator.SEG_CLOSE)) {
+            _rules = adjustSize(_rules, rulesIndex + 1);
             _rules[rulesIndex] = PathIterator.SEG_CLOSE;
-            _offsets[rulesIndex] = _coordsSize;
+            _offsets = adjustSize(_offsets, rulesIndex + 1);
+            _offsets[rulesIndex] = coordsIndex;
+            ++rulesIndex;
         }
 
         _rulesSize = rulesIndex;
