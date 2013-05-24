@@ -67,6 +67,32 @@ public class Point extends AbstractPoint implements Serializable
         y += dy;
     }
 
+    /** Sets the coordinates of this point to be equal to those of the supplied point.
+     * @return a reference to this this, for chaining. */
+    public Point set (IPoint p) {
+        return set(p.x(), p.y());
+    }
+
+    /** Sets the coordinates of this point to the supplied values.
+     * @return a reference to this this, for chaining. */
+    public Point set (int x, int y) {
+        this.x = x;
+        this.y = y;
+        return this;
+    }
+
+    /** Translates this point by the specified offset.
+     * @return a reference to this point, for chaining. */
+    public Point addLocal (int dx, int dy) {
+        return add(dx, dy, this);
+    }
+
+    /** Subtracts the supplied x/y from this point.
+     * @return a reference to this point, for chaining. */
+    public Point subtractLocal (int x, int y) {
+        return subtract(x, y, this);
+    }
+
     @Override // from interface IPoint
     public int x () {
         return x;
