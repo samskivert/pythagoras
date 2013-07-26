@@ -196,6 +196,8 @@ public class MathUtil
      * The value is also always preceded by a sign (e.g. +1.0 or -0.5).
      */
     public static String toString (float value, int decimalPlaces) {
+        if (Float.isNaN(value)) return "NaN";
+
         StringBuilder buf = new StringBuilder();
         if (value >= 0) buf.append("+");
         else {
