@@ -11,7 +11,7 @@ public class Frustum
 {
     /** Intersection types indicating that the frustum does not intersect, intersects, or fully
      * contains, respectively, the parameter. */
-    public enum IntersectionType { NONE, INTERSECTS, CONTAINS };
+    public enum IntersectionType { NONE, INTERSECTS, CONTAINS }
 
     /**
      * Creates an empty (invalid) frustum.
