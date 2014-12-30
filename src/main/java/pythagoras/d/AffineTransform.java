@@ -362,7 +362,7 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public Transform copy () {
+    public AffineTransform copy () {
         return new AffineTransform(m00, m01, m10, m11, tx, ty);
     }
 
