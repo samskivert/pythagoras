@@ -50,6 +50,12 @@ public class AffineTransform extends AbstractTransform
         this.tx  = tx;  this.ty  = ty;
     }
 
+    /** Sets this affine transform matrix to {@code other}.
+      * @return this instance, for chaining. */
+    public AffineTransform set (AffineTransform other) {
+        return setTransform(other.m00, other.m01, other.m10, other.m11, other.tx, other.ty);
+    }
+
     @Override // from Transform
     public float uniformScale () {
         // the square root of the signed area of the parallelogram spanned by the axis vectors
@@ -122,12 +128,12 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public Transform setUniformScale (float scale) {
-        return setScale(scale, scale);
+    public AffineTransform setUniformScale (float scale) {
+        return (AffineTransform)setScale(scale, scale);
     }
 
     @Override // from Transform
-    public Transform setScaleX (float scaleX) {
+    public AffineTransform setScaleX (float scaleX) {
         // normalize the scale to 1, then re-apply
         float mult = scaleX / scaleX();
         m00 *= mult;
@@ -136,7 +142,7 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public Transform setScaleY (float scaleY) {
+    public AffineTransform setScaleY (float scaleY) {
         // normalize the scale to 1, then re-apply
         float mult = scaleY / scaleY();
         m10 *= mult;
@@ -145,7 +151,7 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public Transform setRotation (float angle) {
+    public AffineTransform setRotation (float angle) {
         // extract the scale, then reapply rotation and scale together
         float sx = scaleX(), sy = scaleY();
         float sina = FloatMath.sin(angle), cosa = FloatMath.cos(angle);
@@ -155,26 +161,27 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public Transform setTranslation (float tx, float ty) {
+    public AffineTransform setTranslation (float tx, float ty) {
         this.tx = tx;
         this.ty = ty;
         return this;
     }
 
     @Override // from Transform
-    public Transform setTx (float tx) {
+    public AffineTransform setTx (float tx) {
         this.tx = tx;
         return this;
     }
 
     @Override // from Transform
-    public Transform setTy (float ty) {
+    public AffineTransform setTy (float ty) {
         this.ty = ty;
         return this;
     }
 
     @Override // from Transform
-    public Transform setTransform (float m00, float m01, float m10, float m11, float tx, float ty) {
+    public AffineTransform setTransform (float m00, float m01, float m10, float m11,
+                                         float tx, float ty) {
         this.m00 = m00;
         this.m01 = m01;
         this.m10 = m10;
@@ -185,12 +192,12 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public Transform uniformScale (float scale) {
+    public AffineTransform uniformScale (float scale) {
         return scale(scale, scale);
     }
 
     @Override // from Transform
-    public Transform scale (float scaleX, float scaleY) {
+    public AffineTransform scale (float scaleX, float scaleY) {
         m00 *= scaleX;
         m01 *= scaleX;
         m10 *= scaleY;
@@ -199,55 +206,55 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public Transform scaleX (float scaleX) {
+    public AffineTransform scaleX (float scaleX) {
         return Transforms.multiply(this, scaleX, 0, 0, 1, 0, 0, this);
     }
 
     @Override // from Transform
-    public Transform scaleY (float scaleY) {
+    public AffineTransform scaleY (float scaleY) {
         return Transforms.multiply(this, 1, 0, 0, scaleY, 0, 0, this);
     }
 
     @Override // from Transform
-    public Transform rotate (float angle) {
+    public AffineTransform rotate (float angle) {
         float sina = FloatMath.sin(angle), cosa = FloatMath.cos(angle);
         return Transforms.multiply(this, cosa, sina, -sina, cosa, 0, 0, this);
     }
 
     @Override // from Transform
-    public Transform translate (float tx, float ty) {
+    public AffineTransform translate (float tx, float ty) {
         this.tx += m00*tx + m10*ty;
         this.ty += m11*ty + m01*tx;
         return this;
     }
 
     @Override // from Transform
-    public Transform translateX (float tx) {
+    public AffineTransform translateX (float tx) {
         return Transforms.multiply(this, 1, 0, 0, 1, tx, 0, this);
     }
 
     @Override // from Transform
-    public Transform translateY (float ty) {
+    public AffineTransform translateY (float ty) {
         return Transforms.multiply(this, 1, 0, 0, 1, 0, ty, this);
     }
 
     @Override // from Transform
-    public Transform shear (float sx, float sy) {
+    public AffineTransform shear (float sx, float sy) {
         return Transforms.multiply(this, 1, sy, sx, 1, 0, 0, this);
     }
 
     @Override // from Transform
-    public Transform shearX (float sx) {
+    public AffineTransform shearX (float sx) {
         return Transforms.multiply(this, 1, 0, sx, 1, 0, 0, this);
     }
 
     @Override // from Transform
-    public Transform shearY (float sy) {
+    public AffineTransform shearY (float sy) {
         return Transforms.multiply(this, 1, sy, 0, 1, 0, 0, this);
     }
 
     @Override // from Transform
-    public Transform invert () {
+    public AffineTransform invert () {
         // compute the determinant, storing the subdeterminants for later use
         float det = m00*m11 - m10*m01;
         if (Math.abs(det) == 0f) {

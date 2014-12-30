@@ -50,6 +50,12 @@ public class AffineTransform extends AbstractTransform
         this.tx  = tx;  this.ty  = ty;
     }
 
+    /** Sets this affine transform matrix to {@code other}.
+      * @return this instance, for chaining. */
+    public AffineTransform set (AffineTransform other) {
+        return setTransform(other.m00, other.m01, other.m10, other.m11, other.tx, other.ty);
+    }
+
     @Override // from Transform
     public double uniformScale () {
         // the square root of the signed area of the parallelogram spanned by the axis vectors
@@ -122,12 +128,12 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public Transform setUniformScale (double scale) {
-        return setScale(scale, scale);
+    public AffineTransform setUniformScale (double scale) {
+        return (AffineTransform)setScale(scale, scale);
     }
 
     @Override // from Transform
-    public Transform setScaleX (double scaleX) {
+    public AffineTransform setScaleX (double scaleX) {
         // normalize the scale to 1, then re-apply
         double mult = scaleX / scaleX();
         m00 *= mult;
@@ -136,7 +142,7 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public Transform setScaleY (double scaleY) {
+    public AffineTransform setScaleY (double scaleY) {
         // normalize the scale to 1, then re-apply
         double mult = scaleY / scaleY();
         m10 *= mult;
@@ -145,7 +151,7 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public Transform setRotation (double angle) {
+    public AffineTransform setRotation (double angle) {
         // extract the scale, then reapply rotation and scale together
         double sx = scaleX(), sy = scaleY();
         double sina = Math.sin(angle), cosa = Math.cos(angle);
@@ -155,26 +161,27 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public Transform setTranslation (double tx, double ty) {
+    public AffineTransform setTranslation (double tx, double ty) {
         this.tx = tx;
         this.ty = ty;
         return this;
     }
 
     @Override // from Transform
-    public Transform setTx (double tx) {
+    public AffineTransform setTx (double tx) {
         this.tx = tx;
         return this;
     }
 
     @Override // from Transform
-    public Transform setTy (double ty) {
+    public AffineTransform setTy (double ty) {
         this.ty = ty;
         return this;
     }
 
     @Override // from Transform
-    public Transform setTransform (double m00, double m01, double m10, double m11, double tx, double ty) {
+    public AffineTransform setTransform (double m00, double m01, double m10, double m11,
+                                         double tx, double ty) {
         this.m00 = m00;
         this.m01 = m01;
         this.m10 = m10;
@@ -185,12 +192,12 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public Transform uniformScale (double scale) {
+    public AffineTransform uniformScale (double scale) {
         return scale(scale, scale);
     }
 
     @Override // from Transform
-    public Transform scale (double scaleX, double scaleY) {
+    public AffineTransform scale (double scaleX, double scaleY) {
         m00 *= scaleX;
         m01 *= scaleX;
         m10 *= scaleY;
@@ -199,55 +206,55 @@ public class AffineTransform extends AbstractTransform
     }
 
     @Override // from Transform
-    public Transform scaleX (double scaleX) {
+    public AffineTransform scaleX (double scaleX) {
         return Transforms.multiply(this, scaleX, 0, 0, 1, 0, 0, this);
     }
 
     @Override // from Transform
-    public Transform scaleY (double scaleY) {
+    public AffineTransform scaleY (double scaleY) {
         return Transforms.multiply(this, 1, 0, 0, scaleY, 0, 0, this);
     }
 
     @Override // from Transform
-    public Transform rotate (double angle) {
+    public AffineTransform rotate (double angle) {
         double sina = Math.sin(angle), cosa = Math.cos(angle);
         return Transforms.multiply(this, cosa, sina, -sina, cosa, 0, 0, this);
     }
 
     @Override // from Transform
-    public Transform translate (double tx, double ty) {
+    public AffineTransform translate (double tx, double ty) {
         this.tx += m00*tx + m10*ty;
         this.ty += m11*ty + m01*tx;
         return this;
     }
 
     @Override // from Transform
-    public Transform translateX (double tx) {
+    public AffineTransform translateX (double tx) {
         return Transforms.multiply(this, 1, 0, 0, 1, tx, 0, this);
     }
 
     @Override // from Transform
-    public Transform translateY (double ty) {
+    public AffineTransform translateY (double ty) {
         return Transforms.multiply(this, 1, 0, 0, 1, 0, ty, this);
     }
 
     @Override // from Transform
-    public Transform shear (double sx, double sy) {
+    public AffineTransform shear (double sx, double sy) {
         return Transforms.multiply(this, 1, sy, sx, 1, 0, 0, this);
     }
 
     @Override // from Transform
-    public Transform shearX (double sx) {
+    public AffineTransform shearX (double sx) {
         return Transforms.multiply(this, 1, 0, sx, 1, 0, 0, this);
     }
 
     @Override // from Transform
-    public Transform shearY (double sy) {
+    public AffineTransform shearY (double sy) {
         return Transforms.multiply(this, 1, sy, 0, 1, 0, 0, this);
     }
 
     @Override // from Transform
-    public Transform invert () {
+    public AffineTransform invert () {
         // compute the determinant, storing the subdeterminants for later use
         double det = m00*m11 - m10*m01;
         if (Math.abs(det) == 0f) {
