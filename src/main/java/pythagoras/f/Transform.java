@@ -4,6 +4,8 @@
 
 package pythagoras.f;
 
+import pythagoras.util.NoninvertibleTransformException;
+
 /**
  * Represents a geometric transform. Specialized implementations exist for identity, rigid body,
  * uniform, non-uniform, and affine transforms.

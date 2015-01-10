@@ -18,7 +18,7 @@ public class Matrix3 implements IMatrix3, Serializable
     /** the identity matrix. */
     public static final Matrix3 IDENTITY = new Matrix3();
 
-    /** The values of the matrix. The names take the form {@mCOLROW}. */
+    /** The values of the matrix. The names take the form {@code mCOLROW}. */
     public double m00, m10, m20;
     public double m01, m11, m21;
     public double m02, m12, m22;

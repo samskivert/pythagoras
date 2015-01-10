@@ -21,7 +21,7 @@ public final class Matrix4 implements IMatrix4, Serializable
     /** An empty matrix array. */
     public static final Matrix4[] EMPTY_ARRAY = new Matrix4[0];
 
-    /** The values of the matrix. The names take the form {@mCOLROW}. */
+    /** The values of the matrix. The names take the form {@code mCOLROW}. */
     public float m00, m10, m20, m30;
     public float m01, m11, m21, m31;
     public float m02, m12, m22, m32;
