@@ -18,7 +18,7 @@ public abstract class AbstractPoint implements IPoint
     }
 
     @Override // from IPoint
-    public float distanceSq (IPoint p) {
+    public float distanceSq (XY p) {
         return Points.distanceSq(x(), y(), p.x(), p.y());
     }
 
@@ -28,12 +28,12 @@ public abstract class AbstractPoint implements IPoint
     }
 
     @Override // from IPoint
-    public float distance (IPoint p) {
+    public float distance (XY p) {
         return Points.distance(x(), y(), p.x(), p.y());
     }
 
     @Override // from interface IPoint
-    public float direction (IPoint other) {
+    public float direction (XY other) {
         return FloatMath.atan2(other.y() - y(), other.x() - x());
     }
 
@@ -68,7 +68,7 @@ public abstract class AbstractPoint implements IPoint
     }
 
     @Override
-    public Point subtract (IPoint other, Point result) {
+    public Point subtract (XY other, Point result) {
         return subtract(other.x(), other.y(), result);
     }
 

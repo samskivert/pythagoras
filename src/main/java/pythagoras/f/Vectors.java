@@ -35,7 +35,7 @@ public class Vectors
     /**
      * Creates a vector from {@code from} to {@code to}.
      */
-    public static Vector from (IPoint from, IPoint to) {
+    public static Vector from (XY from, XY to) {
         return new Vector(to.x() - from.x(), to.y() - from.y());
     }
 

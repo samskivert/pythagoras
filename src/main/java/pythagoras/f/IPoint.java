@@ -13,17 +13,17 @@ public interface IPoint extends XY, Cloneable
     float distanceSq (float px, float py);
 
     /** Returns the squared Euclidian distance between this point and the supplied point. */
-    float distanceSq (IPoint p);
+    float distanceSq (XY p);
 
     /** Returns the Euclidian distance between this point and the specified point. */
     float distance (float px, float py);
 
     /** Returns the Euclidian distance between this point and the supplied point. */
-    float distance (IPoint p);
+    float distance (XY p);
 
     /** Returns the angle (in radians) of the vector starting at this point and ending at the
      * supplied other point. */
-    float direction (IPoint other);
+    float direction (XY other);
 
     /** Multiplies this point by a scale factor.
      * @return a new point containing the result. */
@@ -51,7 +51,7 @@ public interface IPoint extends XY, Cloneable
 
     /** Subtracts the supplied point from {@code this} and stores the result in {@code result}.
      * @return a reference to the result, for chaining. */
-    Point subtract (IPoint other, Point result);
+    Point subtract (XY other, Point result);
 
     /** Rotates this point around the origin by the specified angle.
      * @return a new point containing the result. */

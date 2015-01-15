@@ -32,7 +32,7 @@ public class Rectangle extends AbstractRectangle implements Serializable
     /**
      * Constructs a rectangle with the supplied upper-left corner and dimensions (0,0).
      */
-    public Rectangle (IPoint p) {
+    public Rectangle (XY p) {
         setBounds(p.x(), p.y(), 0, 0);
     }
 
@@ -47,7 +47,7 @@ public class Rectangle extends AbstractRectangle implements Serializable
      * Constructs a rectangle with upper-left corner at the supplied point and with the supplied
      * dimensions.
      */
-    public Rectangle (IPoint p, IDimension d) {
+    public Rectangle (XY p, IDimension d) {
         setBounds(p.x(), p.y(), d.width(), d.height());
     }
 
@@ -76,7 +76,7 @@ public class Rectangle extends AbstractRectangle implements Serializable
     /**
      * Sets the upper-left corner of this rectangle to the supplied point.
      */
-    public void setLocation (IPoint p) {
+    public void setLocation (XY p) {
         setLocation(p.x(), p.y());
     }
 
@@ -146,7 +146,7 @@ public class Rectangle extends AbstractRectangle implements Serializable
     /**
      * Expands the bounds of this rectangle to contain the supplied point.
      */
-    public void add (IPoint p) {
+    public void add (XY p) {
         add(p.x(), p.y());
     }
 

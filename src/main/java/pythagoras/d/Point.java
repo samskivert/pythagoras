@@ -33,13 +33,13 @@ public class Point extends AbstractPoint implements Serializable
     /**
      * Constructs a point with coordinates equal to the supplied point.
      */
-    public Point (IPoint p) {
+    public Point (XY p) {
         set(p.x(), p.y());
     }
 
     /** Sets the coordinates of this point to be equal to those of the supplied point.
      * @return a reference to this this, for chaining. */
-    public Point set (IPoint p) {
+    public Point set (XY p) {
         return set(p.x(), p.y());
     }
 

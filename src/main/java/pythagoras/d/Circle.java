@@ -36,7 +36,7 @@ public class Circle extends AbstractCircle implements Serializable
     /**
      * Constructs a circle with the specified properties
      */
-    public Circle (IPoint p, double radius) {
+    public Circle (XY p, double radius) {
         this(p.x(), p.y(), radius);
     }
 

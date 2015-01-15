@@ -18,7 +18,7 @@ public abstract class RectangularShape implements IRectangularShape
     /**
      * Sets the location and size of the framing rectangle of this shape to the supplied values.
      */
-    public void setFrame (IPoint loc, IDimension size) {
+    public void setFrame (XY loc, IDimension size) {
         setFrame(loc.x(), loc.y(), size.width(), size.height());
     }
 
@@ -57,7 +57,7 @@ public abstract class RectangularShape implements IRectangularShape
      * Sets the location and size of the framing rectangle of this shape based on the supplied
      * diagonal line.
      */
-    public void setFrameFromDiagonal (IPoint p1, IPoint p2) {
+    public void setFrameFromDiagonal (XY p1, XY p2) {
         setFrameFromDiagonal(p1.x(), p1.y(), p2.x(), p2.y());
     }
 
@@ -76,7 +76,7 @@ public abstract class RectangularShape implements IRectangularShape
      * Sets the location and size of the framing rectangle of this shape based on the supplied
      * center and corner points.
      */
-    public void setFrameFromCenter (IPoint center, IPoint corner) {
+    public void setFrameFromCenter (XY center, XY corner) {
         setFrameFromCenter(center.x(), center.y(), corner.x(), corner.y());
     }
 
@@ -144,7 +144,7 @@ public abstract class RectangularShape implements IRectangularShape
     }
 
     @Override // from interface IShape
-    public boolean contains (IPoint point) {
+    public boolean contains (XY point) {
         return contains(point.x(), point.y());
     }
 

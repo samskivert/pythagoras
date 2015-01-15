@@ -61,7 +61,7 @@ public interface IRectangle extends IRectangularShape, Cloneable
 
     /** Returns a set of flags indicating where the supplied point lies in relation to the bounds of
      * this rectangle. See {@link #OUT_LEFT}, etc. */
-    int outcode (IPoint point);
+    int outcode (XY point);
 
     /** Returns a mutable copy of this rectangle. */
     Rectangle clone ();

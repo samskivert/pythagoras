@@ -57,7 +57,7 @@ public class QuadCurve extends AbstractQuadCurve implements Serializable
     /**
      * Configures the start, control, and end points for this curve.
      */
-    public void setCurve (IPoint p1, IPoint cp, IPoint p2) {
+    public void setCurve (XY p1, XY cp, XY p2) {
         setCurve(p1.x(), p1.y(), cp.x(), cp.y(), p2.x(), p2.y());
     }
 
@@ -75,7 +75,7 @@ public class QuadCurve extends AbstractQuadCurve implements Serializable
      * Configures the start, control, and end points for this curve, using the values at the
      * specified offset in the {@code points} array.
      */
-    public void setCurve (IPoint[] points, int offset) {
+    public void setCurve (XY[] points, int offset) {
         setCurve(points[offset + 0].x(), points[offset + 0].y(),
                  points[offset + 1].x(), points[offset + 1].y(),
                  points[offset + 2].x(), points[offset + 2].y());

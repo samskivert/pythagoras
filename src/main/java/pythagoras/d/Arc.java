@@ -138,7 +138,7 @@ public class Arc extends AbstractArc implements Serializable
      * Sets the location, size, angular extents, and closure type of this arc to the specified
      * values.
      */
-    public void setArc (IPoint point, IDimension size, double start, double extent, int type) {
+    public void setArc (XY point, IDimension size, double start, double extent, int type) {
         setArc(point.x(), point.y(), size.width(), size.height(), start, extent, type);
     }
 
@@ -172,7 +172,7 @@ public class Arc extends AbstractArc implements Serializable
      * Sets the location, size, angular extents, and closure type of this arc based on the
      * specified values.
      */
-    public void setArcByTangent (IPoint p1, IPoint p2, IPoint p3, double radius) {
+    public void setArcByTangent (XY p1, XY p2, XY p3, double radius) {
         // use simple geometric calculations of arc center, radius and angles by tangents
         double a1 = -Math.atan2(p1.y() - p2.y(), p1.x() - p2.x());
         double a2 = -Math.atan2(p3.y() - p2.y(), p3.x() - p2.x());
@@ -195,7 +195,7 @@ public class Arc extends AbstractArc implements Serializable
      * Sets the starting angle of this arc to the angle defined by the supplied point relative to
      * the center of this arc.
      */
-    public void setAngleStart (IPoint point) {
+    public void setAngleStart (XY point) {
         double angle = Math.atan2(point.y() - centerY(), point.x() - centerX());
         setAngleStart(normAngle(-Math.toDegrees(angle)));
     }
@@ -227,7 +227,7 @@ public class Arc extends AbstractArc implements Serializable
      * point relative to the arc's center. The arc will always be non-empty and extend
      * counterclockwise from the first point around to the second point.
      */
-    public void setAngles (IPoint p1, IPoint p2) {
+    public void setAngles (XY p1, XY p2) {
         setAngles(p1.x(), p1.y(), p2.x(), p2.y());
     }
 

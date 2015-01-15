@@ -16,7 +16,7 @@ public interface IShape
     boolean contains (float x, float y);
 
     /** Returns true if this shape contains the supplied point. */
-    boolean contains (IPoint point);
+    boolean contains (XY point);
 
     /** Returns true if this shape completely contains the specified rectangle. */
     boolean contains (float x, float y, float width, float height);

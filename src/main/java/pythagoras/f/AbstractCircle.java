@@ -19,7 +19,7 @@ public abstract class AbstractCircle implements ICircle
     }
 
     @Override // from ICircle
-    public boolean contains (IPoint p) {
+    public boolean contains (XY p) {
         float r = radius();
         return Points.distanceSq(x(), y(), p.x(), p.y()) < r * r;
     }

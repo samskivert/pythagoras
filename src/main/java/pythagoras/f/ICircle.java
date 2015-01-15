@@ -22,7 +22,7 @@ public interface ICircle
     boolean intersects (ICircle c);
 
     /** Returns true if this circle contains the supplied point. */
-    boolean contains (IPoint p);
+    boolean contains (XY p);
 
     /** Returns true if this circle contains the specified point. */
     boolean contains (float x, float y);

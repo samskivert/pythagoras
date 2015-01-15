@@ -38,7 +38,7 @@ public abstract class AbstractLine implements ILine
     }
 
     @Override // from interface ILine
-    public double pointLineDistSq (IPoint p) {
+    public double pointLineDistSq (XY p) {
         return Lines.pointLineDistSq(p.x(), p.y(), x1(), y1(), x2(), y2());
     }
 
@@ -48,7 +48,7 @@ public abstract class AbstractLine implements ILine
     }
 
     @Override // from interface ILine
-    public double pointLineDist (IPoint p) {
+    public double pointLineDist (XY p) {
         return Lines.pointLineDist(p.x(), p.y(), x1(), y1(), x2(), y2());
     }
 
@@ -58,7 +58,7 @@ public abstract class AbstractLine implements ILine
     }
 
     @Override // from interface ILine
-    public double pointSegDistSq (IPoint p) {
+    public double pointSegDistSq (XY p) {
         return Lines.pointSegDistSq(p.x(), p.y(), x1(), y1(), x2(), y2());
     }
 
@@ -68,7 +68,7 @@ public abstract class AbstractLine implements ILine
     }
 
     @Override // from interface ILine
-    public double pointSegDist (IPoint p) {
+    public double pointSegDist (XY p) {
         return Lines.pointSegDist(p.x(), p.y(), x1(), y1(), x2(), y2());
     }
 
@@ -78,7 +78,7 @@ public abstract class AbstractLine implements ILine
     }
 
     @Override // from interface ILine
-    public int relativeCCW (IPoint p) {
+    public int relativeCCW (XY p) {
         return Lines.relativeCCW(p.x(), p.y(), x1(), y1(), x2(), y2());
     }
 
@@ -98,7 +98,7 @@ public abstract class AbstractLine implements ILine
     }
 
     @Override // from interface IShape
-    public boolean contains (IPoint point) {
+    public boolean contains (XY point) {
         return false;
     }
 

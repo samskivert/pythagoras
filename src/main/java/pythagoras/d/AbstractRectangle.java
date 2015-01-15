@@ -90,7 +90,7 @@ public abstract class AbstractRectangle extends RectangularShape implements IRec
     }
 
     @Override // from interface IRectangle
-    public int outcode (IPoint p) {
+    public int outcode (XY p) {
         return outcode(p.x(), p.y());
     }
 

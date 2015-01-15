@@ -64,7 +64,7 @@ public abstract class AbstractQuadCurve implements IQuadCurve
     }
 
     @Override // from interface IShape
-    public boolean contains (IPoint p) {
+    public boolean contains (XY p) {
         return contains(p.x(), p.y());
     }
 
