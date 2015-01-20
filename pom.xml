@@ -4,7 +4,7 @@
   <groupId>com.samskivert</groupId>
   <artifactId>pythagoras</artifactId>
   <packaging>jar</packaging>
-  <version>1.4.1</version>
+  <version>1.5-SNAPSHOT</version>
   <name>pythagoras</name>
   <description>A portable geometry library.</description>
   <url>http://github.com/samskivert/pythagoras/</url>
