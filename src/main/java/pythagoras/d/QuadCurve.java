@@ -11,9 +11,9 @@ import java.io.Serializable;
  */
 public class QuadCurve extends AbstractQuadCurve implements Serializable
 {
-	private static final long serialVersionUID = -7816504376651508296L;
+    private static final long serialVersionUID = -7816504376651508296L;
 
-	/** The x-coordinate of the start of this curve. */
+    /** The x-coordinate of the start of this curve. */
     public double x1;
 
     /** The y-coordinate of the start of this curve. */

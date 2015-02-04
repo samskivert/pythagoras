@@ -15,9 +15,9 @@ import pythagoras.util.Platform;
  */
 public class Plane implements IPlane, Serializable
 {
-	private static final long serialVersionUID = 5309702666731799041L;
+    private static final long serialVersionUID = 5309702666731799041L;
 
-	/** The X/Y plane. */
+    /** The X/Y plane. */
     public static final Plane XY_PLANE = new Plane(Vector3.UNIT_Z, 0f);
 
     /** The X/Z plane. */

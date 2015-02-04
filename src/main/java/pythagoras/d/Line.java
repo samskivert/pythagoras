@@ -11,9 +11,9 @@ import java.io.Serializable;
  */
 public class Line extends AbstractLine implements Serializable
 {
-	private static final long serialVersionUID = -9086971085479796688L;
+    private static final long serialVersionUID = -9086971085479796688L;
 
-	/** The x-coordinate of the start of this line segment. */
+    /** The x-coordinate of the start of this line segment. */
     public double x1;
 
     /** The y-coordinate of the start of this line segment. */

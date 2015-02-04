@@ -11,9 +11,9 @@ import java.io.Serializable;
  */
 public class Box implements IBox, Serializable
 {
-	private static final long serialVersionUID = 5387466195433177670L;
+    private static final long serialVersionUID = 5387466195433177670L;
 
-	/** The unit box. */
+    /** The unit box. */
     public static final Box UNIT = new Box(Vector3.UNIT_XYZ.negate(), Vector3.UNIT_XYZ);
 
     /** The zero box. */

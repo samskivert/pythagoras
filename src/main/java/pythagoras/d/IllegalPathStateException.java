@@ -11,9 +11,9 @@ package pythagoras.d;
  */
 public class IllegalPathStateException extends RuntimeException
 {
-	private static final long serialVersionUID = -1876236224736636005L;
+    private static final long serialVersionUID = -1876236224736636005L;
 
-	public IllegalPathStateException () {
+    public IllegalPathStateException () {
     }
 
     public IllegalPathStateException (String s) {
