@@ -11,7 +11,9 @@ import java.io.Serializable;
  */
 public class Circle extends AbstractCircle implements Serializable
 {
-    /** The x-coordinate of the circle. */
+	private static final long serialVersionUID = -4841212861047390886L;
+
+	/** The x-coordinate of the circle. */
     public float x;
 
     /** The y-coordinate of the circle. */

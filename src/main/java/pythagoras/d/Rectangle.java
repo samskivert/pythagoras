@@ -11,7 +11,9 @@ import java.io.Serializable;
  */
 public class Rectangle extends AbstractRectangle implements Serializable
 {
-    /** The x-coordinate of the rectangle's upper left corner. */
+	private static final long serialVersionUID = 6584214897153526799L;
+
+	/** The x-coordinate of the rectangle's upper left corner. */
     public double x;
 
     /** The y-coordinate of the rectangle's upper left corner. */

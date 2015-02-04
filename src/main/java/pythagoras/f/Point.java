@@ -11,7 +11,9 @@ import java.io.Serializable;
  */
 public class Point extends AbstractPoint implements Serializable
 {
-    /** The x-coordinate of the point. */
+	private static final long serialVersionUID = -2666598890366249427L;
+
+	/** The x-coordinate of the point. */
     public float x;
 
     /** The y-coordinate of the point. */
