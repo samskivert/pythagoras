@@ -14,9 +14,9 @@ import pythagoras.util.Platform;
  */
 public class Vector4 implements IVector4, Serializable
 {
-	private static final long serialVersionUID = -775706366125314150L;
-	
-	/** The components of the vector. */
+    private static final long serialVersionUID = -775706366125314150L;
+
+    /** The components of the vector. */
     public float x, y, z, w;
 
     /**

@@ -15,9 +15,9 @@ import pythagoras.util.SingularMatrixException;
  */
 public final class Matrix4 implements IMatrix4, Serializable
 {
-	private static final long serialVersionUID = -4239146234415362557L;
+    private static final long serialVersionUID = -4239146234415362557L;
 
-	/** The identity matrix. */
+    /** The identity matrix. */
     public static final IMatrix4 IDENTITY = new Matrix4();
 
     /** An empty matrix array. */

@@ -11,9 +11,9 @@ import java.io.Serializable;
  */
 public class Dimension extends AbstractDimension implements Serializable
 {
-	private static final long serialVersionUID = 3237732020142181995L;
+    private static final long serialVersionUID = 3237732020142181995L;
 
-	/** The magnitude in the x-dimension. */
+    /** The magnitude in the x-dimension. */
     public float width;
 
     /** The magnitude in the y-dimension. */

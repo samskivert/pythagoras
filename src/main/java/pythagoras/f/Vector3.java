@@ -14,9 +14,9 @@ import pythagoras.util.Platform;
  */
 public class Vector3 implements IVector3, Serializable
 {
-	private static final long serialVersionUID = -3884541171214417861L;
+    private static final long serialVersionUID = -3884541171214417861L;
 
-	/** A unit vector in the X+ direction. */
+    /** A unit vector in the X+ direction. */
     public static final IVector3 UNIT_X = new Vector3(1f, 0f, 0f);
 
     /** A unit vector in the Y+ direction. */
