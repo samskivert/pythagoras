@@ -11,7 +11,9 @@ import java.io.Serializable;
  */
 public class RoundRectangle extends AbstractRoundRectangle implements Serializable
 {
-    /** The x-coordinate of the framing rectangle. */
+	private static final long serialVersionUID = -8496388509757573705L;
+
+	/** The x-coordinate of the framing rectangle. */
     public double x;
 
     /** The y-coordinate of the framing rectangle. */

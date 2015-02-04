@@ -11,7 +11,9 @@ import java.io.Serializable;
  */
 public class Arc extends AbstractArc implements Serializable
 {
-    /** The x-coordinate of this arc's framing rectangle. */
+	private static final long serialVersionUID = 378120636227888073L;
+
+	/** The x-coordinate of this arc's framing rectangle. */
     public float x;
 
     /** The y-coordinate of this arc's framing rectangle. */

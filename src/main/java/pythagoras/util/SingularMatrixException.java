@@ -9,7 +9,9 @@ package pythagoras.util;
  */
 public class SingularMatrixException extends RuntimeException
 {
-    /**
+	private static final long serialVersionUID = -4744745375693073952L;
+
+	/**
      * Creates a new exception.
      */
     public SingularMatrixException () {

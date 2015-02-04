@@ -15,7 +15,9 @@ import pythagoras.util.Platform;
  */
 public class Quaternion implements IQuaternion, Serializable
 {
-    /** The identity quaternion. */
+	private static final long serialVersionUID = 6152317379736947895L;
+
+	/** The identity quaternion. */
     public static final IQuaternion IDENTITY = new Quaternion(0f, 0f, 0f, 1f);
 
     /** The components of the quaternion. */

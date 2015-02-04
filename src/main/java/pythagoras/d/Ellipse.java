@@ -11,7 +11,9 @@ import java.io.Serializable;
  */
 public class Ellipse extends AbstractEllipse implements Serializable
 {
-    /** The x-coordinate of the framing rectangle. */
+	private static final long serialVersionUID = -2681903285662523175L;
+
+	/** The x-coordinate of the framing rectangle. */
     public double x;
 
     /** The y-coordinate of the framing rectangle. */

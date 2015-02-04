@@ -11,7 +11,9 @@ import java.io.Serializable;
  */
 public class CubicCurve extends AbstractCubicCurve implements Serializable
 {
-    /** The x-coordinate of the start of this curve. */
+	private static final long serialVersionUID = -3306427309314031213L;
+
+	/** The x-coordinate of the start of this curve. */
     public float x1;
 
     /** The y-coordinate of the start of this curve. */

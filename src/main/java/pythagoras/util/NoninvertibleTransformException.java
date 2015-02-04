@@ -10,7 +10,9 @@ package pythagoras.util;
  */
 public class NoninvertibleTransformException extends RuntimeException
 {
-    public NoninvertibleTransformException (String s) {
+	private static final long serialVersionUID = 5208863644264280750L;
+
+	public NoninvertibleTransformException (String s) {
         super(s);
     }
 }
