@@ -283,7 +283,7 @@ public abstract class AbstractArc extends RectangularShape implements IArc
                     k = -k;
                 }
             } else {
-                arcCount = (int)Math.rint(Math.abs(extent) / 90f);
+                arcCount = MathUtil.iceil(Math.abs(extent) / 90f);
                 step = FloatMath.toRadians(extent / arcCount);
                 k = 4f / 3f * (1f - FloatMath.cos(step / 2f)) / FloatMath.sin(step / 2f);
             }
