@@ -41,6 +41,10 @@ public interface IPoint extends XY, Cloneable
      * @return a reference to the result, for chaining. */
     Point add (float x, float y, Point result);
 
+    /** Translates this point by the specified offset and stores the result in the object provided.
+     * @return a reference to the result, for chaining. */
+    Point add (XY other, Point result);
+
     /** Subtracts the supplied point from {@code this}.
      * @return a new point containing the result. */
     Point subtract (float x, float y);
