@@ -105,7 +105,7 @@ public class Vector extends AbstractVector
 
     /** Copies the elements of another vector.
      * @return a reference to this vector, for chaining. */
-    public Vector set (IVector other) {
+    public Vector set (XY other) {
         return set(other.x(), other.y());
     }
 
