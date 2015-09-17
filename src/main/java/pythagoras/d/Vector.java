@@ -21,7 +21,7 @@ public class Vector extends AbstractVector
     }
 
     /** Creates a vector equal to {@code other}. */
-    public Vector (IVector other) {
+    public Vector (XY other) {
         set(other);
     }
 
