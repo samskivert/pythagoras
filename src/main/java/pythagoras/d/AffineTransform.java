@@ -380,8 +380,11 @@ public class AffineTransform extends AbstractTransform
 
     @Override
     public String toString () {
-        return "affine [" + MathUtil.toString(m00) + " " + MathUtil.toString(m01) + " " +
+        if (m00 != 1 || m01 != 0 || m10 != 0 || m11 != 1) return "affine [" +
+            MathUtil.toString(m00) + " " + MathUtil.toString(m01) + " " +
             MathUtil.toString(m10) + " " + MathUtil.toString(m11) + " " + translation() + "]";
+        else if (tx != 0 || ty != 0) return "trans " + translation();
+        else return "ident";
     }
 
     // we don't publicize this because it might encourage someone to do something stupid like
