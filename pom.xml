@@ -20,10 +20,6 @@
     <url>http://github.com/samskivert/pythagoras/issues</url>
   </issueManagement>
 
-  <prerequisites>
-    <maven>3.3.0</maven>
-  </prerequisites>
-
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
@@ -45,6 +41,10 @@
     <developerConnection>scm:git:git@github.com:samskivert/pythagoras.git</developerConnection>
     <url>http://github.com/samskivert/pythagoras/</url>
   </scm>
+
+  <prerequisites>
+    <maven>3.3.0</maven>
+  </prerequisites>
 
   <properties>
     <source.level>1.7</source.level>
