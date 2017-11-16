@@ -89,7 +89,7 @@ public abstract class AbstractLine implements ILine
 
     @Override // from interface IShape
     public boolean isEmpty () {
-        return false;
+        return true;
     }
 
     @Override // from interface IShape
